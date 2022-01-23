@@ -21,10 +21,10 @@ namespace InvestQ.Application.Services
             if (model.Inativo)
                 throw new Exception("Não é possível incluir uma Corretora já inativa.");
 
-            if (await _corretoraRepo.GetCorretoraByDescricaoAsync(model.Descricao) != null)
+            if (await _corretoraRepo.GetCorretoraByDescricaoAsync(model.Descricao, false) != null)
                 throw new Exception("Já existe uma Corretora com essa descrição.");
 
-            if( await _corretoraRepo.GetCorretoraByIdAsync(model.Id) == null)
+            if( await _corretoraRepo.GetCorretoraByIdAsync(model.Id, false) == null)
             {
                 _corretoraRepo.Adicionar(model);
                 if (await _corretoraRepo.SalvarMudancasAsync())
@@ -39,7 +39,7 @@ namespace InvestQ.Application.Services
             if (model.Inativo)
                 throw new Exception("Não é possível atualizar uma Corretora já inativa.");
 
-            var corretora = await _corretoraRepo.GetCorretoraByIdAsync(model.Id);
+            var corretora = await _corretoraRepo.GetCorretoraByIdAsync(model.Id, false);
 
             if (corretora != null)
             {
@@ -57,7 +57,7 @@ namespace InvestQ.Application.Services
 
         public async Task<bool> DeletarCorretora(int corretoraId)
         {
-            var corretora = await _corretoraRepo.GetCorretoraByIdAsync(corretoraId);
+            var corretora = await _corretoraRepo.GetCorretoraByIdAsync(corretoraId, false);
 
             if (corretora == null)
                 throw new Exception("A Corretora que tentou deletar não existe.");
@@ -67,11 +67,11 @@ namespace InvestQ.Application.Services
             return await _corretoraRepo.SalvarMudancasAsync();
         }
 
-        public async Task<Corretora[]> GetAllCorretorasAsync()
+        public async Task<Corretora[]> GetAllCorretorasAsync(bool includeCliente = false)
         {
             try
             {
-                var corretoras = await _corretoraRepo.GetAllCorretorasAsync(true);
+                var corretoras = await _corretoraRepo.GetAllCorretorasAsync(includeCliente);
 
                 if (corretoras == null) return null;
 
@@ -83,11 +83,27 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<Corretora> GetCorretoraByIdAsync(int corretoraId)
+        public async Task<Corretora[]> GetAllCorretorasByClienteAsync(int clienteId, bool includeCliente)
         {
             try
             {
-                var corretora = await _corretoraRepo.GetCorretoraByIdAsync(corretoraId);
+                var corretoras = await _corretoraRepo.GetAllCorretorasByClienteId(clienteId, includeCliente);
+
+                if (corretoras == null) return null;
+
+                return corretoras;     
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Corretora> GetCorretoraByIdAsync(int corretoraId, bool includeCliente = false)
+        {
+            try
+            {
+                var corretora = await _corretoraRepo.GetCorretoraByIdAsync(corretoraId, includeCliente);
 
                 if (corretora == null) return null;
 

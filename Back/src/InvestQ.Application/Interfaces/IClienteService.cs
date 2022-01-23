@@ -15,7 +15,8 @@ namespace InvestQ.Application.Interfaces
         Task<bool> InativarCliente(Cliente model);
         Task<bool> ReativarCliente(Cliente model);
 
-        Task<Cliente[]> GetAllClientesAsync();
-        Task<Cliente> GetClienteByIdAsync(int clienteId);
+        Task<Cliente[]> GetAllClientesAsync(bool includeCorretora);
+        Task<Cliente> GetClienteByIdAsync(int clienteId, bool includeCorretora);
+        Task<Cliente[]> GetAllClientesByCorretoraAsync(int corretoraId, bool includeCorretora);
     }
 }

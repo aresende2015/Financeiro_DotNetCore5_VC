@@ -8,9 +8,9 @@ namespace InvestQ.Data.Interfaces
 {
     public interface IClienteRepo : IGeralRepo
     {
-        Task<Cliente[]> GetAllClientesAsync(bool includeCorretora = false);  
-        Task<Cliente[]> GetAllClientesByCorretoraId(int corretoraId, bool includeCorretora = false);      
-        Task<Cliente> GetClienteByIdAsync(int id, bool includeCorretora = false);
-        Task<Cliente> GetClienteByCpfAsync(string cpf);
+        Task<Cliente[]> GetAllClientesAsync(bool includeCorretora);  
+        Task<Cliente[]> GetAllClientesByCorretoraId(int corretoraId, bool includeCorretora);      
+        Task<Cliente> GetClienteByIdAsync(int id, bool includeCorretora);
+        Task<Cliente> GetClienteByCpfAsync(string cpf, bool includeCorretora);
     }
 }

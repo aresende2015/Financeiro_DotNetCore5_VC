@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using InvestQ.Data.Context;
 using InvestQ.Data.Interfaces;
 using InvestQ.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace InvestQ.Data.Repositories
 {
@@ -17,24 +18,62 @@ namespace InvestQ.Data.Repositories
             _context = context;
         }
 
-        public Task<Corretora[]> GetAllCorretorasAsync(bool includeCliente = false)
+        public async Task<Corretora[]> GetAllCorretorasAsync(bool includeCliente = false)
         {
-            throw new NotImplementedException();
+            IQueryable<Corretora> query = _context.Corretoras;
+
+            if (includeCliente)
+                query = query.Include(c => c.ClientesCorretoras)
+                             .ThenInclude(cc => cc.Cliente);
+
+            query = query.AsNoTracking()
+                         .OrderBy(c => c.Id);
+
+            return await query.ToArrayAsync();
         }
 
-        public Task<Corretora[]> GetAllCorretorasByClienteId(int clienteId, bool includeCliente = false)
+        public async Task<Corretora[]> GetAllCorretorasByClienteId(int clienteId, bool includeCliente)
         {
-            throw new NotImplementedException();
+            IQueryable<Corretora> query = _context.Corretoras;
+
+            if (includeCliente)
+                query = query.Include(c => c.ClientesCorretoras)
+                             .ThenInclude(cc => cc.Cliente);
+
+            query = query.AsNoTracking()
+                         .OrderBy(c => c.Id)
+                         .Where(c => c.ClientesCorretoras.Any(cc =>cc.ClienteId == clienteId));
+
+            return await query.ToArrayAsync();
         }
 
-        public Task<Corretora> GetCorretoraByDescricaoAsync(string descricao)
+        public async Task<Corretora> GetCorretoraByDescricaoAsync(string descricao, bool includeCliente)
         {
-            throw new NotImplementedException();
+            IQueryable<Corretora> query = _context.Corretoras;
+
+            if (includeCliente)
+                query = query.Include(c => c.ClientesCorretoras)
+                             .ThenInclude(cc => cc.Cliente);
+
+            query = query.AsNoTracking()
+                         .OrderBy(c => c.Descricao);
+
+            return await query.FirstOrDefaultAsync(c => c.Descricao == descricao);
         }
 
-        public Task<Corretora> GetCorretoraByIdAsync(int id, bool includeCliente = false)
+        public async Task<Corretora> GetCorretoraByIdAsync(int id, bool includeCliente = false)
         {
-            throw new NotImplementedException();
+            IQueryable<Corretora> query = _context.Corretoras;
+
+            if (includeCliente)
+                query = query.Include(c => c.ClientesCorretoras)
+                             .ThenInclude(cc => cc.ClienteId);
+
+            query = query.AsNoTracking()
+                         .OrderBy(c => c.Id)
+                         .Where(c => c.Id == id);
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace InvestQ.Data.Repositories
             //_context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        public async Task<Cliente[]> GetAllClientesAsync(bool includeCorretora = false)
+        public async Task<Cliente[]> GetAllClientesAsync(bool includeCorretora)
         {
             IQueryable<Cliente> query = _context.Clientes;
 
@@ -33,7 +33,7 @@ namespace InvestQ.Data.Repositories
             return await query.ToArrayAsync();
         }
 
-        public async Task<Cliente[]> GetAllClientesByCorretoraId(int corretoraId, bool includeCorretora = false)
+        public async Task<Cliente[]> GetAllClientesByCorretoraId(int corretoraId, bool includeCorretora)
         {
             IQueryable<Cliente> query = _context.Clientes;
 
@@ -48,7 +48,7 @@ namespace InvestQ.Data.Repositories
             return await query.ToArrayAsync();
         }
 
-        public async Task<Cliente> GetClienteByCpfAsync(string cpf)
+        public async Task<Cliente> GetClienteByCpfAsync(string cpf, bool includeCorretora)
         {
             IQueryable<Cliente> query = _context.Clientes;
 
@@ -58,7 +58,7 @@ namespace InvestQ.Data.Repositories
             return await query.FirstOrDefaultAsync(c => c.Cpf == cpf);
         }
 
-        public async Task<Cliente> GetClienteByIdAsync(int id, bool includeCorretora = false)
+        public async Task<Cliente> GetClienteByIdAsync(int id, bool includeCorretora)
         {
             IQueryable<Cliente> query = _context.Clientes;
 

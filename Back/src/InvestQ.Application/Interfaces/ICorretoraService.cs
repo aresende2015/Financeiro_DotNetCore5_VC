@@ -15,7 +15,8 @@ namespace InvestQ.Application.Interfaces
         Task<bool> InativarCorretora(Corretora model);
         Task<bool> ReativarCorretora(Corretora model);
 
-        Task<Corretora[]> GetAllCorretorasAsync();
-        Task<Corretora> GetCorretoraByIdAsync(int corretoraId);
+        Task<Corretora[]> GetAllCorretorasAsync(bool includeCliente);
+        Task<Corretora> GetCorretoraByIdAsync(int corretoraId, bool includeCliente);
+        Task<Corretora[]> GetAllCorretorasByClienteAsync(int clienteId, bool includeCliente);
     }
 }

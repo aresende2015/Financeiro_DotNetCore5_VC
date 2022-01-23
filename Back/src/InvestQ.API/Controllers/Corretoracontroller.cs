@@ -25,7 +25,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                 var corretoras = await _corretoraService.GetAllCorretorasAsync();
+                 var corretoras = await _corretoraService.GetAllCorretorasAsync(true);
 
                  if (corretoras == null) return NoContent();
 
@@ -43,7 +43,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                 var corretora = await _corretoraService.GetCorretoraByIdAsync(id);
+                 var corretora = await _corretoraService.GetCorretoraByIdAsync(id, true);
 
                  if (corretora == null) return NoContent();
 
@@ -99,7 +99,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                var corretora = await _corretoraService.GetCorretoraByIdAsync(id);
+                var corretora = await _corretoraService.GetCorretoraByIdAsync(id, false);
                 if (corretora == null)
                     StatusCode(StatusCodes.Status409Conflict,
                         "Você está tetando deletar um Corretora que não existe.");

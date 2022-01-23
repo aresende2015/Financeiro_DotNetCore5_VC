@@ -25,7 +25,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                 var clientes = await _clienteService.GetAllClientesAsync();
+                 var clientes = await _clienteService.GetAllClientesAsync(true);
 
                  if (clientes == null) return NotFound("Nenhum Cliente encontrado.");
 
@@ -43,7 +43,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                 var cliente = await _clienteService.GetClienteByIdAsync(id);
+                 var cliente = await _clienteService.GetClienteByIdAsync(id, true);
 
                  if (cliente == null) return NotFound("Nenhum Cliente encontrado.");
 
@@ -99,7 +99,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                var cliente = await _clienteService.GetClienteByIdAsync(id);
+                var cliente = await _clienteService.GetClienteByIdAsync(id,false);
                 if (cliente == null)
                     StatusCode(StatusCodes.Status409Conflict,
                         "Você está tetando deletar um Cliente que não existe.");

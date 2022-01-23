@@ -23,10 +23,10 @@ namespace InvestQ.Application.Services
                 if (model.Inativo)
                     throw new Exception("Não é possível incluir um Cliente já inativo.");
 
-                if (await _clienteRepo.GetClienteByCpfAsync(model.Cpf) != null)
+                if (await _clienteRepo.GetClienteByCpfAsync(model.Cpf, false) != null)
                     throw new Exception("Já existe um Cliente com esse CPF.");
 
-                if( await _clienteRepo.GetClienteByIdAsync(model.Id) == null)
+                if( await _clienteRepo.GetClienteByIdAsync(model.Id,false) == null)
                 {
                     _clienteRepo.Adicionar(model);
                     if (await _clienteRepo.SalvarMudancasAsync())
@@ -74,11 +74,11 @@ namespace InvestQ.Application.Services
             return await _clienteRepo.SalvarMudancasAsync();
         }
 
-        public async Task<Cliente[]> GetAllClientesAsync()
+        public async Task<Cliente[]> GetAllClientesAsync(bool includeCorretora = false)
         {
             try
             {
-                var clientes = await _clienteRepo.GetAllClientesAsync(true);
+                var clientes = await _clienteRepo.GetAllClientesAsync(includeCorretora);
 
                 if (clientes == null) return null;
 
@@ -90,11 +90,27 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<Cliente> GetClienteByIdAsync(int clienteId)
+        public async Task<Cliente[]> GetAllClientesByCorretoraAsync(int corretoraId, bool includeCorretora)
         {
             try
             {
-                var cliente = await _clienteRepo.GetClienteByIdAsync(clienteId);
+                var clientes = await _clienteRepo.GetAllClientesByCorretoraId(corretoraId, includeCorretora);
+
+                if (clientes == null) return null;
+
+                return clientes;     
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Cliente> GetClienteByIdAsync(int clienteId, bool includeCorretora = false)
+        {
+            try
+            {
+                var cliente = await _clienteRepo.GetClienteByIdAsync(clienteId, includeCorretora);
 
                 if (cliente == null) return null;
 
