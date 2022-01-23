@@ -58,6 +58,6 @@ dotnet ef migrations add inicial -p Investimento.Data -s Investimento.API
 
 - PaRA criar o banco de dados referente a migration, rodar dentro da pasta da solução
 dotnet ef database update -s Investimento.API
-dotnet ef database drop
+dotnet ef database drop.
 
 
