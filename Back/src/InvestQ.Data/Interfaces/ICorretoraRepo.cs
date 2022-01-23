@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Domain.Entities;
 
-namespace InvestQ.Domain.Interfaces.Repositories
+namespace InvestQ.Data.Interfaces
 {
     public interface ICorretoraRepo : IGeralRepo
     {

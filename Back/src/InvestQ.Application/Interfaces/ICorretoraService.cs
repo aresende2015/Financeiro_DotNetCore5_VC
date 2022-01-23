@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Domain.Entities;
 
-namespace InvestQ.Domain.Interfaces.Services
+namespace InvestQ.Application.Interfaces
 {
     public interface ICorretoraService
     {

@@ -6,36 +6,41 @@ dotnet --list-sdks
 dotnet new globaljson --sdk-version 3.1.416
 
 - Criar um projeto web api
-dotnet new webapi -n Investimento.API
+dotnet new webapi -n InvestQ.API
 
 - Criar um projeto de dominio
-dotnet new classlib -n Investimento.Domain
+dotnet new classlib -n InvestQ.Domain
 
 - Criar um projeto de dados(Repositórios)
-dotnet new classlib -n Investimento.Data
+dotnet new classlib -n InvestQ.Data
+
+- Criar um projeto de aplicação()
+dotnet new classlib -n InvestQ.Application
 
 - Criar uma solução do projeto
-dotnet new sln -n Investimento
+dotnet new sln -n InvestQ
 
 - Adicionar os projetos para dentro da solução
-dotnet sln Investimento.sln add Investimento.API
-dotnet sln Investimento.sln add Investimento.Domain
-dotnet sln Investimento.sln add Investimento.Data
+dotnet sln InvestQ.sln add InvestQ.API
+dotnet sln InvestQ.sln add InvestQ.Domain
+dotnet sln InvestQ.sln add InvestQ.Data
+dotnet sln InvestQ.sln add InvestQ.Application
 
 - Para dar um builder na solução, tem que estar na pasta da solução
 dotnet restore
 
 - Adicionar referências dos projetos
-dotnet add Investimento.API reference Investimento.Data
-dotnet add Investimento.API reference Investimento.Domain
-dotnet add Investimento.Data reference Investimento.Domain
+dotnet add InvestQ.API reference InvestQ.Application
+dotnet add InvestQ.Application reference InvestQ.Domain
+dotnet add InvestQ.Application reference InvestQ.Data
+dotnet add InvestQ.Data reference InvestQ.Domain
 
 
 - Rodar um projeto e ficar escutando
-dotnet watch run -p Investimento.API
+dotnet watch run -p InvestQ.API
 
 - Rodar um projeto normal
-dotnet run -p Investimento.API
+dotnet run -p InvestQ.API
 
 - Instalar dotnet EF
 dotnet tool install --global dotnet-EF

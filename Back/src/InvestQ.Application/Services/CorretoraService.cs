@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InvestQ.Application.Interfaces;
+using InvestQ.Data.Interfaces;
 using InvestQ.Domain.Entities;
-using InvestQ.Domain.Interfaces.Repositories;
-using InvestQ.Domain.Interfaces.Services;
 
-namespace InvestQ.Domain.Service
+namespace InvestQ.Application.Services
 {
     public class CorretoraService : ICorretoraService
     {

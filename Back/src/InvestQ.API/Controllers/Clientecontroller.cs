@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InvestQ.Application.Interfaces;
 using InvestQ.Domain.Entities;
-using InvestQ.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +27,7 @@ namespace InvestQ.API.Controllers
             {
                  var clientes = await _clienteService.GetAllClientesAsync();
 
-                 if (clientes == null) return NoContent();
+                 if (clientes == null) return NotFound("Nenhum Cliente encontrado.");
 
                  return Ok(clientes);
             }
@@ -45,7 +45,7 @@ namespace InvestQ.API.Controllers
             {
                  var cliente = await _clienteService.GetClienteByIdAsync(id);
 
-                 if (cliente == null) return NoContent();
+                 if (cliente == null) return NotFound("Nenhum Cliente encontrado.");
 
                  return Ok(cliente);
             }
@@ -62,7 +62,7 @@ namespace InvestQ.API.Controllers
             try
             {
                  var cliente = await _clienteService.AdicionarCliente(model);
-                 if (cliente == null) return NoContent();
+                 if (cliente == null) return BadRequest("Erro ao tentar adicionar o Cliente.");
 
                  return Ok(cliente);
             }

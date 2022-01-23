@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InvestQ.Application.Interfaces;
+using InvestQ.Data.Interfaces;
 using InvestQ.Domain.Entities;
-using InvestQ.Domain.Interfaces.Repositories;
-using InvestQ.Domain.Interfaces.Services;
 
-namespace InvestQ.Domain.Service
+namespace InvestQ.Application.Services
 {
     public class ClienteService : IClienteService
     {
@@ -18,20 +18,27 @@ namespace InvestQ.Domain.Service
         }
         public async Task<Cliente> AdicionarCliente(Cliente model)
         {
-            if (model.Inativo)
-                throw new Exception("Não é possível incluir um Cliente já inativo.");
-
-            if (await _clienteRepo.GetClienteByCpfAsync(model.Cpf) != null)
-                throw new Exception("Já existe um Cliente com esse CPF.");
-
-            if( await _clienteRepo.GetClienteByIdAsync(model.Id) == null)
+            try
             {
-                _clienteRepo.Adicionar(model);
-                if (await _clienteRepo.SalvarMudancasAsync())
-                    return model;
-            }
+                if (model.Inativo)
+                    throw new Exception("Não é possível incluir um Cliente já inativo.");
 
-            return null;
+                if (await _clienteRepo.GetClienteByCpfAsync(model.Cpf) != null)
+                    throw new Exception("Já existe um Cliente com esse CPF.");
+
+                if( await _clienteRepo.GetClienteByIdAsync(model.Id) == null)
+                {
+                    _clienteRepo.Adicionar(model);
+                    if (await _clienteRepo.SalvarMudancasAsync())
+                        return await _clienteRepo.GetClienteByIdAsync(model.Id, false);                    
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {                
+                throw new Exception(ex.Message);
+            }            
         }
 
         public async Task<Cliente> AtualizarCliente(Cliente model)
@@ -39,7 +46,7 @@ namespace InvestQ.Domain.Service
             if (model.Inativo)
                 throw new Exception("Não é possível atualizar um Cliente já inativo.");
 
-            var cliente = await _clienteRepo.GetClienteByIdAsync(model.Id);
+            var cliente = await _clienteRepo.GetClienteByIdAsync(model.Id, false);
 
             if (cliente != null)
             {
@@ -57,7 +64,7 @@ namespace InvestQ.Domain.Service
 
         public async Task<bool> DeletarCliente(int clienteId)
         {
-            var cliente = await _clienteRepo.GetClienteByIdAsync(clienteId);
+            var cliente = await _clienteRepo.GetClienteByIdAsync(clienteId, false);
 
             if (cliente == null)
                 throw new Exception("O Cliente que tentou deletar não existe.");

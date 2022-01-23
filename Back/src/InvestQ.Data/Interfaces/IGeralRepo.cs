@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InvestQ.Domain.Interfaces.Repositories
+namespace InvestQ.Data.Interfaces
 {
     public interface IGeralRepo
     {

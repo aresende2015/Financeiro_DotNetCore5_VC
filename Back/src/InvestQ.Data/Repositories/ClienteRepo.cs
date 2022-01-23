@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Data.Context;
+using InvestQ.Data.Interfaces;
 using InvestQ.Domain.Entities;
-using InvestQ.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace InvestQ.Data.Repositories
@@ -16,6 +16,7 @@ namespace InvestQ.Data.Repositories
         public ClienteRepo(InvestQContext context) : base(context)
         {
             _context = context;
+            //_context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
         public async Task<Cliente[]> GetAllClientesAsync(bool includeCorretora = false)

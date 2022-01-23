@@ -20,8 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InvestQ.Data\InvestQ.Data.csproj" />
-    <ProjectReference Include="..\InvestQ.Domain\InvestQ.Domain.csproj" />
+    <ProjectReference Include="..\InvestQ.Application\InvestQ.Application.csproj" />
   </ItemGroup>
 
 </Project>
