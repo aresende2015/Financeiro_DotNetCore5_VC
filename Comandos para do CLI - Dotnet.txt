@@ -65,4 +65,29 @@ dotnet ef migrations add inicial -p Investimento.Data -s Investimento.API
 dotnet ef database update -s Investimento.API
 dotnet ef database drop.
 
+=======================================================
+Comandos do Angular
+- Esse comando altera a politica de execução do powershell para o angular
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted 
+
+- Retorna a politica anterior do computador
+Set-ExecutionPolicy -ExecutionPolicy AllSigned 
+
+- Instalar o Angular
+npm install -g @angular/cli
+ng --version
+
+- Para criar um projeto, entre na pasta desejada
+ng new my-App
+
+- Para rodar a aplicação
+ng serve
+
+
+
+
+
+=======================================================
+
+
 
