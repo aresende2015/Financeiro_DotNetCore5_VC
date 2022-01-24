@@ -42,6 +42,8 @@ namespace InvestQ.API
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
 
+            services.AddCors();
+
             services.AddScoped<IClienteRepo, ClienteRepo>();
             services.AddScoped<ICorretoraRepo, CorretoraRepo>();
 
@@ -71,6 +73,11 @@ namespace InvestQ.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(acesso => acesso.AllowAnyHeader()
+                                        .AllowAnyMethod()
+                                        .AllowAnyOrigin()
+            );
 
             app.UseEndpoints(endpoints =>
             {

@@ -81,12 +81,20 @@ ng --version
 ng new my-App
 
 - Para rodar a aplicação
-ng serve
+ng serve     ou  (npm start)
 
 
+- Instalar o fortawesome
+npm install --save @fortawesome/fontawesome-free
 
+- Instalar ngx-bootstrap
+npm install ngx-bootstrap --save
 
+- Instalar o bootstrap
+npm install bootstrap@5
 
+- Adicionar o ngx-bootstrap
+ng add ngx-bootstrap
 =======================================================
 
 
