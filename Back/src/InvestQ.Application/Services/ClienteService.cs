@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using InvestQ.Application.Dtos;
 using InvestQ.Application.Interfaces;
 using InvestQ.Data.Interfaces;
 using InvestQ.Domain.Entities;
@@ -11,26 +13,36 @@ namespace InvestQ.Application.Services
     public class ClienteService : IClienteService
     {
         private readonly IClienteRepo _clienteRepo;
+        private readonly IMapper _mapper;
 
-        public ClienteService(IClienteRepo clienteRepo)
+        public ClienteService(IClienteRepo clienteRepo,
+                              IMapper mapper)
         {
             _clienteRepo = clienteRepo;
+            _mapper = mapper;
         }
-        public async Task<Cliente> AdicionarCliente(Cliente model)
+        public async Task<ClienteDto> AdicionarCliente(ClienteDto model)
         {
             try
             {
-                if (model.Inativo)
+                var cliente = _mapper.Map<Cliente>(model);
+
+                if (cliente.Inativo)
                     throw new Exception("Não é possível incluir um Cliente já inativo.");
 
-                if (await _clienteRepo.GetClienteByCpfAsync(model.Cpf, false) != null)
+                if (await _clienteRepo.GetClienteByCpfAsync(cliente.Cpf, false) != null)
                     throw new Exception("Já existe um Cliente com esse CPF.");
 
-                if( await _clienteRepo.GetClienteByIdAsync(model.Id,false) == null)
+                if( await _clienteRepo.GetClienteByIdAsync(cliente.Id,false) == null)
                 {
-                    _clienteRepo.Adicionar(model);
-                    if (await _clienteRepo.SalvarMudancasAsync())
-                        return await _clienteRepo.GetClienteByIdAsync(model.Id, false);                    
+                    _clienteRepo.Adicionar(cliente);
+
+                    if (await _clienteRepo.SalvarMudancasAsync()) {
+                        var retorno = await _clienteRepo.GetClienteByIdAsync(cliente.Id, false);
+
+                        return _mapper.Map<ClienteDto>(retorno);
+                    }
+                        
                 }
 
                 return null;
@@ -38,28 +50,45 @@ namespace InvestQ.Application.Services
             catch (Exception ex)
             {                
                 throw new Exception(ex.Message);
-            }            
+            }
         }
 
-        public async Task<Cliente> AtualizarCliente(Cliente model)
+        public async Task<ClienteDto> AtualizarCliente(int clienteId, ClienteDto model)
         {
-            if (model.Inativo)
-                throw new Exception("Não é possível atualizar um Cliente já inativo.");
-
-            var cliente = await _clienteRepo.GetClienteByIdAsync(model.Id, false);
-
-            if (cliente != null)
+            try
             {
-                if (cliente.Inativo)
-                    throw new Exception("Não se pode alterar um Cliente inativo.");
+                if (clienteId != model.Id)
+                    throw new Exception("Está tentando alterar o Id errado.");
 
-                _clienteRepo.Atualizar(model);
+                if (model.Inativo)
+                    throw new Exception("Não é possível atualizar um Cliente já inativo.");
 
-                if (await _clienteRepo.SalvarMudancasAsync())
-                    return model;
+                var cliente = await _clienteRepo.GetClienteByIdAsync(clienteId, false);
+                
+                if (cliente != null) 
+                {
+                    if (cliente.Inativo)
+                        throw new Exception("Não se pode alterar um Cliente inativo.");
+
+                    model.Inativo = cliente.Inativo;
+                    model.DataDeCriacao = cliente.DataDeCriacao;
+
+                    _mapper.Map(model, cliente);
+
+                    _clienteRepo.Atualizar(cliente);
+
+                    if (await _clienteRepo.SalvarMudancasAsync())
+                        return _mapper.Map<ClienteDto>(cliente);
+                }
+
+                return null;
             }
-
-            return null;
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
+            
         }
 
         public async Task<bool> DeletarCliente(int clienteId)
@@ -74,7 +103,7 @@ namespace InvestQ.Application.Services
             return await _clienteRepo.SalvarMudancasAsync();
         }
 
-        public async Task<Cliente[]> GetAllClientesAsync(bool includeCorretora = false)
+        public async Task<ClienteDto[]> GetAllClientesAsync(bool includeCorretora = false)
         {
             try
             {
@@ -82,7 +111,9 @@ namespace InvestQ.Application.Services
 
                 if (clientes == null) return null;
 
-                return clientes;     
+                var RetornoDto = _mapper.Map<ClienteDto[]>(clientes);
+
+                return RetornoDto;     
             }
             catch (Exception ex)
             {
@@ -90,7 +121,7 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<Cliente[]> GetAllClientesByCorretoraAsync(int corretoraId, bool includeCorretora)
+        public async Task<ClienteDto[]> GetAllClientesByCorretoraAsync(int corretoraId, bool includeCorretora)
         {
             try
             {
@@ -98,7 +129,9 @@ namespace InvestQ.Application.Services
 
                 if (clientes == null) return null;
 
-                return clientes;     
+                var RetornoDto = _mapper.Map<ClienteDto[]>(clientes);
+
+                return RetornoDto;     
             }
             catch (Exception ex)
             {
@@ -106,7 +139,7 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<Cliente> GetClienteByIdAsync(int clienteId, bool includeCorretora = false)
+        public async Task<ClienteDto> GetClienteByIdAsync(int clienteId, bool includeCorretora = false)
         {
             try
             {
@@ -114,7 +147,9 @@ namespace InvestQ.Application.Services
 
                 if (cliente == null) return null;
 
-                return cliente;     
+                var RetornoDto = _mapper.Map<ClienteDto>(cliente);
+
+                return RetornoDto;     
             }
             catch (Exception ex)
             {
@@ -122,24 +157,28 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<bool> InativarCliente(Cliente model)
+        public async Task<bool> InativarCliente(ClienteDto model)
         {
             if (model != null)
             {
-                model.Inativar();
-                _clienteRepo.Atualizar(model);
+                var cliente = _mapper.Map<Cliente>(model);
+
+                cliente.Inativar();
+                _clienteRepo.Atualizar(cliente);
                 return await _clienteRepo.SalvarMudancasAsync();
             }
 
             return false;
         }
 
-        public async Task<bool> ReativarCliente(Cliente model)
+        public async Task<bool> ReativarCliente(ClienteDto model)
         {
             if (model != null)
             {
-                model.Reativar();
-                _clienteRepo.Atualizar(model);
+                var cliente = _mapper.Map<Cliente>(model);
+
+                cliente.Reativar();
+                _clienteRepo.Atualizar(cliente);
                 return await _clienteRepo.SalvarMudancasAsync();
             }
 

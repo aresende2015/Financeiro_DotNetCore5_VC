@@ -7,8 +7,6 @@ namespace InvestQ.Domain.Entities
     {
         public Cliente() 
         {
-            DataDeCriacao = DateTime.Now;
-            Inativo = false;
         }
         public Cliente(int id, 
                        string cpf, 
@@ -20,9 +18,7 @@ namespace InvestQ.Domain.Entities
             Cpf = cpf;
             Nome = nome;
             SobreNome = sobreNome;
-            DataDeCriacao = DateTime.Now;
             DataDeNascimento = dataDeNascimento;
-            Inativo = false;   
         }
         public void Inativar()
         {
@@ -43,8 +39,8 @@ namespace InvestQ.Domain.Entities
         public string Nome { get; set; }
         public string SobreNome { get; set; }
         public DateTime DataDeNascimento { get; set; }
-        public DateTime DataDeCriacao { get; set; }
-        public bool Inativo { get; set; } 
+        public DateTime? DataDeCriacao { get; set; } = DateTime.Now;
+        public bool Inativo { get; set; } = false;
         public IEnumerable<ClienteCorretora> ClientesCorretoras { get; set; }
     }
 }

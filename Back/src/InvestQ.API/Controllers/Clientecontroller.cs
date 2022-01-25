@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InvestQ.Application.Dtos;
 using InvestQ.Application.Interfaces;
-using InvestQ.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,7 +57,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Cliente model) 
+        public async Task<IActionResult> Post(ClienteDto model) 
         {
             try
             {
@@ -74,15 +74,11 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Cliente model)
+        public async Task<IActionResult> Put(int id, ClienteDto model)
         {
             try
             {
-                if (model.Id != id) 
-                    return StatusCode(StatusCodes.Status409Conflict,
-                        "Você está tetando atualizar um Cliente errado.");
-
-                 var cliente = await _clienteService.AtualizarCliente(model);
+                 var cliente = await _clienteService.AtualizarCliente(id, model);
                  if (cliente == null) return NoContent();
 
                  return Ok(cliente);

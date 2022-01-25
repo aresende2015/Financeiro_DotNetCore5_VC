@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClientesComponent implements OnInit {
 
-  public clientes: any;
+  public clientes: any = [];
 
   constructor(private http: HttpClient) { }
 
