@@ -2,21 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using InvestQ.Domain.Entities;
+using InvestQ.Application.Dtos;
 
 namespace InvestQ.Application.Interfaces
 {
     public interface ICorretoraService
     {
-        Task<Corretora> AdicionarCorretora(Corretora model);
-        Task<Corretora> AtualizarCorretora(Corretora model);
+        Task<CorretoraDto> AdicionarCorretora(CorretoraDto model);
+        Task<CorretoraDto> AtualizarCorretora(CorretoraDto model);
         Task<bool> DeletarCorretora(int corretoraId);
         
-        Task<bool> InativarCorretora(Corretora model);
-        Task<bool> ReativarCorretora(Corretora model);
+        Task<bool> InativarCorretora(CorretoraDto model);
+        Task<bool> ReativarCorretora(CorretoraDto model);
 
-        Task<Corretora[]> GetAllCorretorasAsync(bool includeCliente);
-        Task<Corretora> GetCorretoraByIdAsync(int corretoraId, bool includeCliente);
-        Task<Corretora[]> GetAllCorretorasByClienteAsync(int clienteId, bool includeCliente);
+        Task<CorretoraDto[]> GetAllCorretorasAsync(bool includeCliente);
+        Task<CorretoraDto> GetCorretoraByIdAsync(int corretoraId, bool includeCliente);
+        Task<CorretoraDto[]> GetAllCorretorasByClienteAsync(int clienteId, bool includeCliente);
     }
 }

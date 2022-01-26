@@ -16,5 +16,6 @@ namespace InvestQ.Application.Dtos
         public DateTime DataDeNascimento { get; set; }
         public DateTime? DataDeCriacao { get; set; } = DateTime.Now;
         public bool Inativo { get; set; }  = false;
+        public IEnumerable<ClienteCorretoraDto> ClientesCorretoras { get; set; }
     }
 }

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using InvestQ.Application.Dtos;
 using InvestQ.Application.Interfaces;
 using InvestQ.Data.Interfaces;
 using InvestQ.Domain.Entities;
@@ -11,48 +13,70 @@ namespace InvestQ.Application.Services
     public class CorretoraService : ICorretoraService
     {
         private readonly ICorretoraRepo _corretoraRepo;
+        private readonly IMapper _mapper;
 
-        public CorretoraService(ICorretoraRepo corretoraRepo)
+        public CorretoraService(ICorretoraRepo corretoraRepo,
+                                IMapper mapper)
         {
             _corretoraRepo = corretoraRepo;
+            _mapper = mapper;
         }
-        public async Task<Corretora> AdicionarCorretora(Corretora model)
+        public async Task<CorretoraDto> AdicionarCorretora(CorretoraDto model)
         {
             if (model.Inativo)
                 throw new Exception("Não é possível incluir uma Corretora já inativa.");
+            
+            var corretora = _mapper.Map<Corretora>(model);
 
-            if (await _corretoraRepo.GetCorretoraByDescricaoAsync(model.Descricao, false) != null)
+            if (await _corretoraRepo.GetCorretoraByDescricaoAsync(corretora.Descricao, false) != null)
                 throw new Exception("Já existe uma Corretora com essa descrição.");
 
-            if( await _corretoraRepo.GetCorretoraByIdAsync(model.Id, false) == null)
+            if( await _corretoraRepo.GetCorretoraByIdAsync(corretora.Id, false) == null)
             {
-                _corretoraRepo.Adicionar(model);
+                _corretoraRepo.Adicionar(corretora);
+
                 if (await _corretoraRepo.SalvarMudancasAsync())
-                    return model;
+                {
+                    var retorno = await _corretoraRepo.GetCorretoraByIdAsync(corretora.Id, false);
+
+                    return _mapper.Map<CorretoraDto>(retorno);
+                }
             }
 
             return null;
         }
 
-        public async Task<Corretora> AtualizarCorretora(Corretora model)
+        public async Task<CorretoraDto> AtualizarCorretora(CorretoraDto model)
         {
-            if (model.Inativo)
-                throw new Exception("Não é possível atualizar uma Corretora já inativa.");
-
-            var corretora = await _corretoraRepo.GetCorretoraByIdAsync(model.Id, false);
-
-            if (corretora != null)
+            try
             {
-                if (corretora.Inativo)
-                    throw new Exception("Não se pode alterar uma Corretora inativa.");
+                if (model.Inativo)
+                                throw new Exception("Não é possível atualizar uma Corretora já inativa.");
 
-                _corretoraRepo.Atualizar(model);
+                var corretora = await _corretoraRepo.GetCorretoraByIdAsync(model.Id, false);
 
-                if (await _corretoraRepo.SalvarMudancasAsync())
-                    return model;
+                if (corretora != null)
+                {
+                    if (corretora.Inativo)
+                        throw new Exception("Não se pode alterar uma Corretora inativa.");
+
+                    model.Inativo = corretora.Inativo;
+                    model.DataDeCriacao = corretora.DataDeCriacao;
+
+                    _mapper.Map(model, corretora);
+
+                    _corretoraRepo.Atualizar(corretora);
+
+                    if (await _corretoraRepo.SalvarMudancasAsync())
+                        return _mapper.Map<CorretoraDto>(corretora);
+                }
+
+                return null;
             }
-
-            return null;
+            catch (Exception ex)
+            {                
+               throw new Exception(ex.Message);
+            }            
         }
 
         public async Task<bool> DeletarCorretora(int corretoraId)
@@ -67,7 +91,7 @@ namespace InvestQ.Application.Services
             return await _corretoraRepo.SalvarMudancasAsync();
         }
 
-        public async Task<Corretora[]> GetAllCorretorasAsync(bool includeCliente = false)
+        public async Task<CorretoraDto[]> GetAllCorretorasAsync(bool includeCliente = false)
         {
             try
             {
@@ -75,7 +99,7 @@ namespace InvestQ.Application.Services
 
                 if (corretoras == null) return null;
 
-                return corretoras;     
+                return _mapper.Map<CorretoraDto[]>(corretoras)     ;
             }
             catch (Exception ex)
             {
@@ -83,7 +107,7 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<Corretora[]> GetAllCorretorasByClienteAsync(int clienteId, bool includeCliente)
+        public async Task<CorretoraDto[]> GetAllCorretorasByClienteAsync(int clienteId, bool includeCliente)
         {
             try
             {
@@ -91,7 +115,7 @@ namespace InvestQ.Application.Services
 
                 if (corretoras == null) return null;
 
-                return corretoras;     
+                return _mapper.Map<CorretoraDto[]>(corretoras);
             }
             catch (Exception ex)
             {
@@ -99,7 +123,7 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<Corretora> GetCorretoraByIdAsync(int corretoraId, bool includeCliente = false)
+        public async Task<CorretoraDto> GetCorretoraByIdAsync(int corretoraId, bool includeCliente = false)
         {
             try
             {
@@ -107,7 +131,7 @@ namespace InvestQ.Application.Services
 
                 if (corretora == null) return null;
 
-                return corretora;     
+                return _mapper.Map<CorretoraDto>(corretora);
             }
             catch (Exception ex)
             {
@@ -115,24 +139,28 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<bool> InativarCorretora(Corretora model)
+        public async Task<bool> InativarCorretora(CorretoraDto model)
         {
             if (model != null)
             {
-                model.Inativar();
-                _corretoraRepo.Atualizar(model);
+                var corretora = _mapper.Map<Corretora>(model);
+
+                corretora.Inativar();
+                _corretoraRepo.Atualizar(corretora);
                 return await _corretoraRepo.SalvarMudancasAsync();
             }
 
             return false;
         }
 
-        public async Task<bool> ReativarCorretora(Corretora model)
+        public async Task<bool> ReativarCorretora(CorretoraDto model)
         {
             if (model != null)
             {
-                model.Reativar();
-                _corretoraRepo.Atualizar(model);
+                var corretora = _mapper.Map<Corretora>(model);
+
+                corretora.Reativar();
+                _corretoraRepo.Atualizar(corretora);
                 return await _corretoraRepo.SalvarMudancasAsync();
             }
 

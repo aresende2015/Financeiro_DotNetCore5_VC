@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InvestQ.Application.Dtos;
 using InvestQ.Application.Interfaces;
-using InvestQ.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,7 +57,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Corretora model) 
+        public async Task<IActionResult> Post(CorretoraDto model) 
         {
             try
             {
@@ -74,7 +74,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Corretora model)
+        public async Task<IActionResult> Put(int id, CorretoraDto model)
         {
             try
             {
