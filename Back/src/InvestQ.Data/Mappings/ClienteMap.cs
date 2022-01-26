@@ -15,7 +15,20 @@ namespace InvestQ.Data.Mappings
             builder.ToTable("Clientes");
 
             builder.Property(c => c.Cpf)
-                .HasColumnType("varchar(11)");
+                .HasColumnType("varchar(11)")
+                .IsRequired();
+
+            builder.Property(c => c.Nome)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Property(c => c.SobreNome)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Property(c => c.Email)
+                .IsRequired()
+                .HasMaxLength(250);
         }
     }
 }

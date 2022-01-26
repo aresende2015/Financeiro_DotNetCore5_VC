@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace InvestQ.Domain.Entities
 {
@@ -11,13 +12,15 @@ namespace InvestQ.Domain.Entities
         public Cliente(int id, 
                        string cpf, 
                        string nome, 
-                       string sobreNome, 
+                       string sobreNome,
+                       string email,
                        DateTime dataDeNascimento) 
         {
             Id = id;
             Cpf = cpf;
             Nome = nome;
             SobreNome = sobreNome;
+            Email = email;
             DataDeNascimento = dataDeNascimento;
         }
         public void Inativar()
@@ -34,10 +37,11 @@ namespace InvestQ.Domain.Entities
             else
                 throw new Exception($"O Cliente já estava ativo.");
         }
-        public int Id { get; set; }
+        public int Id { get; set; }        
         public string Cpf { get; set; }
         public string Nome { get; set; }
         public string SobreNome { get; set; }
+        public string Email { get; set; }
         public DateTime DataDeNascimento { get; set; }
         public DateTime? DataDeCriacao { get; set; } = DateTime.Now;
         public bool Inativo { get; set; } = false;

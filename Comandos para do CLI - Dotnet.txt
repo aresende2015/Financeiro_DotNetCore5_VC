@@ -59,10 +59,10 @@ dotnet add package Microsoft.EntityFrameworkCore.SQLite
 
 
 - Para criar nossas migrations do EntityFrameworkCore, rodar dentro da pasta da solução
-dotnet ef migrations add inicial -p Investimento.Data -s Investimento.API 
+dotnet ef migrations add inicial -p InvestQ.Data -s InvestQ.API 
 
 - PaRA criar o banco de dados referente a migration, rodar dentro da pasta da solução
-dotnet ef database update -s Investimento.API
+dotnet ef database update -s InvestQ.API
 dotnet ef database drop.
 
 =======================================================

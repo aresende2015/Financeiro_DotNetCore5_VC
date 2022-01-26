@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace InvestQ.Domain.Entities
 {
@@ -7,14 +8,14 @@ namespace InvestQ.Domain.Entities
     {
         public Corretora() 
         {
-            DataDeCriacao = DateTime.Now;
-            Inativo = false; 
         }
         public Corretora(int id, 
-                         string descricao) 
+                         string descricao,
+                         string imagem)
         {
             Id = id;
             Descricao = descricao;
+            Imagen = imagem;
             DataDeCriacao = DateTime.Now;
             Inativo = false; 
         }
@@ -34,8 +35,9 @@ namespace InvestQ.Domain.Entities
         }
         public int Id { get; set; }
         public string Descricao { get; set; }
-        public DateTime DataDeCriacao { get; set; }
-        public bool Inativo { get; set; } 
+       public string Imagen { get; set; }
+        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
+        public bool Inativo { get; set; } = false;
         public IEnumerable<ClienteCorretora> ClientesCorretoras { get; set; }
     }
 }

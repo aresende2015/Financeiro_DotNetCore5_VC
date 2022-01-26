@@ -27,7 +27,7 @@ namespace InvestQ.API.Controllers
             {
                  var clientes = await _clienteService.GetAllClientesAsync(true);
 
-                 if (clientes == null) return NotFound("Nenhum Cliente encontrado.");
+                 if (clientes == null) return NoContent();
 
                  return Ok(clientes);
             }
@@ -45,7 +45,7 @@ namespace InvestQ.API.Controllers
             {
                  var cliente = await _clienteService.GetClienteByIdAsync(id, true);
 
-                 if (cliente == null) return NotFound("Nenhum Cliente encontrado.");
+                 if (cliente == null) return NoContent();
 
                  return Ok(cliente);
             }

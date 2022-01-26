@@ -29,16 +29,16 @@ namespace InvestQ.Data.Context
             builder.Entity<Cliente>()
             .HasData(
                 new List<Cliente>(){
-                    new Cliente(1, "012345678900", "Alex", "Resende", DateTime.Parse("01/01/1980")),
-                    new Cliente(2, "987654321000", "Caio", "Silva", DateTime.Parse("01/01/2010"))
+                    new Cliente(1, "012345678900", "Alex", "Resende", "alex@gmail.com", DateTime.Parse("01/01/1980")),
+                    new Cliente(2, "987654321000", "Caio", "Silva", "caio@gmail.com", DateTime.Parse("01/01/2010"))
                 }
             );
 
             builder.Entity<Corretora>()
             .HasData(
                 new List<Corretora>(){
-                    new Corretora(1, "Clear"),
-                    new Corretora(2, "MyCap")
+                    new Corretora(1, "Clear", "clear.gif"),
+                    new Corretora(2, "MyCap", "mycap.gif")
                 }
             );
 

@@ -62,7 +62,7 @@ namespace InvestQ.API.Controllers
             try
             {
                  var corretora = await _corretoraService.AdicionarCorretora(model);
-                 if (corretora == null) return NoContent();
+                 if (corretora == null) return BadRequest("Erro ao tentar adicionar a corretora.");
 
                  return Ok(corretora);
             }
