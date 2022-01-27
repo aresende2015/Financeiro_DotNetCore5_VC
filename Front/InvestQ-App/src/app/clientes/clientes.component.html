@@ -1,12 +1,16 @@
 <h2>Clientes</h2>
 <hr>
-
-<form action="" class="form-inline">
-  <div class="form-group mb-2">
-    <input type="text" class="form-control mr-2" placeholder="buscar">
-    <button class="btn btn-outline-success">Buscar</button>
+<div class="form-inline">
+  <div class="form-group col-md-3">
+    <label>Filtro: </label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="buscar"
+      [(ngModel)]="filtroLista"
+    >
   </div>
-</form>
+</div>
 <table class="table table-striped">
   <thead class="table-dark">
     <tr>
@@ -14,14 +18,23 @@
       <th>CPF</th>
       <th>Nome</th>
       <th>Idade</th>
+      <th>Data de Nascimento</th>
+      <th>E-mail</th>
+      <th></th>
     </tr>
   </thead>
   <tbody *ngIf="clientes && clientes.length">
-    <tr *ngFor="let cliente of clientes">
+    <tr *ngFor="let cliente of clientesFiltrados">
       <td>{{cliente.id}}</td>
       <td>{{cliente.cpf}}</td>
-      <td>{{cliente.nome}}</td>
-      <td></td>
+      <td>{{cliente.nomeCompleto}}</td>
+      <td>{{cliente.idade}}</td>
+      <td>{{cliente.dataDeNascimento}}</td>
+      <td>{{cliente.email}}</td>
+      <td>
+        <button class="btn btn-outline-primary btn-sm me-md-2">Editar</button>
+        <button class="btn btn-outline-danger btn-sm">Excluir</button>
+      </td>
     </tr>
   </tbody>
   <tfoot *ngIf="!clientes.length">

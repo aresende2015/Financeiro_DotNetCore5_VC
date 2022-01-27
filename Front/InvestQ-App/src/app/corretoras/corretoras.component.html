@@ -1,3 +1,43 @@
-<p>
-  corretoras works!
-</p>
+<h2>Corretoras</h2>
+<hr>
+
+<form action="" class="form-inline">
+  <div class="form-group mb-2">
+    <input type="text" class="form-control mr-2" placeholder="buscar">
+    <button class="btn btn-outline-success">Buscar</button>
+  </div>
+</form>
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>
+        <button class="btn btn-outline-light btn-sm" (click)="mostrarOcultarImagen()">
+          {{!mostrarImagem ? 'Exibir' : 'Ocultar'}}
+        </button>
+      </th>
+      <th>#</th>
+      <th>Descrição</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="corretoras && corretoras.length">
+    <tr *ngFor="let corretora of corretoras">
+      <td>
+        <img [collapse]="!mostrarImagem"
+             [isAnimated]="true"
+             src="/assets/{{corretora.imagen}}"
+             [style.width.px]="largudaImagem"
+             [style.margin.px]="margemImagem"
+        >
+      </td>
+      <td>{{corretora.id}}</td>
+      <td>{{corretora.descricao}}</td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!corretoras.length">
+    <tr>
+      <td colspan="8" class="text-center">
+        <h4>Nenhum evento encontrado!</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>

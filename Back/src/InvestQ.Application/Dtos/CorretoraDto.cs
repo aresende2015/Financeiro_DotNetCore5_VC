@@ -17,8 +17,8 @@ namespace InvestQ.Application.Dtos
         public string Descricao { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [RegularExpression(@".*\.(gif|jpe?g|bmp|png)$", 
-                           ErrorMessage = "Não é uma imagem válida. (gif, jpg, jpeg, bmp ou png")]
+        [RegularExpression(@".*\.(gif|jpe?g|bmp|png|jfif)$", 
+                           ErrorMessage = "Não é uma imagem válida. (gif, jpg, jpeg, jfif, bmp ou png")]
         public string Imagen { get; set; }
         public DateTime DataDeCriacao { get; set; }
         public bool Inativo { get; set; } 

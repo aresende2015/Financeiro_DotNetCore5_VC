@@ -454,6 +454,8 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 *.db
+*.db-shm
+*.db-wal
 Migrations/
 Migrations/*
 
