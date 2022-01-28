@@ -1,33 +1,80 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
+import { Corretora } from '../models/Corretora';
+import { CorretoraService } from '../services/corretora.service';
 
 @Component({
   selector: 'app-corretoras',
   templateUrl: './corretoras.component.html',
-  styleUrls: ['./corretoras.component.scss']
+  styleUrls: ['./corretoras.component.scss'],
+  //providers: [CorretoraService]
 })
 export class CorretorasComponent implements OnInit {
 
-  public corretoras: any = [];
-  largudaImagem: number = 100;
-  margemImagem: number = 2;
-  mostrarImagem: boolean = true;
+  modalRef?: BsModalRef;
 
-  constructor(private http: HttpClient) { }
+  public corretoras: Corretora[] = [];
+  public largudaImagem: number = 100;
+  public margemImagem: number = 2;
+  public mostrarImagem: boolean = true;
 
-  ngOnInit() {
+  constructor(
+    private corretoraService: CorretoraService,
+    private modalService: BsModalService,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
+  ) { }
+
+  public ngOnInit(): void {
     this.getCorretoras();
+    /** spinner starts on init */
+    this.spinner.show();
+
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      //this.spinner.hide();
+    }, 3000);
   }
 
-  mostrarOcultarImagen() {
+  public mostrarOcultarImagen(): void {
     this.mostrarImagem = !this.mostrarImagem;
   }
 
   public getCorretoras(): void {
-    this.http.get('https://localhost:5001/api/corretora').subscribe(
-      response => this.corretoras = response,
-      error => console.log(error)
+
+    const observer = {
+      next: (_corretoras: Corretora[]) => {
+        this.corretoras = _corretoras
+      },
+      error: (error: any) => {
+        this.spinner.hide();
+        this.toastr.error('Erro ao carregar a tela...', 'Error!');
+      },
+      complete: () => {this.spinner.hide()}
+    }
+
+    this.corretoraService.getCorretoras().subscribe(observer
+
+      //(_corretoras: Corretora[]) => {
+      //  this.corretoras = _corretoras
+      //},
+      //error => console.log(error)
     );
+  }
+
+  openModal(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {
+    this.modalRef?.hide();
+    this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
+  }
+
+  decline(): void {
+    this.modalRef?.hide();
   }
 
 }

@@ -39,7 +39,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetCorretoraById(int id)
         {
             try
             {
@@ -53,6 +53,24 @@ namespace InvestQ.API.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                             $"Erro ao tentar recuperar a Corretora com id ${id}. Erro: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{descricao}/descricao")]
+        public async Task<IActionResult> GetCorretoraByDescricao(string descricao)
+        {
+            try
+            {
+                 var corretora = await _corretoraService.GetCorretoraByDescricaoAsync(descricao, true);
+
+                 if (corretora == null) return NoContent();
+
+                 return Ok(corretora);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                            $"Erro ao tentar recuperar a Corretora com a ${descricao}. Erro: {ex.Message}");
             }
         }
 

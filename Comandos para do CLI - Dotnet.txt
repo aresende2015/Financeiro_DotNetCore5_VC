@@ -95,6 +95,12 @@ npm install bootstrap@5
 
 - Adicionar o ngx-bootstrap
 ng add ngx-bootstrap
+
+- Instalar o ngx-toastr
+npm install ngx-toastr --save
+
+- Instalar o ngx-spinner
+npm install ngx-spinner --save
 =======================================================
 
 

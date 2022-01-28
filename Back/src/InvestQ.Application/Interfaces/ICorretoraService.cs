@@ -17,6 +17,7 @@ namespace InvestQ.Application.Interfaces
 
         Task<CorretoraDto[]> GetAllCorretorasAsync(bool includeCliente);
         Task<CorretoraDto> GetCorretoraByIdAsync(int corretoraId, bool includeCliente);
+        Task<CorretoraDto> GetCorretoraByDescricaoAsync(string descricao, bool includeCliente);
         Task<CorretoraDto[]> GetAllCorretorasByClienteAsync(int clienteId, bool includeCliente);
     }
 }

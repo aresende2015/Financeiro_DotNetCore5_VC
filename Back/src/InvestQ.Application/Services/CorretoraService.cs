@@ -123,6 +123,22 @@ namespace InvestQ.Application.Services
             }
         }
 
+        public async Task<CorretoraDto> GetCorretoraByDescricaoAsync(string descricao, bool includeCliente)
+        {
+            try
+            {
+                var corretora = await _corretoraRepo.GetCorretoraByDescricaoAsync(descricao, includeCliente);
+
+                if (corretora == null) return null;
+
+                return _mapper.Map<CorretoraDto>(corretora);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<CorretoraDto> GetCorretoraByIdAsync(int corretoraId, bool includeCliente = false)
         {
             try
