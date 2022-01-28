@@ -101,6 +101,12 @@ npm install ngx-toastr --save
 
 - Instalar o ngx-spinner
 npm install ngx-spinner --save
+
+- Instalar o Bootsnipp
+
+- Instalar o Bootswatch
+npm install bootswatch
+
 =======================================================
 
 

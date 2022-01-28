@@ -23,13 +23,13 @@ import { TituloComponent } from './shared/titulo/titulo.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-
-
+import { ClienteDetalheComponent } from './components/clientes/cliente-detalhe/cliente-detalhe.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClientesComponent,
+    ClienteDetalheComponent,
     CorretorasComponent,
     ContatosComponent,
     PerfilComponent,

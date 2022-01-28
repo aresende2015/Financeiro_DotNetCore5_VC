@@ -1,52 +1,71 @@
-<app-titulo [titulo]="'Clientes'"></app-titulo>
-<div class="form-inline">
-  <div class="form-group col-md-3">
-    <label>Filtro: </label>
-    <input
-      type="text"
-      class="form-control"
-      placeholder="buscar"
-      [(ngModel)]="filtroLista"
-    >
+<app-titulo
+  [titulo]="'Clientes'"
+  [iconClass]="'far fa-address-card'"
+  [subTitulo]="'Tela para cadastro de clientes'"
+  [botaoListar]="true"
+>
+</app-titulo>
+
+<div class="card rounded shadow-sm p-3">
+  <div class="d-flex">
+    <div class="flex-fill pe-3">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Filtro: </div>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Filtrar por cpf ou nome"
+          [(ngModel)]="filtroLista"
+        >
+      </div>
+    </div>
+    <div>
+      <a class="d-flex btn btn-outline-primary" href="#">
+        <i class="fa fa-plus-circle my-1"></i>
+        <b class="ms-1 d-none d-sm-block">Novo</b>
+      </a>
+    </div>
   </div>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>CPF</th>
+        <th>Nome</th>
+        <th class="d-none d-md-table-cell">Idade</th>
+        <th class="d-none d-md-table-cell">Data de Nascimento</th>
+        <th>E-mail</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody *ngIf="clientes && clientes.length">
+      <tr *ngFor="let cliente of clientesFiltrados">
+        <td>{{cliente.id}}</td>
+        <td>{{cliente.cpf}}</td>
+        <td>{{cliente.nomeCompleto}}</td>
+        <td class="d-none d-md-table-cell">{{cliente.idade}}</td>
+        <td class="d-none d-md-table-cell">{{cliente.dataDeNascimento | DateFormatPipe}}</td>
+        <td>{{cliente.email}}</td>
+        <td>
+          <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar">
+            <i class="fa fa-edit"></i>
+            Editar
+          </button>
+          <button class="btn btn-outline-danger btn-sm" tooltip="Excluir">
+            <i class="fa fa-trash"></i>
+            Excluir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!clientes.length">
+      <tr>
+        <td colspan="8" class="text-center">
+          <h4>Nenhum evento encontrado!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
 </div>
-<table class="table table-striped">
-  <thead class="table-dark">
-    <tr>
-      <th>#</th>
-      <th>CPF</th>
-      <th>Nome</th>
-      <th>Idade</th>
-      <th>Data de Nascimento</th>
-      <th>E-mail</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody *ngIf="clientes && clientes.length">
-    <tr *ngFor="let cliente of clientesFiltrados">
-      <td>{{cliente.id}}</td>
-      <td>{{cliente.cpf}}</td>
-      <td>{{cliente.nomeCompleto}}</td>
-      <td>{{cliente.idade}}</td>
-      <td>{{cliente.dataDeNascimento | DateFormatPipe}}</td>
-      <td>{{cliente.email}}</td>
-      <td>
-        <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar">
-          <i class="fa fa-edit"></i>
-          Editar
-        </button>
-        <button class="btn btn-outline-danger btn-sm" tooltip="Excluir">
-          <i class="fa fa-trash"></i>
-          Excluir
-        </button>
-      </td>
-    </tr>
-  </tbody>
-  <tfoot *ngIf="!clientes.length">
-    <tr>
-      <td colspan="8" class="text-center">
-        <h4>Nenhum evento encontrado!</h4>
-      </td>
-    </tr>
-  </tfoot>
-</table>
