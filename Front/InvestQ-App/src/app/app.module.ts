@@ -14,11 +14,16 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ClientesComponent } from './clientes/clientes.component';
-import { CorretorasComponent } from './corretoras/corretoras.component';
+import { ClientesComponent } from './components/clientes/clientes.component';
+import { CorretorasComponent } from './components/corretoras/corretoras.component';
 import { NavComponent } from './nav/nav.component';
 import { CorretoraService } from './services/corretora.service';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
+import { TituloComponent } from './shared/titulo/titulo.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { ContatosComponent } from './components/contatos/contatos.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+
 
 
 @NgModule({
@@ -26,8 +31,12 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     AppComponent,
     ClientesComponent,
     CorretorasComponent,
+    ContatosComponent,
+    PerfilComponent,
+    DashboardComponent,
     NavComponent,
-    DateTimeFormatPipe
+    DateTimeFormatPipe,
+    TituloComponent
    ],
   imports: [
     BrowserModule,
