@@ -24,12 +24,15 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ClienteDetalheComponent } from './components/clientes/cliente-detalhe/cliente-detalhe.component';
+import { ClienteListaComponent } from './components/clientes/cliente-lista/cliente-lista.component';
+import { ClienteService } from './services/cliente.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClientesComponent,
     ClienteDetalheComponent,
+    ClienteListaComponent,
     CorretorasComponent,
     ContatosComponent,
     PerfilComponent,
@@ -57,7 +60,7 @@ import { ClienteDetalheComponent } from './components/clientes/cliente-detalhe/c
     NgxSpinnerModule
 
   ],
-  providers: [CorretoraService],
+  providers: [CorretoraService, ClienteService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

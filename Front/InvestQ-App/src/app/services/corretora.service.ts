@@ -11,7 +11,7 @@ export class CorretoraService {
 
   constructor(private http: HttpClient) { }
 
-  public getCorretoras(): Observable<Corretora[]> {
+  public getAllCorretoras(): Observable<Corretora[]> {
     return this.http.get<Corretora[]>(this.baseURL);
   }
 

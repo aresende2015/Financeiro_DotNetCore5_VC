@@ -16,6 +16,27 @@ export class CorretorasComponent implements OnInit {
   modalRef?: BsModalRef;
 
   public corretoras: Corretora[] = [];
+  public corretorasFiltradas: Corretora[] = [];
+
+  private _filtroLista: string = '';
+
+  public get filtroLista(): string {
+    return this._filtroLista;
+  }
+
+  public set filtroLista(value: string) {
+    this._filtroLista = value;
+    this.corretorasFiltradas = this.filtroLista ? this.filtrarCorretoras(this.filtroLista) : this.corretoras;
+  }
+
+  filtrarCorretoras(filtrarPor: string): Corretora[] {
+    filtrarPor = filtrarPor.toLocaleLowerCase();
+    return this.corretoras.filter(
+      ( corretora: { descricao: string; }) =>
+          corretora.descricao.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+    );
+  }
+
   public largudaImagem: number = 100;
   public margemImagem: number = 2;
   public mostrarImagem: boolean = true;
@@ -28,9 +49,10 @@ export class CorretorasComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.getCorretoras();
     /** spinner starts on init */
     this.spinner.show();
+
+    this.getCorretoras();
 
     setTimeout(() => {
       /** spinner ends after 5 seconds */
@@ -46,7 +68,8 @@ export class CorretorasComponent implements OnInit {
 
     const observer = {
       next: (_corretoras: Corretora[]) => {
-        this.corretoras = _corretoras
+        this.corretoras = _corretoras;
+        this.corretorasFiltradas = this.corretoras;
       },
       error: (error: any) => {
         this.spinner.hide();
@@ -55,13 +78,7 @@ export class CorretorasComponent implements OnInit {
       complete: () => {this.spinner.hide()}
     }
 
-    this.corretoraService.getCorretoras().subscribe(observer
-
-      //(_corretoras: Corretora[]) => {
-      //  this.corretoras = _corretoras
-      //},
-      //error => console.log(error)
-    );
+    this.corretoraService.getAllCorretoras().subscribe(observer);
   }
 
   openModal(template: TemplateRef<any>): void {
