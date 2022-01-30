@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Cliente } from 'src/app/models/Cliente';
 import { ClienteService } from './../../../services/cliente.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cliente-lista',
@@ -42,7 +43,8 @@ export class ClienteListaComponent implements OnInit {
     private clienteService: ClienteService,
     private modalService: BsModalService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private router: Router
   ) { }
 
   public ngOnInit() {
@@ -84,6 +86,10 @@ export class ClienteListaComponent implements OnInit {
 
   public decline(): void {
     this.modalRef?.hide();
+  }
+
+  public detalheCliente(id: number): void {
+    this.router.navigate([`clientes/detalhe/${id}`])
   }
 
 }

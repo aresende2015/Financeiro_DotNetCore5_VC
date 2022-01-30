@@ -10,10 +10,10 @@
     <div class="collapse navbar-collapse" [collapse]="isCollapsed" [isAnimated]="true" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" aria-current="page" routerLink="clientes">Clientes</a>
+          <a class="nav-link" aria-current="page" routerLink="clientes/lista">Clientes</a>
         </li>
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="corretoras">Corretoras</a>
+          <a class="nav-link" routerLink="corretoras/lista">Corretoras</a>
         </li>
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="contatos">Contatos</a>
@@ -26,11 +26,11 @@
             Vinícius
           </a>
           <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" routerLink="perfil">
+            <a class="dropdown-item" routerLink="user/perfil">
               Perfil
             </a>
             <div role="separator" class="divider"></div>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" routerLink="user/login">
               Sair
             </a>
           </div>

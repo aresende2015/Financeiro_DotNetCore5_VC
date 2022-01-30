@@ -107,6 +107,14 @@ npm install ngx-spinner --save
 - Instalar o Bootswatch
 npm install bootswatch
 
+- Criar componentes no Angular via CLI (usuários)
+- Irá criar um componente dentro da pasta components e referenciar no modulo app
+ng g c components/user --module app
+ng g c components/user/login --module app
+ng g c components/user/registration --module app
+
+
+
 =======================================================
 
 
