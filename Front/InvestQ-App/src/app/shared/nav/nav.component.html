@@ -1,6 +1,11 @@
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand-lg navbar-light"
+     style="background-color: #e3f2fd;"
+     *ngIf="showMenu()"
+>
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">InvestQ</a>
+    <a class="navbar-brand" href="#">InvestQ
+      <i class="fa fa-users mb-2"></i>
+    </a>
     <button class="navbar-toggler" (click)="isCollapsed = !isCollapsed"
             type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarNav" aria-controls="navbarNav"

@@ -2,8 +2,8 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { Cliente } from 'src/app/models/Cliente';
-import { ClienteService } from './../../../services/cliente.service';
+import { Cliente } from '@app/models/Cliente';
+import { ClienteService } from '@app/services/cliente.service';
 import { Router } from '@angular/router';
 
 @Component({

@@ -2,8 +2,8 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { Corretora } from 'src/app/models/Corretora';
-import { CorretoraService } from 'src/app/services/corretora.service';
+import { Corretora } from '@app/models/Corretora';
+import { CorretoraService } from '@app/services/corretora.service';
 import { Router } from '@angular/router';
 
 @Component({
