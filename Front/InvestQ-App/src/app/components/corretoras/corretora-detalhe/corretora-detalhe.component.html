@@ -1,3 +1,59 @@
-<p>
-  corretora-detalhe works!
-</p>
+<div class="card rounded shadow-sm">
+  <form [formGroup]="form">
+    <!--<p>Form value: {{form.value | json}}</p>
+    <p>Form value: {{form.status | json}}</p>-->
+    <div class="p-3">
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>Descrição</label>
+          <input
+            type="text"
+            [ngClass]="{'is-invalid': f.descricao.errors && f.descricao.touched}"
+            class="form-control"
+            formControlName="descricao"
+            placeholder=""
+          >
+          <div *ngIf="f.descricao.errors?.required" class="invalid-feedback">
+            Descrição é obrigatório.
+          </div>
+          <div *ngIf="f.descricao.errors?.minlength" class="invalid-feedback">
+            Descrição deve possuir pelo menos 3 caracteres.
+          </div>
+          <div *ngIf="f.descricao.errors?.maxlength" class="invalid-feedback">
+            Descrição deve possuir no máximo 100 caracteres
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Imagen</label>
+          <input
+            type="text"
+            [ngClass]="{'is-invalid': f.imagen.errors && f.imagen.touched}"
+            class="form-control"
+            formControlName="imagen"
+            placeholder=""
+          >
+          <div *ngIf="f.imagen.errors?.required" class="invalid-feedback">
+            Imagen é obrigatório.
+          </div>
+          <div *ngIf="f.imagen.errors?.minlength" class="invalid-feedback">
+            Imagen deve possuir pelo menos 3 caracteres.
+          </div>
+          <div *ngIf="f.imagen.errors?.maxlength" class="invalid-feedback">
+            Imagen deve possuir no máximo 100 caracteres
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex">
+        <button class="btn btn-outline-secondary me-auto border" (click)="resetForm()">
+          Cancelar Alteração
+        </button>
+        <button class="btn btn-success" [disabled]="!form.valid">
+          <!--<span class="spinner-border spinner-border-sm mr-1"></span>-->
+          Salvar Evento
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
