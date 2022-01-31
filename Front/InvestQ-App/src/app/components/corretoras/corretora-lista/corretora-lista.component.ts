@@ -80,6 +80,7 @@ export class CorretoraListaComponent implements OnInit {
     }
 
     this.corretoraService.getAllCorretoras().subscribe(observer);
+
   }
 
   openModal(template: TemplateRef<any>): void {
