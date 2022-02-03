@@ -1,5 +1,15 @@
+Pré-requisitos
+Instalar dotnet core 5 ==> https://dotnet.microsoft.com/en-us/download
+Instalar Node ==> https://nodejs.org/en/
+Instalar Postman ==> https://www.postman.com/downloads/
+
+
 dotnet --version
 dotnet --list-sdks
+node --version
+npm --version
+
+=====================
 
 
 - Criar o globaljason do projeto

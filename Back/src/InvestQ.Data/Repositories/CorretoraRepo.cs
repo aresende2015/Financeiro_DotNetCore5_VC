@@ -67,7 +67,7 @@ namespace InvestQ.Data.Repositories
 
             if (includeCliente)
                 query = query.Include(c => c.ClientesCorretoras)
-                             .ThenInclude(cc => cc.ClienteId);
+                             .ThenInclude(cc => cc.Cliente);
 
             query = query.AsNoTracking()
                          .OrderBy(c => c.Id)

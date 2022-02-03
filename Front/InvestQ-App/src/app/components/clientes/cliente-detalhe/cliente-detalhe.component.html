@@ -81,9 +81,11 @@
         <div class="form-group col-md-4">
           <label>Data de Nascimento</label>
           <input
-            type="datetime"
+            type="datetime" class="form-control"
             [ngClass]="cssValidator(f.dataDeNascimento)"
-            class="form-control"
+            [bsValue]="cliente.dataDeNascimento | DateFormatPipe"
+            bsDatepicker
+            [bsConfig]="bsConfig"
             formControlName="dataDeNascimento"
             placeholder=""
           >

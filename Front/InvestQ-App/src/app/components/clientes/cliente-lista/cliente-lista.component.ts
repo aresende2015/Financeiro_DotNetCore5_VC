@@ -18,6 +18,7 @@ export class ClienteListaComponent implements OnInit {
 
   public clientes: Cliente[] = [];
   public clientesFiltrados: Cliente[] = [];
+  public clienteId =0;
 
   private _filtroLista: string = '';
 
@@ -75,7 +76,9 @@ export class ClienteListaComponent implements OnInit {
     this.clienteService.getAllClientes().subscribe(observer);
   }
 
-  public openModal(template: TemplateRef<any>): void {
+  public openModal(event: any, template: TemplateRef<any>, clienteId: number): void {
+    event.stopPropagation();
+    this.clienteId = clienteId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 

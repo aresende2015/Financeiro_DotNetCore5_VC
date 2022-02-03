@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
+
+import { Cliente } from '@app/models/Cliente';
+import { ClienteService } from '@app/services/cliente.service';
 @Component({
   selector: 'app-cliente-detalhe',
   templateUrl: './cliente-detalhe.component.html',
@@ -7,16 +15,58 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class ClienteDetalheComponent implements OnInit {
 
+  cliente = {} as Cliente;
+  //cliente: Cliente;
+
   form!: FormGroup;
 
   get f(): any {
     return this.form.controls;
   }
 
-  constructor(private fb: FormBuilder) { }
+  get bsConfig(): any {
+    return {
+      isAnimated: true,
+      adaptivePosition: true,
+      dateInputFormat: 'YYYY/MM/DD hh:mm a',
+      containerClass: 'theme-default',
+      showWeekNumbers: false
+    }
+  }
+
+  constructor(private fb: FormBuilder,
+              private localeService: BsLocaleService,
+              private router: ActivatedRoute,
+              private clienteService: ClienteService,
+              private spinner: NgxSpinnerService,
+              private toastr: ToastrService)
+  {
+    this.localeService.use('pt-br');
+  }
+
+  public carregarCliente(): void {
+    const clienteIdParam = this.router.snapshot.paramMap.get('id');
+
+    if (clienteIdParam !== null) {
+      this.spinner.show();
+      this.clienteService.getClienteById(+clienteIdParam).subscribe({
+        next: (cliente: Cliente) => {
+          this.cliente = {...cliente};
+          this.form.patchValue(this.cliente);
+        },
+        error: (error: any) => {
+          this.spinner.hide();
+          this.toastr.error('Erro ao tentar carregar o cliente.', 'Erro!');
+          console.error(error)
+        },
+        complete: () => {this.spinner.hide()}
+      });
+    }
+  }
 
   ngOnInit(): void {
     this.validation();
+    this.carregarCliente();
   }
 
   public validation(): void {
