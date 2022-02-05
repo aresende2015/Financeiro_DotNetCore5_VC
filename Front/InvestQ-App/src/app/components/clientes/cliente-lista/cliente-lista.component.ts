@@ -90,17 +90,17 @@ export class ClienteListaComponent implements OnInit {
       (result: any) => {
         if (result.message === 'Deletado') {
           this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
-          this.spinner.hide();
+          //this.spinner.hide();
           this.carregarClientes();
         }
       },
       (error: any) => {
         console.error(error);
         this.toastr.error(`Erro ao tentar deletar o cliente ${this.clienteId}`, 'Erro');
-        this.spinner.hide();
+        //this.spinner.hide();
       },
-      () => {this.spinner.hide();}
-    );
+      //() => {this.spinner.hide();}
+    ).add(() => {this.spinner.hide();});
 
 
 

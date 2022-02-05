@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -20,6 +20,8 @@ export class CorretoraDetalheComponent implements OnInit {
 
   form!: FormGroup;
 
+  estadoSalvar = 'post';
+
   get f(): any {
     return this.form.controls;
   }
@@ -36,8 +38,10 @@ export class CorretoraDetalheComponent implements OnInit {
     const corretoraIdParam = this.router.snapshot.paramMap.get('id');
 
     if (corretoraIdParam !== null) {
-
       this.spinner.show();
+
+      this.estadoSalvar = 'put';
+
       this.corretoraService.getCorretoraById(+corretoraIdParam).subscribe({
         next: (corretora: Corretora) => {
           this.corretora = {...corretora};
@@ -67,5 +71,42 @@ export class CorretoraDetalheComponent implements OnInit {
 
   public resetForm(): void {
     this.form.reset();
+  }
+
+  public cssValidator(campoForm: FormControl): any {
+    return {'is-invalid': campoForm.errors && campoForm.touched};
+  }
+
+  public salvarAlteracao(): void {
+    this.spinner.show();
+    if (this.form.valid) {
+
+      //if (this.estadoSalvar === 'post') {
+      //  this.cliente = {...this.form.value};
+      //} else  {
+      //  this.cliente = {id: this.cliente.id, ...this.form.value};
+      //}
+
+      this.corretora = (this.estadoSalvar === 'post')
+                      ? {...this.form.value}
+                      : {id: this.corretora.id, ...this.form.value};
+
+      this.corretoraService[this.estadoSalvar](this.corretora).subscribe(
+        () => {
+          //this.spinner.hide();
+          this.toastr.success('Corretora salva com sucesso!', 'Sucesso');
+        },
+        (error: any) => {
+          console.error(error);
+          //this.spinner.hide();
+          this.toastr.error('Erro ao atualizar corretora', 'Erro');
+        },
+        () => {
+          //this.spinner.hide();
+        }
+      ).add(() => {this.spinner.hide()});
+
+    }
+
   }
 }

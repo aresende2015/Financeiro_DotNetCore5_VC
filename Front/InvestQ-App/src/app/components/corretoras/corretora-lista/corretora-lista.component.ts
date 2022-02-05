@@ -17,6 +17,7 @@ export class CorretoraListaComponent implements OnInit {
 
   public corretoras: Corretora[] = [];
   public corretorasFiltradas: Corretora[] = [];
+  public corretoraId = 0;
 
   private _filtroLista: string = '';
 
@@ -53,7 +54,7 @@ export class CorretoraListaComponent implements OnInit {
     /** spinner starts on init */
     this.spinner.show();
 
-    this.getCorretoras();
+    this.carregarCorretoras();
 
     setTimeout(() => {
       /** spinner ends after 5 seconds */
@@ -65,7 +66,7 @@ export class CorretoraListaComponent implements OnInit {
     this.mostrarImagem = !this.mostrarImagem;
   }
 
-  public getCorretoras(): void {
+  public carregarCorretoras(): void {
 
     const observer = {
       next: (_corretoras: Corretora[]) => {
@@ -83,12 +84,32 @@ export class CorretoraListaComponent implements OnInit {
 
   }
 
-  openModal(template: TemplateRef<any>): void {
+  openModal(event: any, template: TemplateRef<any>, corretoraId: number): void {
+    event.stopPropagation();
+    this.corretoraId = corretoraId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
   confirm(): void {
     this.modalRef?.hide();
+    this.spinner.show();
+
+    this.corretoraService.deleteCorretora(this.corretoraId).subscribe(
+      (result: any) => {
+        if (result.message === 'Deletado') {
+          this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
+          //this.spinner.hide();
+          this.carregarCorretoras();
+        }
+      },
+      (error: any) => {
+        console.error(error);
+        this.toastr.error(`Erro ao tentar deletar o cliente ${this.corretoraId}`, 'Erro');
+        //this.spinner.hide();
+      },
+      //() => {this.spinner.hide();}
+    ).add(() => {this.spinner.hide();})
+
     this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
   }
 
