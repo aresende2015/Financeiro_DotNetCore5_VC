@@ -20,6 +20,8 @@ export class ClienteDetalheComponent implements OnInit {
 
   form!: FormGroup;
 
+  estadoSalvar = 'post';
+
   get f(): any {
     return this.form.controls;
   }
@@ -49,6 +51,9 @@ export class ClienteDetalheComponent implements OnInit {
 
     if (clienteIdParam !== null) {
       this.spinner.show();
+
+      this.estadoSalvar = 'put';
+
       this.clienteService.getClienteById(+clienteIdParam).subscribe({
         next: (cliente: Cliente) => {
           this.cliente = {...cliente};
@@ -85,6 +90,39 @@ export class ClienteDetalheComponent implements OnInit {
 
   public cssValidator(campoForm: FormControl): any {
     return {'is-invalid': campoForm.errors && campoForm.touched};
+  }
+
+  public salvarAlteracao(): void {
+    this.spinner.show();
+    if (this.form.valid) {
+
+      //if (this.estadoSalvar === 'post') {
+      //  this.cliente = {...this.form.value};
+      //} else  {
+      //  this.cliente = {id: this.cliente.id, ...this.form.value};
+      //}
+
+      this.cliente = (this.estadoSalvar === 'post')
+                      ? {...this.form.value}
+                      : {id: this.cliente.id, ...this.form.value};
+
+      this.clienteService[this.estadoSalvar](this.cliente).subscribe(
+        () => {
+          //this.spinner.hide();
+          this.toastr.success('Cliente salvo com sucesso!', 'Sucesso');
+        },
+        (error: any) => {
+          console.error(error);
+          //this.spinner.hide();
+          this.toastr.error('Erro ao atualizar cliente', 'Erro');
+        },
+        () => {
+          //this.spinner.hide();
+        }
+      ).add(() => {this.spinner.hide()});
+
+    }
+
   }
 
 }

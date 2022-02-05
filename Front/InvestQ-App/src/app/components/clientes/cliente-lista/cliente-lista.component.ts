@@ -50,7 +50,7 @@ export class ClienteListaComponent implements OnInit {
 
   public ngOnInit() {
     this.spinner.show();
-    this.getClientes();
+    this.carregarClientes();
 
     setTimeout(() => {
       /** spinner ends after 5 seconds */
@@ -58,7 +58,7 @@ export class ClienteListaComponent implements OnInit {
     }, 3000);
   }
 
-  public getClientes(): void {
+  public carregarClientes(): void {
     const observer = {
       next: (_clientes: Cliente[]) => {
         this.clientes = _clientes;
@@ -84,7 +84,26 @@ export class ClienteListaComponent implements OnInit {
 
   public confirm(): void {
     this.modalRef?.hide();
-    this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
+    this.spinner.show();
+
+    this.clienteService.deleteCliente(this.clienteId).subscribe(
+      (result: any) => {
+        if (result.message === 'Deletado') {
+          this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
+          this.spinner.hide();
+          this.carregarClientes();
+        }
+      },
+      (error: any) => {
+        console.error(error);
+        this.toastr.error(`Erro ao tentar deletar o cliente ${this.clienteId}`, 'Erro');
+        this.spinner.hide();
+      },
+      () => {this.spinner.hide();}
+    );
+
+
+
   }
 
   public decline(): void {

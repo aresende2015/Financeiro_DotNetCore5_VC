@@ -91,7 +91,7 @@ ng --version
 ng new my-App
 
 - Para rodar a aplicação
-ng serve     ou  (npm start)
+ng serve -o     ou  (npm start)
 
 
 - Instalar o fortawesome
