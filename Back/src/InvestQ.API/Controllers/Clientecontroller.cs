@@ -11,11 +11,11 @@ namespace InvestQ.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class Clientecontroller : ControllerBase
+    public class ClienteController : ControllerBase
     {
         private readonly IClienteService _clienteService;
 
-        public Clientecontroller(IClienteService clienteService)
+        public ClienteController(IClienteService clienteService)
         {
             _clienteService = clienteService;
         }

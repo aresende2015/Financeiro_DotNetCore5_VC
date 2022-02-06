@@ -21,10 +21,16 @@ namespace InvestQ.Data.Context
 
         public DbSet<ClienteCorretora> ClientesCorretoras { get; set; }
 
+        public DbSet<Setor> Setores { get; set; }
+
+        public DbSet<Subsetor> Subsetores { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new ClienteMap());
             builder.ApplyConfiguration(new ClienteCorretoraMap());
+            builder.ApplyConfiguration(new SetorMap());
+            builder.ApplyConfiguration(new SubsetorMap());
 
             builder.Entity<Cliente>()
             .HasData(
@@ -48,6 +54,23 @@ namespace InvestQ.Data.Context
                     new ClienteCorretora(1,1),
                     new ClienteCorretora(1,2),
                     new ClienteCorretora(2,1)
+                }
+            );
+
+            builder.Entity<Setor>()
+            .HasData(
+                new List<Setor>(){
+                    new Setor(1, "Consumo Cíclico"),
+                    new Setor(2, "Consumo não Cíclico")
+                }
+            );
+
+            builder.Entity<Subsetor>()
+            .HasData(
+                new List<Subsetor>(){
+                    new Subsetor(1, "Comércio", 1),
+                    new Subsetor(2, "Viagens e Lazer", 1),
+                    new Subsetor(3, "Alimentos Processados", 2)
                 }
             );
         }

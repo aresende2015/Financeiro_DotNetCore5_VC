@@ -48,11 +48,15 @@ namespace InvestQ.API
 
             services.AddScoped<IClienteRepo, ClienteRepo>();
             services.AddScoped<ICorretoraRepo, CorretoraRepo>();
+            services.AddScoped<ISetorRepo, SetorRepo>();
+            services.AddScoped<ISubsetorRepo, SubsetorRepo>();
 
             services.AddScoped<IGeralRepo, GeralRepo>();
 
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<ICorretoraService, CorretoraService>();
+            services.AddScoped<ISetorService, SetorService>();
+            services.AddScoped<ISubsetorService, SubsetorService>();
 
             services.AddSwaggerGen(c =>
             {

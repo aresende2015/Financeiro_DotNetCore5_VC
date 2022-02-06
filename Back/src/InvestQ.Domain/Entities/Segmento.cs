@@ -1,41 +1,40 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace InvestQ.Domain.Entities
 {
-    public class Corretora
+    public class Segmento
     {
-        public Corretora() 
+        public Segmento() 
         {
         }
-        public Corretora(int id, 
-                         string descricao,
-                         string imagem)
+        public Segmento(int id, 
+                         string descricao)
         {
             Id = id;
             Descricao = descricao;
-            Imagen = imagem;
         }
         public void Inativar()
         {
             if (Inativo)
                 Inativo = true;
             else
-                throw new Exception($"A Corretora já estava inativa.");
+                throw new Exception($"O Segmento já estava inativo.");
         }
         public void Reativar()
         {
             if (!Inativo)
                 Inativo = false;
             else
-                throw new Exception($"A Corretora já estava ativa.");
+                throw new Exception($"O Segmento já estava ativo.");
         }
         public int Id { get; set; }
         public string Descricao { get; set; }
-        public string Imagen { get; set; }
         public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
         public bool Inativo { get; set; } = false;
-        public IEnumerable<ClienteCorretora> ClientesCorretoras { get; set; }
+        public int SubsetorId {get; set;}
+        public Subsetor Subsertor { get; set; }
     }
 }

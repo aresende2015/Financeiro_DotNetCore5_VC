@@ -28,6 +28,10 @@ namespace InvestQ.Application.Profiles
             CreateMap<ClienteCorretora, ClienteCorretoraDto>().ReverseMap();
 
             CreateMap<Corretora, CorretoraDto>().ReverseMap();
+
+            CreateMap<SetorDto, Setor>().ReverseMap();
+
+            CreateMap<SubsetorDto, Subsetor>().ReverseMap();
             
         }
     }
