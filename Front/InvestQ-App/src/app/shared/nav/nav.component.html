@@ -20,6 +20,23 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="corretoras/lista">Corretoras</a>
         </li>
+        <li class="nav-item dropdown" dropdown>
+          <a dropdownToggle class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Cadastros
+          </a>
+          <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" routerLink="setores/lista">
+              Setor
+            </a>
+            <a class="dropdown-item" routerLink="subsetores/lista">
+              Subsetor
+            </a>
+            <a class="dropdown-item" routerLink="#">
+              Segmento
+            </a>
+          </div>
+        </li>
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="contatos">Contatos</a>
         </li>
@@ -34,7 +51,8 @@
             <a class="dropdown-item" routerLink="user/perfil">
               Perfil
             </a>
-            <div role="separator" class="divider"></div>
+            <hr class="dropdown-divider">
+            <!--<div role="separator" class="divider"></div>-->
             <a class="dropdown-item" routerLink="user/login">
               Sair
             </a>

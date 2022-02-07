@@ -12,6 +12,9 @@ import { CorretoraDetalheComponent } from './components/corretoras/corretora-det
 import { UserComponent } from './components/user/user.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 import { LoginComponent } from './components/user/login/login.component';
+import { SetoresComponent } from './components/setores/setores.component';
+import { SetorDetalheComponent } from './components/setores/setor-detalhe/setor-detalhe.component';
+import { SetorListaComponent } from './components/setores/setor-lista/setor-lista.component';
 
 const routes: Routes = [
   {
@@ -40,6 +43,15 @@ const routes: Routes = [
       { path: 'detalhe/:id', component: ClienteDetalheComponent },
       { path: 'detalhe', component: ClienteDetalheComponent },
       { path: 'lista', component: ClienteListaComponent }
+    ]
+  },
+  { path: 'setores', redirectTo: 'setores/lista' },
+  {
+    path: 'setores', component: SetoresComponent,
+    children: [
+      { path: 'detalhe/:id', component: SetorDetalheComponent },
+      { path: 'detalhe', component: SetorDetalheComponent },
+      { path: 'lista', component: SetorListaComponent }
     ]
   },
   { path: 'contatos', component: ContatosComponent },

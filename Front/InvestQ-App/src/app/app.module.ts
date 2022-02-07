@@ -11,7 +11,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
-
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
@@ -20,20 +19,27 @@ import { AppComponent } from './app.component';
 import { ClientesComponent } from './components/clientes/clientes.component';
 import { CorretorasComponent } from './components/corretoras/corretoras.component';
 import { NavComponent } from './shared/nav/nav.component';
-import { CorretoraService } from './services/corretora.service';
+
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { TituloComponent } from './shared/titulo/titulo.component';
+
 import { PerfilComponent } from './components/user/perfil/perfil.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ClienteDetalheComponent } from './components/clientes/cliente-detalhe/cliente-detalhe.component';
 import { ClienteListaComponent } from './components/clientes/cliente-lista/cliente-lista.component';
-import { ClienteService } from './services/cliente.service';
 import { CorretoraDetalheComponent } from './components/corretoras/corretora-detalhe/corretora-detalhe.component';
 import { CorretoraListaComponent } from './components/corretoras/corretora-lista/corretora-lista.component';
 import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
+
+import { CorretoraService } from './services/corretora.service';
+import { ClienteService } from './services/cliente.service';
+import { SetorService } from './services/setor.service';
+import { SetorDetalheComponent } from './components/setores/setor-detalhe/setor-detalhe.component';
+import { SetoresComponent } from './components/setores/setores.component';
+import { SetorListaComponent } from './components/setores/setor-lista/setor-lista.component';
 
 defineLocale('pt-br', ptBrLocale);
 @NgModule({
@@ -44,6 +50,9 @@ defineLocale('pt-br', ptBrLocale);
     ClienteListaComponent,
     CorretorasComponent,
     CorretoraDetalheComponent,
+    SetoresComponent,
+    SetorDetalheComponent,
+    SetorListaComponent,
     CorretoraListaComponent,
     ContatosComponent,
     PerfilComponent,
@@ -76,7 +85,7 @@ defineLocale('pt-br', ptBrLocale);
     BsDatepickerModule.forRoot()
 
   ],
-  providers: [CorretoraService, ClienteService],
+  providers: [CorretoraService, ClienteService, SetorService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
