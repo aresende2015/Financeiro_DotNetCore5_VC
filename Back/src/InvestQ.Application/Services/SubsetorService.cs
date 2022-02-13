@@ -21,31 +21,18 @@ namespace InvestQ.Application.Services
             _subsetorRepo = subsetorRepo;
             _mapper = mapper;
         }
-        public async Task<SubsetorDto> AdicionarSubsetor(SubsetorDto model)
+        
+        public async Task AddSubsetor(int setorId, SubsetorDto model)
         {
             try
             {
                 var subsetor = _mapper.Map<Subsetor>(model);
 
-                if (subsetor.Inativo)
-                    throw new Exception("Não é possível incluir um Subsetor já inativo.");
+                subsetor.SetorId = setorId;
+                
+                _subsetorRepo.Adicionar(subsetor);
 
-                if (await _subsetorRepo.GetSubsetorByDescricaoAsync(subsetor.Descricao, false) != null)
-                    throw new Exception("Já existe um Subsetor com esse CPF.");
-
-                if( await _subsetorRepo.GetSubsetorByIdAsync(subsetor.Id,false) == null)
-                {
-                    _subsetorRepo.Adicionar(subsetor);
-
-                    if (await _subsetorRepo.SalvarMudancasAsync()) {
-                        var retorno = await _subsetorRepo.GetSubsetorByIdAsync(subsetor.Id, false);
-
-                        return _mapper.Map<SubsetorDto>(retorno);
-                    }
-                        
-                }
-
-                return null;
+                await _subsetorRepo.SalvarMudancasAsync();
             }
             catch (Exception ex)
             {                
@@ -53,32 +40,39 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<SubsetorDto> AtualizarSubsetor(int subsetorId, SubsetorDto model)
+        public async Task<SubsetorDto[]> SalvarSubsetores(int setorId, SubsetorDto[] models)
         {
             try
             {
-                if (subsetorId != model.Id)
-                    throw new Exception("Está tentando alterar o Id errado.");
-
-                if (model.Inativo)
-                    throw new Exception("Não é possível atualizar um Subsetor já inativo.");
-
-                var subsetor = await _subsetorRepo.GetSubsetorByIdAsync(subsetorId, false);
+                var subsetores = await _subsetorRepo.GetSubsetoresBySetorIdAsync(setorId);
                 
-                if (subsetor != null) 
+                if (subsetores != null) 
                 {
-                    if (subsetor.Inativo)
-                        throw new Exception("Não se pode alterar um Subsetor inativo.");
 
-                    model.Inativo = subsetor.Inativo;
-                    model.DataDeCriacao = subsetor.DataDeCriacao;
+                    foreach (var model in models)
+                    {
+                        if (model.Id == 0) 
+                        {
+                            await AddSubsetor(setorId, model);
+                        }
+                        else
+                        {
+                            var subsetor = subsetores.FirstOrDefault(s => s.Id == model.Id);
+                            
+                            model.SetorId = setorId;
 
-                    _mapper.Map(model, subsetor);
+                            _mapper.Map(model, subsetor);
 
-                    _subsetorRepo.Atualizar(subsetor);
+                            _subsetorRepo.Atualizar(subsetor);
 
-                    if (await _subsetorRepo.SalvarMudancasAsync())
-                        return _mapper.Map<SubsetorDto>(subsetor);
+                            await _subsetorRepo.SalvarMudancasAsync();
+                        }
+                    }
+
+                    var subsetorRetorno = await _subsetorRepo.GetSubsetoresBySetorIdAsync(setorId);
+
+                    return _mapper.Map<SubsetorDto[]>(subsetorRetorno);
+
                 }
 
                 return null;
@@ -90,23 +84,29 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<bool> DeletarSubsetor(int subsetorId)
-        {
-            var subsetor = await _subsetorRepo.GetSubsetorByIdAsync(subsetorId, false);
-
-            if (subsetor == null)
-                throw new Exception("O Subsetor que tentou deletar não existe.");
-
-            _subsetorRepo.Deletar(subsetor);
-
-            return await _subsetorRepo.SalvarMudancasAsync();
-        }
-
-        public async Task<SubsetorDto[]> GetAllSubsetoresAsync(bool includeSegmento)
+        public async Task<bool> DeletarSubsetor(int setorId, int subsetorId)
         {
             try
             {
-                var subsetores = await _subsetorRepo.GetAllSubsetoresAsync(includeSegmento);
+                var subsetor = await _subsetorRepo.GetSubsetorByIdsAsync(setorId, subsetorId);
+
+                if (subsetor == null)
+                    throw new Exception("O Subsetor que tentou deletar não existe.");
+
+                _subsetorRepo.Deletar(subsetor);
+
+                return await _subsetorRepo.SalvarMudancasAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task<SubsetorDto[]> GetSubsetoresBySetorIdAsync(int setorId)
+        {
+            try
+            {
+                var subsetores = await _subsetorRepo.GetSubsetoresBySetorIdAsync(setorId);
 
                 if (subsetores == null) return null;
 
@@ -120,11 +120,11 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<SubsetorDto> GetSubsetorByIdAsync(int subsetorId, bool includeSegmento)
+        public async Task<SubsetorDto> GetSubsetorByIdsAsync(int setorId, int subsetorId)
         {
             try
             {
-                var subsetor = await _subsetorRepo.GetSubsetorByIdAsync(subsetorId, includeSegmento);
+                var subsetor = await _subsetorRepo.GetSubsetorByIdsAsync(setorId, subsetorId);
 
                 if (subsetor == null) return null;
 
@@ -138,32 +138,5 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<bool> InativarSubsetor(SubsetorDto model)
-        {
-            if (model != null)
-            {
-                var subsetor = _mapper.Map<Subsetor>(model);
-
-                subsetor.Inativar();
-                _subsetorRepo.Atualizar(subsetor);
-                return await _subsetorRepo.SalvarMudancasAsync();
-            }
-
-            return false;
-        }
-
-        public async Task<bool> ReativarSubsetor(SubsetorDto model)
-        {
-            if (model != null)
-            {
-                var subsetor = _mapper.Map<Subsetor>(model);
-
-                subsetor.Reativar();
-                _subsetorRepo.Atualizar(subsetor);
-                return await _subsetorRepo.SalvarMudancasAsync();
-            }
-
-            return false;
-        }
     }
 }

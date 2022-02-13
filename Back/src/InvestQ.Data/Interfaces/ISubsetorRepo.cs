@@ -8,9 +8,8 @@ namespace InvestQ.Data.Interfaces
 {
     public interface ISubsetorRepo: IGeralRepo
     {
-        Task<Subsetor[]> GetAllSubsetoresAsync(bool includeSegmento);  
-        Task<Subsetor> GetSubsetorByIdAsync(int id, bool includeSegmento);
-        Task<Subsetor> GetSubsetorByDescricaoAsync(string descricao, bool includeSegmento);
+        Task<Subsetor[]> GetSubsetoresBySetorIdAsync(int setorId);  
+        Task<Subsetor> GetSubsetorByIdsAsync(int setorId, int subsetorId);
         
     }
 }

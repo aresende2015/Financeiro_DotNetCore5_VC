@@ -8,15 +8,14 @@ namespace InvestQ.Application.Interfaces
 {
     public interface ISubsetorService
     {
-        Task<SubsetorDto> AdicionarSubsetor(SubsetorDto model);
-        Task<SubsetorDto> AtualizarSubsetor(int subsetorId, SubsetorDto model);
-        Task<bool> DeletarSubsetor(int subsetorId);
+        Task<SubsetorDto[]> SalvarSubsetores(int setorId, SubsetorDto[] models);
+        Task<bool> DeletarSubsetor(int setorId, int subsetorId);
         
-        Task<bool> InativarSubsetor(SubsetorDto model);
-        Task<bool> ReativarSubsetor(SubsetorDto model);
+        //Task<bool> InativarSubsetor(SubsetorDto model);
+        //Task<bool> ReativarSubsetor(SubsetorDto model);
 
-        Task<SubsetorDto[]> GetAllSubsetoresAsync(bool includeSegmento);
-        Task<SubsetorDto> GetSubsetorByIdAsync(int subsetorId, bool includeSegmento);
+        Task<SubsetorDto[]> GetSubsetoresBySetorIdAsync(int setorId);
+        Task<SubsetorDto> GetSubsetorByIdsAsync(int setorId, int subsetorId);
         
     }
 }

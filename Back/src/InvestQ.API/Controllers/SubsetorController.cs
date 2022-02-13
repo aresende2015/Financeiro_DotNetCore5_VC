@@ -19,12 +19,12 @@ namespace InvestQ.API.Controllers
             _subsetorService =subsertorService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get() 
+        [HttpGet("{setorId}")]
+        public async Task<IActionResult> Get(int setorId) 
         {
             try
             {
-                 var subsetores = await _subsetorService.GetAllSubsetoresAsync(true);
+                 var subsetores = await _subsetorService.GetSubsetoresBySetorIdAsync(setorId);
 
                  if (subsetores == null) return NoContent();
 
@@ -37,69 +37,34 @@ namespace InvestQ.API.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpPut("{setorId}")]
+        public async Task<IActionResult> Put(int setorId, SubsetorDto[] models)
         {
             try
             {
-                 var subsetor = await _subsetorService.GetSubsetorByIdAsync(id, true);
+                 var subsetores = await _subsetorService.SalvarSubsetores(setorId, models);
+                 if (subsetores == null) return NoContent();
 
-                 if (subsetor == null) return NoContent();
-
-                 return Ok(subsetor);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                            $"Erro ao tentar recuperar o Subsetor com id ${id}. Erro: {ex.Message}");
-            }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Post(SubsetorDto model) 
-        {
-            try
-            {
-                 var subsetor = await _subsetorService.AdicionarSubsetor(model);
-                 if (subsetor == null) return BadRequest("Erro ao tentar adicionar o Subsetor.");
-
-                 return Ok(subsetor);
+                 return Ok(subsetores);
             }
             catch (Exception ex)
             {                
                 return StatusCode(StatusCodes.Status500InternalServerError, 
-                    $"Erro ao tentar adicionar um Subsetor. Erro: {ex.Message}");
+                    $"Erro ao tentar salvar Subsetores. Erro: {ex.Message}");
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, SubsetorDto model)
+        [HttpDelete("{setorId}/{subsetorId}")]
+        public async Task<IActionResult> Delete(int setorId, int subsetorId)
         {
             try
             {
-                 var subsetor = await _subsetorService.AtualizarSubsetor(id, model);
-                 if (subsetor == null) return NoContent();
-
-                 return Ok(subsetor);
-            }
-            catch (Exception ex)
-            {                
-                return StatusCode(StatusCodes.Status500InternalServerError, 
-                    $"Erro ao tentar atualizar um Subsetor com id: ${id}. Erro: {ex.Message}");
-            }
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            try
-            {
-                var subsetor = await _subsetorService.GetSubsetorByIdAsync(id,false);
+                var subsetor = await _subsetorService.GetSubsetorByIdsAsync(setorId, subsetorId);
                 if (subsetor == null)
                     StatusCode(StatusCodes.Status409Conflict,
                         "Você está tetando deletar um Subsetor que não existe.");
 
-                if(await _subsetorService.DeletarSubsetor(id))
+                if(await _subsetorService.DeletarSubsetor(subsetor.SetorId, subsetor.Id))
                 {
                     return Ok(new { message = "Deletado"});
                 }
@@ -111,7 +76,7 @@ namespace InvestQ.API.Controllers
             catch (Exception ex)
             {                
                 return StatusCode(StatusCodes.Status500InternalServerError, 
-                    $"Erro ao tentar deletar o Subsetor com id: ${id}. Erro: {ex.Message}");
+                    $"Erro ao tentar deletar Subsetores. Erro: {ex.Message}");
             }
         }
 

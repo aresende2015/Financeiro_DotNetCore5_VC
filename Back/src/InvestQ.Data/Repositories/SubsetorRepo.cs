@@ -17,44 +17,25 @@ namespace InvestQ.Data.Repositories
             _context = context;
         }
 
-        public async Task<Subsetor[]> GetAllSubsetoresAsync(bool includeSegmento)
+        public async Task<Subsetor> GetSubsetorByIdsAsync(int setorId, int subsetorId)
         {
             IQueryable<Subsetor> query = _context.Subsetores;
 
-            if (includeSegmento)
-                query = query.Include(ss => ss.Segmentos);
-
             query = query.AsNoTracking()
-                         .OrderBy(ss => ss.Id);
-
-            return await query.ToArrayAsync();
-        }
-
-        public async Task<Subsetor> GetSubsetorByDescricaoAsync(string descricao, bool includeSegmento)
-        {
-            IQueryable<Subsetor> query = _context.Subsetores;
-
-            if (includeSegmento)
-                query = query.Include(ss => ss.Segmentos);
-
-            query = query.AsNoTracking()
-                         .OrderBy(ss => ss.Descricao);
-
-            return await query.FirstOrDefaultAsync(ss => ss.Descricao == descricao);
-        }
-
-        public async Task<Subsetor> GetSubsetorByIdAsync(int id, bool includeSegmento)
-        {
-            IQueryable<Subsetor> query = _context.Subsetores;
-
-            if (includeSegmento)
-                query = query.Include(ss => ss.Segmentos);
-
-            query = query.AsNoTracking()
-                         .OrderBy(ss => ss.Id)
-                         .Where(ss => ss.Id == id);
+                        .Where(subsetor => subsetor.SetorId == setorId
+                                && subsetor.Id == subsetorId);
 
             return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<Subsetor[]> GetSubsetoresBySetorIdAsync(int setorId)
+        {
+            IQueryable<Subsetor> query = _context.Subsetores;
+
+            query = query.AsNoTracking()
+                        .Where(subsetor => subsetor.SetorId == setorId);
+
+            return await query.ToArrayAsync();
         }
     }
 }

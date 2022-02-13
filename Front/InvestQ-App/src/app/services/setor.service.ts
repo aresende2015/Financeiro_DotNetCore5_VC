@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { Setor } from '@app/models/Setor';
 import { Observable, take } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SetorService {
   baseURL = 'https://localhost:5001/api/setor';
 

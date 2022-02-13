@@ -5,5 +5,5 @@ export class Setor {
   descricao: string;
   dataDeCriacao?: Date;
   inativo: boolean;
-  Subsetores: Subsetor[];
+  subsetores: Subsetor[];
 }

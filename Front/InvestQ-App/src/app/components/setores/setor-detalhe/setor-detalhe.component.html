@@ -20,7 +20,7 @@
             Descrição deve possuir pelo menos 3 caracteres.
           </div>
           <div *ngIf="f.descricao.errors?.maxlength" class="invalid-feedback">
-            Descrição deve possuir no máximo 200 caracteres
+            Descrição deve possuir no máximo 100 caracteres
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
         <button class="btn btn-outline-secondary me-auto border" (click)="resetForm()">
           Cancelar Alteração
         </button>
-        <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarAlteracao()">
+        <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarSetor()">
           <!--<span class="spinner-border spinner-border-sm mr-1"></span>-->
           Salvar Evento
         </button>
@@ -38,3 +38,80 @@
     </div>
   </form>
 </div>
+
+<div class="card rounded shadow-sm mt-4" *ngIf="modoEditar">
+  <div class="p-3">
+    <div class="d-flex border-bottom">
+      <h2 class="me-auto">
+        Subsetor referente ao Setor
+      </h2>
+      <h2>
+        <i class="fas fa-chart-line"></i>
+      </h2>
+    </div>
+    <p>Clique em Subsetor para adicionar e preencher novos Subsetores</p>
+    <div class="row p-1">
+      <div [formGroup]="form" class="col">
+        <div formArrayName="subsetores" *ngFor="let subsetor of form.get('subsetores')['controls']; let i=index">
+          <fieldset [formGroupName]="i" class="form-group">
+            <legend class="d-flex justify-content-between capitalize">
+              <button (click)="removerSubsetor(template, i)" class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
+                tooltip="Excluir Subsetor"
+                [adaptivePosition]="false"
+                [delay]="500"
+                placement="left">
+                <i class="fa fa-window-close my-1 pe-1"></i>
+                <b class="ml-1 d-none d-sm-block">Excluir</b>
+              </button>
+            </legend>
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label>Descrição</label>
+                <input
+                  [ngClass]="cssValidator(subsetores.get(i+'.descricao'))"
+                  type="text"
+                  class="form-control"
+                  formControlName="descricao"
+                  placeholder="Subsetor">
+                <div *ngIf="form.get('subsetores.'+i+'.descricao').hasError('required')" class="invalid-feedback">
+                  Descrição é obrigatório.
+                </div>
+                <div *ngIf="form.get('subsetores.'+i+'.descricao').hasError('minlength')" class="invalid-feedback">
+                  Descrição deve possuir pelo menos 3 caracteres.
+                </div>
+                <div *ngIf="form.get('subsetores.'+i+'.descricao').hasError('maxlength')" class="invalid-feedback">
+                  Descrição deve possuir no máximo 100 caracteres.
+                </div>
+                <br>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button class="d-flex btn btn-outline-primary" (click)="adicionarSubsetor()">
+      <i class="fa fa-plus-circle my-1 pe-1"></i>
+      <b class="ml-1">Subsetor</b>
+    </button>
+  </div>
+  <div class="card-footer">
+    <div class="d-flex">
+      <button class="btn btn-outline-secondary me-auto border">
+        Cancelar Alteração
+      </button>
+      <button class="btn btn-success" (click)="salvarSubsetores()">
+        Salvar Subsetores
+      </button>
+    </div>
+  </div>
+</div>
+<br>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que quer deletar o subsetor  {{this.subsetorAtual.descricao}}?</p>
+    <button type="button" class="btn btn-default" (click)="confirmaDeletarSubsetor()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="CancelarDelecaoSubsetor()" >Não</button>
+  </div>
+</ng-template>

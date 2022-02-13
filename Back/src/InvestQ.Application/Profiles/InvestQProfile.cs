@@ -29,9 +29,9 @@ namespace InvestQ.Application.Profiles
 
             CreateMap<Corretora, CorretoraDto>().ReverseMap();
 
-            CreateMap<SetorDto, Setor>().ReverseMap();
+            CreateMap<Setor, SetorDto>().ReverseMap();
 
-            CreateMap<SubsetorDto, Subsetor>().ReverseMap();
+            CreateMap<Subsetor, SubsetorDto>().ReverseMap();
             
         }
     }

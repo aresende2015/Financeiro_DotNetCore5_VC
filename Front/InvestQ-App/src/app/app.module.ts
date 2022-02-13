@@ -15,14 +15,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { ClientesComponent } from './components/clientes/clientes.component';
-import { CorretorasComponent } from './components/corretoras/corretoras.component';
-import { NavComponent } from './shared/nav/nav.component';
 
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
-import { TituloComponent } from './shared/titulo/titulo.component';
 
+import { AppComponent } from './app.component';
+import { NavComponent } from './shared/nav/nav.component';
+import { TituloComponent } from './shared/titulo/titulo.component';
+import { ClientesComponent } from './components/clientes/clientes.component';
+import { CorretorasComponent } from './components/corretoras/corretoras.component';
 import { PerfilComponent } from './components/user/perfil/perfil.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -33,13 +33,14 @@ import { CorretoraListaComponent } from './components/corretoras/corretora-lista
 import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
+import { SetorDetalheComponent } from './components/setores/setor-detalhe/setor-detalhe.component';
+import { SetoresComponent } from './components/setores/setores.component';
+import { SetorListaComponent } from './components/setores/setor-lista/setor-lista.component';
 
 import { CorretoraService } from './services/corretora.service';
 import { ClienteService } from './services/cliente.service';
 import { SetorService } from './services/setor.service';
-import { SetorDetalheComponent } from './components/setores/setor-detalhe/setor-detalhe.component';
-import { SetoresComponent } from './components/setores/setores.component';
-import { SetorListaComponent } from './components/setores/setor-lista/setor-lista.component';
+import { SubsetorService } from './services/subsetor.service';
 
 defineLocale('pt-br', ptBrLocale);
 @NgModule({
@@ -85,7 +86,7 @@ defineLocale('pt-br', ptBrLocale);
     BsDatepickerModule.forRoot()
 
   ],
-  providers: [CorretoraService, ClienteService, SetorService],
+  providers: [CorretoraService, ClienteService, SetorService, SubsetorService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -15,7 +15,10 @@ namespace InvestQ.Application.Dtos
         public string Descricao { get; set; }
         public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
         public bool Inativo { get; set; } = false;
-        //public IEnumerable<Subsetor> Subsetores { get; set; }
+        public int SetorId { get; set; }
+        public SetorDto SetorDto { get; set; }
+
+        
         
     }
 }
