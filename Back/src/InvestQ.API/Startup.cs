@@ -50,6 +50,7 @@ namespace InvestQ.API
             services.AddScoped<ICorretoraRepo, CorretoraRepo>();
             services.AddScoped<ISetorRepo, SetorRepo>();
             services.AddScoped<ISubsetorRepo, SubsetorRepo>();
+            services.AddScoped<ISegmentoRepo, SegmentoRepo>();
 
             services.AddScoped<IGeralRepo, GeralRepo>();
 
@@ -57,6 +58,7 @@ namespace InvestQ.API
             services.AddScoped<ICorretoraService, CorretoraService>();
             services.AddScoped<ISetorService, SetorService>();
             services.AddScoped<ISubsetorService, SubsetorService>();
+            services.AddScoped<ISegmentoService, SegmentoService>();
 
             services.AddSwaggerGen(c =>
             {

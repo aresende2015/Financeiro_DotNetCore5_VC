@@ -25,12 +25,15 @@ namespace InvestQ.Data.Context
 
         public DbSet<Subsetor> Subsetores { get; set; }
 
+        public DbSet<Segmento> Segmentos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new ClienteMap());
             builder.ApplyConfiguration(new ClienteCorretoraMap());
             builder.ApplyConfiguration(new SetorMap());
             builder.ApplyConfiguration(new SubsetorMap());
+            builder.ApplyConfiguration(new SegmentoMap());
 
             builder.Entity<Cliente>()
             .HasData(
@@ -71,6 +74,13 @@ namespace InvestQ.Data.Context
                     new Subsetor(1, "Comércio", 1),
                     new Subsetor(2, "Viagens e Lazer", 1),
                     new Subsetor(3, "Alimentos Processados", 2)
+                }
+            );
+
+            builder.Entity<Segmento>()
+            .HasData(
+                new List<Segmento>(){
+                    new Segmento(1, "Produtos Diversos", 1)
                 }
             );
         }

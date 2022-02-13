@@ -16,9 +16,8 @@ namespace InvestQ.Application.Dtos
         public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
         public bool Inativo { get; set; } = false;
         public int SetorId { get; set; }
-        public SetorDto SetorDto { get; set; }
-
-        
+        public SetorDto Setor { get; set; }
+        public IEnumerable<SegmentoDto> Segmentos { get; set; }
         
     }
 }

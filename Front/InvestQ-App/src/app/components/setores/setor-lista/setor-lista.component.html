@@ -35,11 +35,14 @@
         <td>{{setor.id}}</td>
         <td>{{setor.descricao | uppercase}}</td>
         <td>
-          <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="detalheSetor(setor.id)">
-            <i class="fa fa-edit"></i>
+          <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="editarSetor(setor.id)">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Listar subsetores" (click)="listarSubsetores(setor.id)">
+            <i class="fas fa-list"></i>
           </button>
           <button class="btn btn-outline-danger btn-sm" tooltip="Excluir" (click)="openModal($event, template, setor.id)">
-            <i class="fa fa-trash"></i>
+            <i class="fas fa-trash"></i>
           </button>
         </td>
       </tr>

@@ -1,0 +1,44 @@
+<div class="card rounded shadow-sm p-3">
+
+  <legend class="d-flex justify-content-between capitalize">
+    <p>Lista de Subsetores do Setor: {{this.setorId}} - {{this.setorDescricao}}</p>
+  </legend>
+
+  <div class="d-flex">
+    <div class="flex-fill pe-3">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Filtro: </div>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Filtrar por descrição"
+          [(ngModel)]="filtroLista"
+        >
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Descrição</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="subsetores && subsetores.length">
+      <tr *ngFor="let subsetor of subsetoresFiltrados" >
+        <td>{{subsetor.id}}</td>
+        <td>{{subsetor.descricao | uppercase}}</td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!subsetores.length">
+      <tr>
+        <td colspan="8" class="text-center">
+          <h4>Nenhum evento encontrado!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

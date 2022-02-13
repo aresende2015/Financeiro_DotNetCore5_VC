@@ -11,10 +11,12 @@ namespace InvestQ.Domain.Entities
         {
         }
         public Segmento(int id, 
-                         string descricao)
+                        string descricao,
+                        int subsetorId)
         {
             Id = id;
             Descricao = descricao;
+            SubsetorId = subsetorId;
         }
         public void Inativar()
         {
@@ -35,6 +37,6 @@ namespace InvestQ.Domain.Entities
         public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
         public bool Inativo { get; set; } = false;
         public int SubsetorId {get; set;}
-        public Subsetor Subsertor { get; set; }
+        public Subsetor Subsetor { get; set; }
     }
 }

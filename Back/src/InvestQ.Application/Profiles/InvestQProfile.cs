@@ -32,6 +32,8 @@ namespace InvestQ.Application.Profiles
             CreateMap<Setor, SetorDto>().ReverseMap();
 
             CreateMap<Subsetor, SubsetorDto>().ReverseMap();
+
+            CreateMap<Segmento, SegmentoDto>().ReverseMap();
             
         }
     }

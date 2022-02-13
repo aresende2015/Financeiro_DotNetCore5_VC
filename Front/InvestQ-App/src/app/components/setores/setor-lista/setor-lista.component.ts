@@ -108,8 +108,12 @@ export class SetorListaComponent implements OnInit {
     this.modalRef?.hide();
   }
 
-  public detalheSetor(id: number): void {
+  public editarSetor(id: number): void {
     this.router.navigate([`setores/detalhe/${id}`])
+  }
+
+  public listarSubsetores(id: number): void {
+    this.router.navigate([`setores/listarsubsetores/${id}`])
   }
 
 }

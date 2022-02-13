@@ -36,11 +36,13 @@ import { RegistrationComponent } from './components/user/registration/registrati
 import { SetorDetalheComponent } from './components/setores/setor-detalhe/setor-detalhe.component';
 import { SetoresComponent } from './components/setores/setores.component';
 import { SetorListaComponent } from './components/setores/setor-lista/setor-lista.component';
+import { SubsetoresListaComponent } from './components/setores/subsetores-lista/subsetores-lista.component';
 
 import { CorretoraService } from './services/corretora.service';
 import { ClienteService } from './services/cliente.service';
 import { SetorService } from './services/setor.service';
 import { SubsetorService } from './services/subsetor.service';
+
 
 defineLocale('pt-br', ptBrLocale);
 @NgModule({
@@ -54,6 +56,7 @@ defineLocale('pt-br', ptBrLocale);
     SetoresComponent,
     SetorDetalheComponent,
     SetorListaComponent,
+    SubsetoresListaComponent,
     CorretoraListaComponent,
     ContatosComponent,
     PerfilComponent,

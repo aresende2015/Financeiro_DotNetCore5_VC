@@ -55,6 +55,7 @@
         <div formArrayName="subsetores" *ngFor="let subsetor of form.get('subsetores')['controls']; let i=index">
           <fieldset [formGroupName]="i" class="form-group">
             <legend class="d-flex justify-content-between capitalize">
+              Código: {{subsetores.get(i+".id").value}}
               <button (click)="removerSubsetor(template, i)" class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
                 tooltip="Excluir Subsetor"
                 [adaptivePosition]="false"
@@ -72,7 +73,7 @@
                   type="text"
                   class="form-control"
                   formControlName="descricao"
-                  placeholder="Subsetor">
+                  placeholder="">
                 <div *ngIf="form.get('subsetores.'+i+'.descricao').hasError('required')" class="invalid-feedback">
                   Descrição é obrigatório.
                 </div>
@@ -97,10 +98,10 @@
   </div>
   <div class="card-footer">
     <div class="d-flex">
-      <button class="btn btn-outline-secondary me-auto border">
+      <button class="btn btn-outline-secondary me-auto border" (click)="resetFormSubsetor()">
         Cancelar Alteração
       </button>
-      <button class="btn btn-success" (click)="salvarSubsetores()">
+      <button [disabled]="!form.get('subsetores').valid" class="btn btn-success" (click)="salvarSubsetores()">
         Salvar Subsetores
       </button>
     </div>

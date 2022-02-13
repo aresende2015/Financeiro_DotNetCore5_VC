@@ -15,6 +15,7 @@ import { LoginComponent } from './components/user/login/login.component';
 import { SetoresComponent } from './components/setores/setores.component';
 import { SetorDetalheComponent } from './components/setores/setor-detalhe/setor-detalhe.component';
 import { SetorListaComponent } from './components/setores/setor-lista/setor-lista.component';
+import { SubsetoresListaComponent } from './components/setores/subsetores-lista/subsetores-lista.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,7 @@ const routes: Routes = [
     path: 'setores', component: SetoresComponent,
     children: [
       { path: 'detalhe/:id', component: SetorDetalheComponent },
+      { path: 'listarsubsetores/:id', component: SubsetoresListaComponent },
       { path: 'detalhe', component: SetorDetalheComponent },
       { path: 'lista', component: SetorListaComponent }
     ]

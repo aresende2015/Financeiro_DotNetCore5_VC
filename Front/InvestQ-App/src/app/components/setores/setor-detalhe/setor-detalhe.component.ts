@@ -55,7 +55,7 @@ export class SetorDetalheComponent implements OnInit {
   public carregarSetor(): void {
     this.setorId = +this.activatedRouter.snapshot.paramMap.get('id')!;
 
-    if (this.setorId !== null || this.setorId === 0) {
+    if (this.setorId !== null && this.setorId !== 0) {
       this.spinner.show();
 
       this.estadoSalvar = 'put';
@@ -119,14 +119,19 @@ export class SetorDetalheComponent implements OnInit {
     this.form.reset();
   }
 
+  public resetFormSubsetor(): void {
+    this.form.get('subsetores').reset();
+  }
+
   public cssValidator(campoForm: FormControl | AbstractControl): any {
     return {'is-invalid': campoForm.errors && campoForm.touched};
   }
 
   public salvarSetor(): void {
-    this.spinner.show();
 
     if (this.form.valid) {
+      this.spinner.show();
+
       this.setor = (this.estadoSalvar === 'post')
                       ? {...this.form.value}
                       : {id: this.setor.id, ...this.form.value};
@@ -148,13 +153,15 @@ export class SetorDetalheComponent implements OnInit {
   }
 
   public salvarSubsetores(): void {
-    this.spinner.show();
 
     if (this.form.get('subsetores').valid) {
+      this.spinner.show();
+
       this.subsetorService.put(this.setorId, this.form.value.subsetores)
         .subscribe(
           () => {
             this.toastr.success('Subsetores salvos com sucesso!', 'Sucesso"');
+            this.router.navigate([`setores/lista`]);
             //this.subsetores.reset();
           },
           (error: any) => {
