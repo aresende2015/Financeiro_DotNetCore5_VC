@@ -1,3 +1,4 @@
+import { Segmento } from "./Segmento";
 import { Setor } from "./Setor";
 
 export class Subsetor {
@@ -7,4 +8,5 @@ export class Subsetor {
   inativo: boolean;
   setorId: number;
   setor: Setor;
+  segmentos: Segmento[];
 }

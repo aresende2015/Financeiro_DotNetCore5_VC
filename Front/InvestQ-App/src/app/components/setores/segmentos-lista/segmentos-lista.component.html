@@ -1,0 +1,45 @@
+<div class="card rounded shadow-sm p-3">
+
+  <legend class="d-flex justify-content-between capitalize">
+    <p>Lista de Segmentos do Subsetor: {{this.subsetorId}} - {{this.subsetorDescricao}}</p>
+  </legend>
+
+  <div class="d-flex">
+    <div class="flex-fill pe-3">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Filtro: </div>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Filtrar por descrição"
+          [(ngModel)]="filtroLista"
+        >
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Descrição</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody *ngIf="segmentos && segmentos.length">
+      <tr *ngFor="let segmento of segmentosFiltrados" >
+        <td>{{segmento.id}}</td>
+        <td>{{segmento.descricao | uppercase}}</td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!segmentos.length">
+      <tr>
+        <td colspan="8" class="text-center">
+          <h4>Nenhum segmento encontrado!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

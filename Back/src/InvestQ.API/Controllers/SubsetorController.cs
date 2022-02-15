@@ -19,7 +19,7 @@ namespace InvestQ.API.Controllers
             _subsetorService =subsertorService;
         }
 
-        [HttpGet("{setorId}")]
+        [HttpGet("setor/{setorId}")]
         public async Task<IActionResult> Get(int setorId) 
         {
             try
@@ -34,6 +34,24 @@ namespace InvestQ.API.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                             $"Erro ao tentar recuperar todos os Subsetores. Erro: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{subsetorId}")]
+        public async Task<IActionResult> GetSubsetor(int subsetorId) 
+        {
+            try
+            {
+                 var subsetor = await _subsetorService.GetSubsetorByIdAsync(subsetorId);
+
+                 if (subsetor == null) return NoContent();
+
+                 return Ok(subsetor);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                            $"Erro ao tentar recuperar Subsetor. Erro: {ex.Message}");
             }
         }
 

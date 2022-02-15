@@ -138,5 +138,24 @@ namespace InvestQ.Application.Services
             }
         }
 
+        public async Task<SubsetorDto> GetSubsetorByIdAsync(int subsetorId)
+        {
+            try
+            {
+                var subsetor = await _subsetorRepo.GetSubsetorByIdAsync(subsetorId);
+
+                if (subsetor == null) return null;
+
+                var RetornoDto = _mapper.Map<SubsetorDto>(subsetor);
+
+                return RetornoDto;
+
+            }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

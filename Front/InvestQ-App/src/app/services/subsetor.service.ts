@@ -13,7 +13,14 @@ export class SubsetorService {
   public getSubsetoresBySetorId(setorId: number): Observable<Subsetor[]> {
     return this
             .http
-            .get<Subsetor[]>(`${this.baseURL}/${setorId}`)
+            .get<Subsetor[]>(`${this.baseURL}/${'setor'}/${setorId}`)
+            .pipe(take(1));
+  }
+
+  public getSubsetorById(subsetorId: number): Observable<Subsetor> {
+    return this
+            .http
+            .get<Subsetor>(`${this.baseURL}/${subsetorId}`)
             .pipe(take(1));
   }
 

@@ -14,6 +14,7 @@ namespace InvestQ.Application.Interfaces
         //Task<bool> InativarSubsetor(SubsetorDto model);
         //Task<bool> ReativarSubsetor(SubsetorDto model);
 
+        Task<SubsetorDto> GetSubsetorByIdAsync(int subsetorId);
         Task<SubsetorDto[]> GetSubsetoresBySetorIdAsync(int setorId);
         Task<SubsetorDto> GetSubsetorByIdsAsync(int setorId, int subsetorId);
         

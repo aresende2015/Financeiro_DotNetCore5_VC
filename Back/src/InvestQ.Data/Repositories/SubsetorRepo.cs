@@ -17,10 +17,24 @@ namespace InvestQ.Data.Repositories
             _context = context;
         }
 
+        public async Task<Subsetor> GetSubsetorByIdAsync(int id)
+        {
+            IQueryable<Subsetor> query = _context.Subsetores;
+
+            query = query.Include(ss => ss.Segmentos);
+
+            query = query.AsNoTracking()
+                        .Where(ss => ss.Id == id);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         public async Task<Subsetor> GetSubsetorByIdsAsync(int setorId, int subsetorId)
         {
             IQueryable<Subsetor> query = _context.Subsetores;
 
+            query = query.Include(ss => ss.Segmentos);
+            
             query = query.AsNoTracking()
                         .Where(subsetor => subsetor.SetorId == setorId
                                 && subsetor.Id == subsetorId);

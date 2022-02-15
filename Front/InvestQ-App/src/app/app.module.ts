@@ -37,11 +37,14 @@ import { SetorDetalheComponent } from './components/setores/setor-detalhe/setor-
 import { SetoresComponent } from './components/setores/setores.component';
 import { SetorListaComponent } from './components/setores/setor-lista/setor-lista.component';
 import { SubsetoresListaComponent } from './components/setores/subsetores-lista/subsetores-lista.component';
+import { SubsetorDetalheComponent } from './components/setores/subsetor-detalhe/subsetor-detalhe.component';
+import { SegmentosListaComponent } from './components/setores/segmentos-lista/segmentos-lista.component';
 
 import { CorretoraService } from './services/corretora.service';
 import { ClienteService } from './services/cliente.service';
 import { SetorService } from './services/setor.service';
 import { SubsetorService } from './services/subsetor.service';
+import { SegmentoService } from './services/segmento.service';
 
 
 defineLocale('pt-br', ptBrLocale);
@@ -57,6 +60,8 @@ defineLocale('pt-br', ptBrLocale);
     SetorDetalheComponent,
     SetorListaComponent,
     SubsetoresListaComponent,
+    SubsetorDetalheComponent,
+    SegmentosListaComponent,
     CorretoraListaComponent,
     ContatosComponent,
     PerfilComponent,
@@ -89,7 +94,7 @@ defineLocale('pt-br', ptBrLocale);
     BsDatepickerModule.forRoot()
 
   ],
-  providers: [CorretoraService, ClienteService, SetorService, SubsetorService],
+  providers: [CorretoraService, ClienteService, SetorService, SubsetorService, SegmentoService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

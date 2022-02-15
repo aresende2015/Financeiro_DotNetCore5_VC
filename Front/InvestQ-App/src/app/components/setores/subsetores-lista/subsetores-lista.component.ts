@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Setor } from '@app/models/Setor';
 import { Subsetor } from '@app/models/Subsetor';
 import { SubsetorService } from '@app/services/subsetor.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 
@@ -13,8 +14,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SubsetoresListaComponent implements OnInit {
 
+  modalRef?: BsModalRef;
+
   public subsetores: Subsetor[] = [];
   public subsetoresFiltrados: Subsetor[] = [];
+  public subsetorId = 0;
 
   setorId: number;
   setorDescricao: string;
@@ -42,8 +46,10 @@ export class SubsetoresListaComponent implements OnInit {
 
   constructor(private subsetorService: SubsetorService,
               private spinner: NgxSpinnerService,
+              private modalService: BsModalService,
               private toastr: ToastrService,
-              private activatedRouter: ActivatedRoute) { }
+              private activatedRouter: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.spinner.show();
@@ -69,6 +75,47 @@ export class SubsetoresListaComponent implements OnInit {
     }
 
     this.subsetorService.getSubsetoresBySetorId(this.setorId).subscribe(observer).add(() => {this.spinner.hide()});
+  }
+
+  openModal(event: any, template: TemplateRef<any>, subsetorId: number): void {
+    event.stopPropagation();
+    this.subsetorId = subsetorId;
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {
+    this.modalRef?.hide();
+    this.spinner.show();
+
+    this.subsetorService.deleteSubsetor(this.setorId, this.subsetorId).subscribe(
+      (result: any) => {
+        if (result.message === 'Deletado') {
+          this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
+          //this.spinner.hide();
+          this.carregarSubsetores();
+        }
+      },
+      (error: any) => {
+        console.error(error);
+        this.toastr.error(`Erro ao tentar deletar o subsetor ${this.subsetorId}`, 'Erro');
+        //this.spinner.hide();
+      },
+      //() => {this.spinner.hide();}
+    ).add(() => {this.spinner.hide();})
+
+    this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
+  }
+
+  decline(): void {
+    this.modalRef?.hide();
+  }
+
+  public editarSubsetor(id: number): void {
+    this.router.navigate([`setores/subsetordetalhe/${id}`])
+  }
+
+  public listarSegmentos(id: number): void {
+    this.router.navigate([`setores/listarsegmentos/${id}`])
   }
 
 }
