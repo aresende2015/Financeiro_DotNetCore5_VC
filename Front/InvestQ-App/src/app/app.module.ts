@@ -39,12 +39,14 @@ import { SetorListaComponent } from './components/setores/setor-lista/setor-list
 import { SubsetoresListaComponent } from './components/setores/subsetores-lista/subsetores-lista.component';
 import { SubsetorDetalheComponent } from './components/setores/subsetor-detalhe/subsetor-detalhe.component';
 import { SegmentosListaComponent } from './components/setores/segmentos-lista/segmentos-lista.component';
+import { SegmentoDetalheComponent } from './components/setores/segmento-detalhe/segmento-detalhe.component';
 
 import { CorretoraService } from './services/corretora.service';
 import { ClienteService } from './services/cliente.service';
 import { SetorService } from './services/setor.service';
 import { SubsetorService } from './services/subsetor.service';
 import { SegmentoService } from './services/segmento.service';
+
 
 
 defineLocale('pt-br', ptBrLocale);
@@ -62,6 +64,7 @@ defineLocale('pt-br', ptBrLocale);
     SubsetoresListaComponent,
     SubsetorDetalheComponent,
     SegmentosListaComponent,
+    SegmentoDetalheComponent,
     CorretoraListaComponent,
     ContatosComponent,
     PerfilComponent,

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Segmento } from '@app/models/Segmento';
+import { Subsetor } from '@app/models/Subsetor';
 import { SegmentoService } from '@app/services/segmento.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 
@@ -12,11 +14,16 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SegmentosListaComponent implements OnInit {
 
+  modalRef?: BsModalRef;
+
   public segmentos: Segmento[] = [];
   public segmentosFiltrados: Segmento[] = [];
 
+  public subsetor: Subsetor;
+
+  public segmentoId = 0;
+
   subsetorId: number;
-  subsetorDescricao: string;
 
   private _filtroLista: string = '';
 
@@ -42,6 +49,7 @@ export class SegmentosListaComponent implements OnInit {
   constructor(private segmentoService: SegmentoService,
               private spinner: NgxSpinnerService,
               private toastr: ToastrService,
+              private modalService: BsModalService,
               private activatedRouter: ActivatedRoute,
               private router: Router) { }
 
@@ -59,7 +67,7 @@ export class SegmentosListaComponent implements OnInit {
         this.segmentos = _segmentos;
         this.segmentosFiltrados = this.segmentos;
 
-        this.subsetorDescricao = this.segmentos.find(s => s.subsetorId === this.subsetorId).subsetor.descricao;
+        this.subsetor = this.segmentos.find(s => s.subsetorId === this.subsetorId).subsetor;
 
       },
       error: (error: any) => {
@@ -70,6 +78,44 @@ export class SegmentosListaComponent implements OnInit {
     }
 
     this.segmentoService.getSegmentosBySubsetorId(this.subsetorId).subscribe(observer).add(() => {this.spinner.hide()});
+  }
+
+  openModal(event: any, template: TemplateRef<any>, segmentoId: number): void {
+    event.stopPropagation();
+    this.segmentoId = segmentoId;
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {
+    this.modalRef?.hide();
+    this.spinner.show();
+
+    this.segmentoService.deleteSegmento(this.subsetorId, this.segmentoId).subscribe(
+      (result: any) => {
+        if (result.message === 'Deletado') {
+          this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
+          //this.spinner.hide();
+          this.carregarSegmentos();
+        }
+      },
+      (error: any) => {
+        console.error(error);
+        this.toastr.error(`Erro ao tentar deletar o segmento ${this.segmentoId}`, 'Erro');
+        //this.spinner.hide();
+      },
+      //() => {this.spinner.hide();}
+    ).add(() => {this.spinner.hide();})
+
+    this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
+  }
+
+  decline(): void {
+    this.modalRef?.hide();
+  }
+
+  public editarSegmento(id: number, subsetorId: number): void {
+
+    this.router.navigate([`setores/segmentodetalhe/${id}/${subsetorId}`])
   }
 
 }

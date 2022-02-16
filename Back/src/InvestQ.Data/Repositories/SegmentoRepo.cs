@@ -21,7 +21,8 @@ namespace InvestQ.Data.Repositories
         {
             IQueryable<Segmento> query = _context.Segmentos;
 
-            query = query.Include(s => s.Subsetor);
+            query = query.Include(ss => ss.Subsetor)
+                        .ThenInclude(s => s.Setor);
             
             query = query.AsNoTracking()
                         .Where(s => s.SubsetorId == subsetorId);

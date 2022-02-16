@@ -18,6 +18,7 @@ import { SetorListaComponent } from './components/setores/setor-lista/setor-list
 import { SubsetoresListaComponent } from './components/setores/subsetores-lista/subsetores-lista.component';
 import { SegmentosListaComponent } from './components/setores/segmentos-lista/segmentos-lista.component';
 import { SubsetorDetalheComponent } from './components/setores/subsetor-detalhe/subsetor-detalhe.component';
+import { SegmentoDetalheComponent } from './components/setores/segmento-detalhe/segmento-detalhe.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,7 @@ const routes: Routes = [
       { path: 'subsetordetalhe/:id', component: SubsetorDetalheComponent },
       { path: 'listarsubsetores/:id', component: SubsetoresListaComponent },
       { path: 'listarsegmentos/:id', component: SegmentosListaComponent },
+      { path: 'segmentodetalhe/:id/:subsetorId', component: SegmentoDetalheComponent },
       { path: 'detalhe', component: SetorDetalheComponent },
       { path: 'lista', component: SetorListaComponent }
     ]

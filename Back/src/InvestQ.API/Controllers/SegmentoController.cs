@@ -37,6 +37,24 @@ namespace InvestQ.API.Controllers
             }
         }
 
+        [HttpGet("{subsetorId}/{segmentoId}")]
+        public async Task<IActionResult> Get(int subsetorId, int segmentoId)
+        {
+            try
+            {
+                var segmento = await _segmentoService.GetSegmentoByIdsAsync(subsetorId, segmentoId);
+
+                if (segmento == null) return NoContent();
+
+                return Ok(segmento);
+            }
+            catch (Exception ex)
+            {                
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                            $"Erro ao tentar recuperar o Segmento. Erro: {ex.Message}");
+            }
+        }
+
         [HttpPut("{subsetorId}")]
         public async Task<IActionResult> Put(int subsetorId, SegmentoDto[] models)
         {
