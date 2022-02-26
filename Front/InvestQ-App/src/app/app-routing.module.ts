@@ -57,7 +57,7 @@ const routes: Routes = [
       { path: 'subsetordetalhe/:id', component: SubsetorDetalheComponent },
       { path: 'listarsubsetores/:id', component: SubsetoresListaComponent },
       { path: 'listarsegmentos/:id', component: SegmentosListaComponent },
-      { path: 'segmentodetalhe/:id/:subsetorId', component: SegmentoDetalheComponent },
+      { path: 'segmentodetalhe/:subsetorId/:id', component: SegmentoDetalheComponent },
       { path: 'detalhe', component: SetorDetalheComponent },
       { path: 'lista', component: SetorListaComponent }
     ]

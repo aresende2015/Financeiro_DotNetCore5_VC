@@ -34,7 +34,7 @@
         <td>{{segmento.id}}</td>
         <td>{{segmento.descricao | uppercase}}</td>
         <td>
-          <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="editarSegmento(segmento.id, segmento.subsetorId)">
+          <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="editarSegmento(segmento.subsetorId, segmento.id)">
             <i class="fas fa-edit"></i>
           </button>
           <button class="btn btn-outline-danger btn-sm" tooltip="Excluir" (click)="openModal($event, template, segmento.id)">

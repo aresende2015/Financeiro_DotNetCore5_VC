@@ -9,6 +9,7 @@ namespace InvestQ.Application.Interfaces
     public interface ISegmentoService
     {
         Task<SegmentoDto[]> SalvarSegmentos(int subsetorId, SegmentoDto[] models);
+        Task<SegmentoDto>SalvarSegmento(int subsetorId, int segmentoId, SegmentoDto model);
         Task<bool> DeletarSegmento(int subsetorId, int segmentoId);
         
         //Task<bool> InativarSubsetor(SegmentoDto model);

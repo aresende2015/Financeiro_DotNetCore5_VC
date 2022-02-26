@@ -28,6 +28,10 @@ export class SubsetorDetalheComponent implements OnInit {
 
   segmentoAtual = {id: 0, descricao: '', indice: 0};
 
+  get f(): any {
+    return this.form.controls;
+  }
+
   get segmentos(): FormArray {
     return this.form.get('segmentos') as FormArray;
   }
@@ -76,6 +80,7 @@ export class SubsetorDetalheComponent implements OnInit {
 
   public validation(): void {
     this.form = this.fb.group({
+      descricao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       segmentos: this.fb.array([]),
     })
   }
@@ -104,11 +109,11 @@ export class SubsetorDetalheComponent implements OnInit {
     if (this.form.get('segmentos').valid) {
       this.spinner.show();
 
-      this.segmentoService.put(this.subsetorId, this.form.value.segmentos)
+      this.segmentoService.putSegmentos(this.subsetorId, this.form.value.segmentos)
         .subscribe(
           () => {
             this.toastr.success('Segmentos salvos com sucesso!', 'Sucesso"');
-            this.router.navigate([`subsetores/lista`]);
+            this.router.navigate([`setores/listarsubsetores/${this.subsetor.setorId}`]);
             //this.subsetores.reset();
           },
           (error: any) => {

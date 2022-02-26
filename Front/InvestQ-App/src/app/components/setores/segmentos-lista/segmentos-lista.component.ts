@@ -113,9 +113,8 @@ export class SegmentosListaComponent implements OnInit {
     this.modalRef?.hide();
   }
 
-  public editarSegmento(id: number, subsetorId: number): void {
-
-    this.router.navigate([`setores/segmentodetalhe/${id}/${subsetorId}`])
+  public editarSegmento(subsetorId: number, id: number): void {
+    this.router.navigate([`setores/segmentodetalhe/${subsetorId}/${id}`])
   }
 
 }

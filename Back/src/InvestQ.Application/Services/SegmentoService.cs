@@ -94,6 +94,32 @@ namespace InvestQ.Application.Services
             }
         }
 
+        public async Task<SegmentoDto> SalvarSegmento(int subsetorId, int segmentoId, SegmentoDto model)
+        {
+           try
+           {
+                if ((subsetorId != model.SubsetorId) || (segmentoId != model.Id))
+                    throw new Exception("O Segmento não pertece ao subsetorId passado.");
+
+                var segmento = await _segmentoRepo.GetSegmentoByIdsAsync(subsetorId,segmentoId);
+
+                if (segmento != null) 
+                {
+                    _mapper.Map(model, segmento);
+
+                     _segmentoRepo.Atualizar(segmento);
+
+                    await _segmentoRepo.SalvarMudancasAsync();
+                }
+
+                return model;
+           }
+           catch (Exception ex)
+           {
+                throw new Exception(ex.Message);
+           }
+        }
+
         public async Task<SegmentoDto[]> SalvarSegmentos(int subsetorId, SegmentoDto[] models)
         {
             try
@@ -132,8 +158,7 @@ namespace InvestQ.Application.Services
                 return null;
             }
             catch (Exception ex)
-            {
-                
+            {                
                 throw new Exception(ex.Message);
             }
         }

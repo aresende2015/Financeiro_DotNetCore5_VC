@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Segmento } from '@app/models/Segmento';
 import { Observable, take } from 'rxjs';
-import { Subsetor } from './../models/Subsetor';
 
 @Injectable()
 export class SegmentoService {
@@ -24,9 +23,15 @@ export class SegmentoService {
         .pipe(take(1));
   }
 
-  public put(subsetorId: number, segmentos: Segmento[]): Observable<Segmento[]> {
+  public putSegmentos(subsetorId: number, segmentos: Segmento[]): Observable<Segmento[]> {
     return this.http
       .put<Segmento[]>(`${this.baseURL}/${subsetorId}`, segmentos)
+      .pipe(take(1));
+  }
+
+  public putSegmento(subsetorId: number, segmentoId: number, segmento: Segmento): Observable<Segmento> {
+    return this.http
+      .put<Segmento>(`${this.baseURL}/${subsetorId}/${segmentoId}`, segmento)
       .pipe(take(1));
   }
 

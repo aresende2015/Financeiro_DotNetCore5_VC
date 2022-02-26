@@ -72,6 +72,24 @@ namespace InvestQ.API.Controllers
             }
         }
 
+        [HttpPut("{subsetorId}/{segmentoId}")]
+        public async Task<IActionResult> SalvarSegmento(int subsetorId, int segmentoId, SegmentoDto model)
+        {
+            try
+            {
+                var segmento = await _segmentoService.SalvarSegmento(subsetorId, segmentoId, model);
+
+                if (segmento == null) return NoContent();
+
+                 return Ok(segmento);
+            }
+            catch (Exception ex)
+            {                
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    $"Erro ao tentar atualizar o Segmento. Erro: {ex.Message}");
+            }
+        }
+
         [HttpDelete("{subsetorId}/{segmentoId}")]
         public async Task<IActionResult> Delete(int subsetorId, int segmentoId)
         {

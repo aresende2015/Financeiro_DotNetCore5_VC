@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Segmento } from '@app/models/Segmento';
 import { SegmentoService } from '@app/services/segmento.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -30,7 +30,8 @@ export class SegmentoDetalheComponent implements OnInit {
               private activatedRouter: ActivatedRoute,
               private toastr: ToastrService,
               private segmentoService: SegmentoService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.carregarSegmento();
@@ -75,6 +76,23 @@ export class SegmentoDetalheComponent implements OnInit {
   }
 
   public salvarSegmento(): void {
+    if (this.form.valid) {
+      this.spinner.show();
+
+      this.segmento = {id: this.segmento.id, subsetorId: this.segmento.subsetorId, ...this.form.value};
+
+      this.segmentoService.putSegmento(this.subsetorId, this.segmentoId, this.segmento)
+            .subscribe(
+              () => {
+                this.toastr.success('Segmento salvo com sucesso!', 'Sucesso');
+                this.router.navigate([`setores/listarsegmentos/${this.subsetorId}`]);
+              },
+              (error: any) => {
+                this.toastr.error('Erro ao tentar salvar o segmento.', 'Erro');
+                console.error(error);
+              }
+            ).add(() => this.spinner.hide());
+    }
 
   }
 
