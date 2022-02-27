@@ -16,9 +16,8 @@ namespace InvestQ.Application.Dtos
         [StringLength(50, MinimumLength = 3, ErrorMessage = "O campo de {0} deve ter no mínimo 3 e no máximo 50 caracteres.")]
         public string Descricao { get; set; }
 
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [RegularExpression(@".*\.(gif|jpe?g|bmp|png|jfif)$", 
-                           ErrorMessage = "Não é uma imagem válida. (gif, jpg, jpeg, jfif, bmp ou png")]
+        //[Required(ErrorMessage = "O campo {0} é obrigatório")]
+        //[RegularExpression(@".*\.(gif|jpe?g|bmp|png|jfif)$",  ErrorMessage = "Não é uma imagem válida. (gif, jpg, jpeg, jfif, bmp ou png")]
         public string Imagen { get; set; }
         public DateTime DataDeCriacao { get; set; }
         public bool Inativo { get; set; } 

@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Corretora } from '@app/models/Corretora';
 import { CorretoraService } from '@app/services/corretora.service';
 import { Router } from '@angular/router';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-corretora-lista',
@@ -64,6 +65,12 @@ export class CorretoraListaComponent implements OnInit {
 
   public mostrarOcultarImagen(): void {
     this.mostrarImagem = !this.mostrarImagem;
+  }
+
+  public mostraImagem(imagemURL: string): string {
+    return (imagemURL !== '')
+      ? `${environment.apiURL}resources/images/${imagemURL}`
+      : 'assets/img/semImagem.jpeg';
   }
 
   public carregarCorretoras(): void {

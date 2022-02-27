@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { Corretora } from '../models/Corretora';
+import { environment } from '@environments/environment';
 
 @Injectable(
   //{providedIn: 'root'}
 )
 export class CorretoraService {
-  baseURL = 'https://localhost:5001/api/corretora';
+  baseURL = environment.apiURL + 'api/corretora';
 
   constructor(private http: HttpClient) { }
 
@@ -38,6 +39,18 @@ export class CorretoraService {
   public deleteCorretora(id: number): Observable<any> {
     return this.http
       .delete(`${this.baseURL}/${id}`)
+      .pipe(take(1));
+  }
+
+  public postUpload(corretoraId: number, file: File): Observable<Corretora> {
+    const fileToUpload = file[0] as File;
+
+    const formData = new FormData();
+
+    formData.append('file', fileToUpload);
+
+    return this.http
+      .post<Corretora>(`${this.baseURL}/upload-image/${corretoraId}`, formData)
       .pipe(take(1));
   }
 

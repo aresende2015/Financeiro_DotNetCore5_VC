@@ -42,7 +42,7 @@
         <td>
           <img [collapse]="!mostrarImagem"
               [isAnimated]="true"
-              src="/assets/{{corretora.imagen}}"
+              [src]="mostraImagem(corretora.imagen)"
               [style.width.px]="largudaImagem"
               [style.margin.px]="margemImagem"
           >
