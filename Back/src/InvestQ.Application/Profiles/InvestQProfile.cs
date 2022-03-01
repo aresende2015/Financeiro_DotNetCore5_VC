@@ -6,6 +6,7 @@ using AutoMapper;
 using InvestQ.Application.Dtos;
 using InvestQ.Application.Helpers;
 using InvestQ.Domain.Entities;
+using InvestQ.Domain.Identity;
 
 namespace InvestQ.Application.Profiles
 {
@@ -34,6 +35,12 @@ namespace InvestQ.Application.Profiles
             CreateMap<Subsetor, SubsetorDto>().ReverseMap();
 
             CreateMap<Segmento, SegmentoDto>().ReverseMap();
+
+            CreateMap<User, UserDto>().ReverseMap();
+
+            CreateMap<User, UserUpdateDto>().ReverseMap();
+
+            CreateMap<User, UserLoginDto>().ReverseMap();
             
         }
     }

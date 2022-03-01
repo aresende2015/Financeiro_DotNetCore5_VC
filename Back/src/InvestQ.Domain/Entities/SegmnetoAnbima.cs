@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using InvestQ.Domain.Enum;
-
+using InvestQ.Domain.Entities.Enum;
 namespace InvestQ.Domain.Entities
 {
     public class SegmnetoAnbima

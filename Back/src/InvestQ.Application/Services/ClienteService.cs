@@ -21,24 +21,25 @@ namespace InvestQ.Application.Services
             _clienteRepo = clienteRepo;
             _mapper = mapper;
         }
-        public async Task<ClienteDto> AdicionarCliente(ClienteDto model)
+        public async Task<ClienteDto> AdicionarCliente(int userId, ClienteDto model)
         {
             try
             {
                 var cliente = _mapper.Map<Cliente>(model);
+                cliente.UserId = userId;
 
                 if (cliente.Inativo)
                     throw new Exception("Não é possível incluir um Cliente já inativo.");
 
-                if (await _clienteRepo.GetClienteByCpfAsync(cliente.Cpf, false) != null)
+                if (await _clienteRepo.GetClienteByCpfAsync(userId, cliente.Cpf, false) != null)
                     throw new Exception("Já existe um Cliente com esse CPF.");
 
-                if( await _clienteRepo.GetClienteByIdAsync(cliente.Id,false) == null)
+                if( await _clienteRepo.GetClienteByIdAsync(userId, cliente.Id,false) == null)
                 {
                     _clienteRepo.Adicionar(cliente);
 
                     if (await _clienteRepo.SalvarMudancasAsync()) {
-                        var retorno = await _clienteRepo.GetClienteByIdAsync(cliente.Id, false);
+                        var retorno = await _clienteRepo.GetClienteByIdAsync(userId, cliente.Id, false);
 
                         return _mapper.Map<ClienteDto>(retorno);
                     }
@@ -53,7 +54,7 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<ClienteDto> AtualizarCliente(int clienteId, ClienteDto model)
+        public async Task<ClienteDto> AtualizarCliente(int userId, int clienteId, ClienteDto model)
         {
             try
             {
@@ -63,7 +64,7 @@ namespace InvestQ.Application.Services
                 if (model.Inativo)
                     throw new Exception("Não é possível atualizar um Cliente já inativo.");
 
-                var cliente = await _clienteRepo.GetClienteByIdAsync(clienteId, false);
+                var cliente = await _clienteRepo.GetClienteByIdAsync(userId, clienteId, false);
                 
                 if (cliente != null) 
                 {
@@ -72,6 +73,7 @@ namespace InvestQ.Application.Services
 
                     model.Inativo = cliente.Inativo;
                     model.DataDeCriacao = cliente.DataDeCriacao;
+                    model.UserId = userId;
 
                     _mapper.Map(model, cliente);
 
@@ -91,9 +93,9 @@ namespace InvestQ.Application.Services
             
         }
 
-        public async Task<bool> DeletarCliente(int clienteId)
+        public async Task<bool> DeletarCliente(int userId, int clienteId)
         {
-            var cliente = await _clienteRepo.GetClienteByIdAsync(clienteId, false);
+            var cliente = await _clienteRepo.GetClienteByIdAsync(userId, clienteId, false);
 
             if (cliente == null)
                 throw new Exception("O Cliente que tentou deletar não existe.");
@@ -103,11 +105,11 @@ namespace InvestQ.Application.Services
             return await _clienteRepo.SalvarMudancasAsync();
         }
 
-        public async Task<ClienteDto[]> GetAllClientesAsync(bool includeCorretora = false)
+        public async Task<ClienteDto[]> GetAllClientesAsync(int userId, bool includeCorretora = false)
         {
             try
             {
-                var clientes = await _clienteRepo.GetAllClientesAsync(includeCorretora);
+                var clientes = await _clienteRepo.GetAllClientesAsync(userId, includeCorretora);
 
                 if (clientes == null) return null;
 
@@ -121,11 +123,11 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<ClienteDto[]> GetAllClientesByCorretoraAsync(int corretoraId, bool includeCorretora)
+        public async Task<ClienteDto[]> GetAllClientesByCorretoraAsync(int userId, int corretoraId, bool includeCorretora)
         {
             try
             {
-                var clientes = await _clienteRepo.GetAllClientesByCorretoraId(corretoraId, includeCorretora);
+                var clientes = await _clienteRepo.GetAllClientesByCorretoraId(userId, corretoraId, includeCorretora);
 
                 if (clientes == null) return null;
 
@@ -139,11 +141,11 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<ClienteDto> GetClienteByIdAsync(int clienteId, bool includeCorretora = false)
+        public async Task<ClienteDto> GetClienteByIdAsync(int userId, int clienteId, bool includeCorretora = false)
         {
             try
             {
-                var cliente = await _clienteRepo.GetClienteByIdAsync(clienteId, includeCorretora);
+                var cliente = await _clienteRepo.GetClienteByIdAsync(userId, clienteId, includeCorretora);
 
                 if (cliente == null) return null;
 
@@ -157,7 +159,7 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<bool> InativarCliente(ClienteDto model)
+        public async Task<bool> InativarCliente(int userId, ClienteDto model)
         {
             if (model != null)
             {
@@ -171,7 +173,7 @@ namespace InvestQ.Application.Services
             return false;
         }
 
-        public async Task<bool> ReativarCliente(ClienteDto model)
+        public async Task<bool> ReativarCliente(int userId, ClienteDto model)
         {
             if (model != null)
             {

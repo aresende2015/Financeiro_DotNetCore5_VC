@@ -8,15 +8,15 @@ namespace InvestQ.Application.Interfaces
 {
     public interface IClienteService
     {
-        Task<ClienteDto> AdicionarCliente(ClienteDto model);
-        Task<ClienteDto> AtualizarCliente(int clienteId, ClienteDto model);
-        Task<bool> DeletarCliente(int clienteId);
+        Task<ClienteDto> AdicionarCliente(int userId, ClienteDto model);
+        Task<ClienteDto> AtualizarCliente(int userId, int clienteId, ClienteDto model);
+        Task<bool> DeletarCliente(int userId, int clienteId);
         
-        Task<bool> InativarCliente(ClienteDto model);
-        Task<bool> ReativarCliente(ClienteDto model);
+        Task<bool> InativarCliente(int userId, ClienteDto model);
+        Task<bool> ReativarCliente(int userId, ClienteDto model);
 
-        Task<ClienteDto[]> GetAllClientesAsync(bool includeCorretora);
-        Task<ClienteDto> GetClienteByIdAsync(int clienteId, bool includeCorretora);
-        Task<ClienteDto[]> GetAllClientesByCorretoraAsync(int corretoraId, bool includeCorretora);
+        Task<ClienteDto[]> GetAllClientesAsync(int userId, bool includeCorretora);
+        Task<ClienteDto> GetClienteByIdAsync(int userId, int clienteId, bool includeCorretora);
+        Task<ClienteDto[]> GetAllClientesByCorretoraAsync(int userId, int corretoraId, bool includeCorretora);
     }
 }

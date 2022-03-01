@@ -19,7 +19,7 @@ namespace InvestQ.Data.Repositories
             //_context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        public async Task<Cliente[]> GetAllClientesAsync(bool includeCorretora)
+        public async Task<Cliente[]> GetAllClientesAsync(int userId, bool includeCorretora)
         {
             IQueryable<Cliente> query = _context.Clientes;
 
@@ -28,12 +28,13 @@ namespace InvestQ.Data.Repositories
                              .ThenInclude(cc => cc.Corretora);
 
             query = query.AsNoTracking()
+                         .Where(c => c.UserId == userId)
                          .OrderBy(c => c.Id);
 
             return await query.ToArrayAsync();
         }
 
-        public async Task<Cliente[]> GetAllClientesByCorretoraId(int corretoraId, bool includeCorretora)
+        public async Task<Cliente[]> GetAllClientesByCorretoraId(int userId, int corretoraId, bool includeCorretora)
         {
             IQueryable<Cliente> query = _context.Clientes;
 
@@ -43,22 +44,23 @@ namespace InvestQ.Data.Repositories
 
             query = query.AsNoTracking()
                          .OrderBy(c => c.Id)
-                         .Where(c => c.ClientesCorretoras.Any(cc =>cc.CorretoraId == corretoraId));
+                         .Where(c => c.ClientesCorretoras.Any(cc =>cc.CorretoraId == corretoraId) && c.UserId == userId);
 
             return await query.ToArrayAsync();
         }
 
-        public async Task<Cliente> GetClienteByCpfAsync(string cpf, bool includeCorretora)
+        public async Task<Cliente> GetClienteByCpfAsync(int userId, string cpf, bool includeCorretora)
         {
             IQueryable<Cliente> query = _context.Clientes;
 
             query = query.AsNoTracking()
+                         .Where(c => c.UserId == userId)
                          .OrderBy(c => c.Cpf);
 
             return await query.FirstOrDefaultAsync(c => c.Cpf == cpf);
         }
 
-        public async Task<Cliente> GetClienteByIdAsync(int id, bool includeCorretora)
+        public async Task<Cliente> GetClienteByIdAsync(int userId, int id, bool includeCorretora)
         {
             IQueryable<Cliente> query = _context.Clientes;
 
@@ -67,8 +69,8 @@ namespace InvestQ.Data.Repositories
                              .ThenInclude(cc => cc.Corretora);
 
             query = query.AsNoTracking()
-                         .OrderBy(c => c.Id)
-                         .Where(c => c.Id == id);
+                         .Where(c => c.Id == id && c.UserId == userId)
+                         .OrderBy(c => c.Id);
 
             return await query.FirstOrDefaultAsync();
         }

@@ -128,4 +128,9 @@ ng g c components/user/registration --module app
 =======================================================
 
 
+Instalando o Identity
+
+Usar o NuGet Gallery ==> Microsoft.AspNetCore.Identity para EntityFrameworkCore
+Instalar primeiramente no projeto de dominios.
+
 

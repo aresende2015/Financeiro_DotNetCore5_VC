@@ -14,6 +14,10 @@ namespace InvestQ.Data.Mappings
         {
             builder.ToTable("Subsetores");
 
+            builder.HasMany(ss => ss.Segmentos)
+                    .WithOne(s => s.Subsetor)
+                    .OnDelete(DeleteBehavior.Cascade);
+
             builder.Property(ss => ss.Descricao)
                 .IsRequired()
                 .HasMaxLength(200);

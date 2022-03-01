@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using InvestQ.Domain.Identity;
 
 namespace InvestQ.Domain.Entities
 {
@@ -43,6 +44,8 @@ namespace InvestQ.Domain.Entities
         public string SobreNome { get; set; }
         public string Email { get; set; }
         public DateTime DataDeNascimento { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
         public DateTime? DataDeCriacao { get; set; } = DateTime.Now;
         public bool Inativo { get; set; } = false;
         public IEnumerable<ClienteCorretora> ClientesCorretoras { get; set; }

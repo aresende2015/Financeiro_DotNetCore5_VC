@@ -2,22 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InvestQ.API.Extensions;
 using InvestQ.Application.Dtos;
 using InvestQ.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvestQ.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ClienteController : ControllerBase
     {
         private readonly IClienteService _clienteService;
+        private readonly IUserService _userService;
 
-        public ClienteController(IClienteService clienteService)
+        public ClienteController(IClienteService clienteService,
+                                 IUserService userService)
         {
             _clienteService = clienteService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -25,7 +31,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                 var clientes = await _clienteService.GetAllClientesAsync(true);
+                 var clientes = await _clienteService.GetAllClientesAsync(User.GetUserId(), true);
 
                  if (clientes == null) return NoContent();
 
@@ -43,7 +49,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                 var cliente = await _clienteService.GetClienteByIdAsync(id, true);
+                 var cliente = await _clienteService.GetClienteByIdAsync(User.GetUserId(), id, true);
 
                  if (cliente == null) return NoContent();
 
@@ -61,7 +67,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                 var cliente = await _clienteService.AdicionarCliente(model);
+                 var cliente = await _clienteService.AdicionarCliente(User.GetUserId(), model);
                  if (cliente == null) return BadRequest("Erro ao tentar adicionar o Cliente.");
 
                  return Ok(cliente);
@@ -78,7 +84,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                 var cliente = await _clienteService.AtualizarCliente(id, model);
+                 var cliente = await _clienteService.AtualizarCliente(User.GetUserId(), id, model);
                  if (cliente == null) return NoContent();
 
                  return Ok(cliente);
@@ -95,12 +101,12 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                var cliente = await _clienteService.GetClienteByIdAsync(id,false);
+                var cliente = await _clienteService.GetClienteByIdAsync(User.GetUserId(), id,false);
                 if (cliente == null)
                     StatusCode(StatusCodes.Status409Conflict,
                         "Você está tetando deletar um Cliente que não existe.");
 
-                if(await _clienteService.DeletarCliente(id))
+                if(await _clienteService.DeletarCliente(User.GetUserId(), id))
                 {
                     return Ok(new { message = "Deletado"});
                 }

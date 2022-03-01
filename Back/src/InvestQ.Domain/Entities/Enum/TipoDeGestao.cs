@@ -1,4 +1,4 @@
-namespace InvestQ.Domain.Enum
+namespace InvestQ.Domain.Entities.Enum
 {
     public enum TipoDeGestao
     {
