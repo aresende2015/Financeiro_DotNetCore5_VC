@@ -14,7 +14,6 @@ namespace InvestQ.Application.Dtos
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Funcao { get; set; }
-        public string Descricao { get; set; }
         public string Password { get; set; }
         public string Token { get; set; }
     }

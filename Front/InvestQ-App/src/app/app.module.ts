@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -18,6 +18,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+
 import { AppComponent } from './app.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
@@ -31,6 +33,7 @@ import { ClienteListaComponent } from './components/clientes/cliente-lista/clien
 import { CorretoraDetalheComponent } from './components/corretoras/corretora-detalhe/corretora-detalhe.component';
 import { CorretoraListaComponent } from './components/corretoras/corretora-lista/corretora-lista.component';
 import { UserComponent } from './components/user/user.component';
+import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 import { SetorDetalheComponent } from './components/setores/setor-detalhe/setor-detalhe.component';
@@ -46,6 +49,9 @@ import { ClienteService } from './services/cliente.service';
 import { SetorService } from './services/setor.service';
 import { SubsetorService } from './services/subsetor.service';
 import { SegmentoService } from './services/segmento.service';
+import { UserService } from './services/user.service';
+
+
 
 
 
@@ -73,6 +79,7 @@ defineLocale('pt-br', ptBrLocale);
     DateTimeFormatPipe,
     TituloComponent,
     UserComponent,
+    HomeComponent,
     LoginComponent,
     RegistrationComponent
    ],
@@ -97,8 +104,15 @@ defineLocale('pt-br', ptBrLocale);
     BsDatepickerModule.forRoot()
 
   ],
-  providers: [CorretoraService, ClienteService, SetorService, SubsetorService, SegmentoService],
-  bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  providers: [
+    CorretoraService,
+    ClienteService,
+    SetorService,
+    SubsetorService,
+    SegmentoService,
+    UserService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -134,3 +134,19 @@ Usar o NuGet Gallery ==> Microsoft.AspNetCore.Identity para EntityFrameworkCore
 Instalar primeiramente no projeto de dominios.
 
 
+===========================
+Criando um interceptor no front
+
+ng g interceptor interceptors/jwt
+
+============================
+
+Criando um Guard
+
+ng g guard guard/auth
+
+
+
+
+
+

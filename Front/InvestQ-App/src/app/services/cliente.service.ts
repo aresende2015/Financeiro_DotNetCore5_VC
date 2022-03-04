@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { Cliente } from '../models/Cliente';
@@ -13,7 +13,7 @@ export class ClienteService {
 
   public getAllClientes(): Observable<Cliente[]> {
     return this.http
-      .get<Cliente[]>(this.baseURL)
+      .get<Cliente[]>(this.baseURL )
       .pipe(take(1));
   }
 

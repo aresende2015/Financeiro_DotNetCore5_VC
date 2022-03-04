@@ -44,7 +44,7 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<UserDto> CreateUserAsync(UserDto userDto)
+        public async Task<UserUpdateDto> CreateUserAsync(UserDto userDto)
         {
              try
             {
@@ -54,7 +54,7 @@ namespace InvestQ.Application.Services
 
                 if  (result.Succeeded) 
                 {
-                    var userToReturn = _mapper.Map<UserDto>(user);
+                    var userToReturn = _mapper.Map<UserUpdateDto>(user);
 
                     return userToReturn;
                 }
@@ -93,11 +93,16 @@ namespace InvestQ.Application.Services
 
                 if (user == null) return null;
 
+                userUpdateDto.Id = user.Id;
+
                 _mapper.Map(userUpdateDto, user);
 
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                if  (userUpdateDto.Password != null)
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-                var result = await _userManager.ResetPasswordAsync(user, token, userUpdateDto.Password);
+                    await _userManager.ResetPasswordAsync(user, token, userUpdateDto.Password);
+                }                
 
                 _userRepo.Atualizar<User>(user);
 

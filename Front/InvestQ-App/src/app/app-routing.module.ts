@@ -19,8 +19,55 @@ import { SubsetoresListaComponent } from './components/setores/subsetores-lista/
 import { SegmentosListaComponent } from './components/setores/segmentos-lista/segmentos-lista.component';
 import { SubsetorDetalheComponent } from './components/setores/subsetor-detalhe/subsetor-detalhe.component';
 import { SegmentoDetalheComponent } from './components/setores/segmento-detalhe/segmento-detalhe.component';
+import { AuthGuard } from './guard/auth.guard';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'user', redirectTo: 'user/perfil'},
+      {
+        path: 'user/perfil', component: PerfilComponent
+      },
+      { path: 'corretoras', redirectTo: 'corretoras/lista' },
+      {
+        path: 'corretoras', component: CorretorasComponent,
+        children: [
+          { path: 'detalhe/:id', component: CorretoraDetalheComponent },
+          { path: 'detalhe', component: CorretoraDetalheComponent },
+          { path: 'lista', component: CorretoraListaComponent }
+        ]
+      },
+      { path: 'clientes', redirectTo: 'clientes/lista' },
+      {
+        path: 'clientes', component: ClientesComponent,
+        children: [
+          { path: 'detalhe/:id', component: ClienteDetalheComponent },
+          { path: 'detalhe', component: ClienteDetalheComponent },
+          { path: 'lista', component: ClienteListaComponent }
+        ]
+      },
+      { path: 'setores', redirectTo: 'setores/lista' },
+      {
+        path: 'setores', component: SetoresComponent,
+        children: [
+          { path: 'detalhe/:id', component: SetorDetalheComponent },
+          { path: 'subsetordetalhe/:id', component: SubsetorDetalheComponent },
+          { path: 'listarsubsetores/:id', component: SubsetoresListaComponent },
+          { path: 'listarsegmentos/:id', component: SegmentosListaComponent },
+          { path: 'segmentodetalhe/:subsetorId/:id', component: SegmentoDetalheComponent },
+          { path: 'detalhe', component: SetorDetalheComponent },
+          { path: 'lista', component: SetorListaComponent }
+        ]
+      },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'contatos', component: ContatosComponent },
+    ]
+  },
   {
     path: 'user', component: UserComponent,
     children: [
@@ -28,48 +75,12 @@ const routes: Routes = [
       { path: 'registration', component: RegistrationComponent}
     ]
   },
-  {
-    path: 'user/perfil', component: PerfilComponent
-  },
-  { path: 'corretoras', redirectTo: 'corretoras/lista' },
-  {
-    path: 'corretoras', component: CorretorasComponent,
-    children: [
-      { path: 'detalhe/:id', component: CorretoraDetalheComponent },
-      { path: 'detalhe', component: CorretoraDetalheComponent },
-      { path: 'lista', component: CorretoraListaComponent }
-    ]
-  },
-  { path: 'clientes', redirectTo: 'clientes/lista' },
-  {
-    path: 'clientes', component: ClientesComponent,
-    children: [
-      { path: 'detalhe/:id', component: ClienteDetalheComponent },
-      { path: 'detalhe', component: ClienteDetalheComponent },
-      { path: 'lista', component: ClienteListaComponent }
-    ]
-  },
-  { path: 'setores', redirectTo: 'setores/lista' },
-  {
-    path: 'setores', component: SetoresComponent,
-    children: [
-      { path: 'detalhe/:id', component: SetorDetalheComponent },
-      { path: 'subsetordetalhe/:id', component: SubsetorDetalheComponent },
-      { path: 'listarsubsetores/:id', component: SubsetoresListaComponent },
-      { path: 'listarsegmentos/:id', component: SegmentosListaComponent },
-      { path: 'segmentodetalhe/:subsetorId/:id', component: SegmentoDetalheComponent },
-      { path: 'detalhe', component: SetorDetalheComponent },
-      { path: 'lista', component: SetorListaComponent }
-    ]
-  },
-  { path: 'contatos', component: ContatosComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
+  { path: 'home', component: HomeComponent },
+  { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+exports: [RouterModule]
 })
 export class AppRoutingModule { }

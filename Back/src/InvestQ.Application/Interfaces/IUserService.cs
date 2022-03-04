@@ -12,7 +12,7 @@ namespace InvestQ.Application.Interfaces
         Task<bool> UserExists(string username);
         Task<UserUpdateDto> GetUserByUsernameAsync(string username);
         Task<SignInResult> CheckUserPasswordAsync(UserUpdateDto userUpdateDto, string password);
-        Task<UserDto> CreateUserAsync(UserDto userDto);
+        Task<UserUpdateDto> CreateUserAsync(UserDto userDto);
         Task<UserUpdateDto> UpdateUser(UserUpdateDto userUpdateDto);
     }
 }

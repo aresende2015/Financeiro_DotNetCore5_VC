@@ -9,7 +9,7 @@
 
 	<div class="col-md-6">
 
-		<form [formGroup]="form" class="p-1">
+		<form [formGroup]="form" class="p-1" (ngSubmit)="register()">
       <div class="pb-2 d-block d-md-none">
         <h3 class="border-bottom">Cadastro de Usuário</h3>
       </div>
@@ -73,17 +73,17 @@
           <label for="">Usuario:</label>
           <input
             class="form-control" type="text"
-            [ngClass]="{'is-invalid': f.usuario.errors && f.usuario.touched}"
-            formControlName="usuario"
+            [ngClass]="{'is-invalid': f.username.errors && f.username.touched}"
+            formControlName="username"
             placeholder="Insira o nome de Usuário"
           />
-          <div *ngIf="f.usuario.errors?.required" class="invalid-feedback">
+          <div *ngIf="f.username.errors?.required" class="invalid-feedback">
             O usuário é obrigatório.
           </div>
-          <div *ngIf="f.usuario.errors?.minlength" class="invalid-feedback">
+          <div *ngIf="f.username.errors?.minlength" class="invalid-feedback">
             O usuário deve possuir pelo menos 3 caracteres.
           </div>
-          <div *ngIf="f.usuario.errors?.maxlength" class="invalid-feedback">
+          <div *ngIf="f.username.errors?.maxlength" class="invalid-feedback">
             O usuário deve possuir no máximo 20 caracteres.
           </div>
         </div>
@@ -93,17 +93,17 @@
           <label for="">Senha:</label>
           <input
             class="form-control" type="password"
-            [ngClass]="{'is-invalid': f.senha.errors && f.senha.touched}"
-            formControlName="senha"
+            [ngClass]="{'is-invalid': f.password.errors && f.password.touched}"
+            formControlName="password"
             placeholder="Digite uma Senha"
           />
-          <div *ngIf="f.senha.errors?.required" class="invalid-feedback">
+          <div *ngIf="f.password.errors?.required && f.password.touched" class="invalid-feedback">
             A senha é obrigatória.
           </div>
-          <div *ngIf="f.senha.errors?.minlength" class="invalid-feedback">
+          <div *ngIf="f.password.errors?.minlength && f.password.touched" class="invalid-feedback">
             A senha deve possuir pelo menos 6 caracteres.
           </div>
-          <div *ngIf="f.senha.errors?.maxlength" class="invalid-feedback">
+          <div *ngIf="f.password.errors?.maxlength && f.password.touched" class="invalid-feedback">
             A senha deve possuir no máximo 100 caracteres.
           </div>
         </div>
@@ -111,20 +111,20 @@
           <label for="">Confirmar Senha:</label>
           <input
             class="form-control" type="password"
-            [ngClass]="{'is-invalid': f.confirmarSenha.errors && f.confirmarSenha.touched}"
-            formControlName="confirmarSenha"
+            [ngClass]="{'is-invalid': f.confirmarPassword.errors && f.confirmarPassword.touched}"
+            formControlName="confirmarPassword"
             placeholder="Confirme a Senha"
           />
-          <div *ngIf="f.confirmarSenha.errors?.required" class="invalid-feedback">
+          <div *ngIf="f.confirmarPassword.errors?.required" class="invalid-feedback">
             A confirmação da senha é obrigatória.
           </div>
-          <div *ngIf="f.confirmarSenha.errors?.mustMatch" class="invalid-feedback">
+          <div *ngIf="f.confirmarPassword.errors?.mustMatch" class="invalid-feedback">
             A confirmação da senha deve ser igual a senha.
           </div>
-          <div *ngIf="f.confirmarSenha.errors?.minlength" class="invalid-feedback">
+          <div *ngIf="f.confirmarPassword.errors?.minlength" class="invalid-feedback">
             A confirmação da senha deve possuir pelo menos 6 caracteres.
           </div>
-          <div *ngIf="f.confirmarSenha.errors?.maxlength" class="invalid-feedback">
+          <div *ngIf="f.confirmarPassword.errors?.maxlength" class="invalid-feedback">
             A confirmação da senha deve possuir no máximo 100 caracteres.
           </div>
         </div>
@@ -137,7 +137,7 @@
       </div>
       <div class="form-row">
         <div class="form-group col-12 d-grid gap-2">
-          <button class="btn btn-lg btn-success px-5">
+          <button [disabled]="!form.valid" class="btn btn-lg btn-success px-5" type="submit">
             Registar
           </button>
         </div>
