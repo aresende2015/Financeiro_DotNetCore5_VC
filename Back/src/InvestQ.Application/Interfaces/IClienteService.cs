@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Application.Dtos;
+using InvestQ.Data.Paginacao;
 
 namespace InvestQ.Application.Interfaces
 {
@@ -15,8 +16,8 @@ namespace InvestQ.Application.Interfaces
         Task<bool> InativarCliente(int userId, ClienteDto model);
         Task<bool> ReativarCliente(int userId, ClienteDto model);
 
-        Task<ClienteDto[]> GetAllClientesAsync(int userId, bool includeCorretora);
+        Task<PageList<ClienteDto>> GetAllClientesAsync(int userId, PageParams pageParams, bool includeCorretora);
         Task<ClienteDto> GetClienteByIdAsync(int userId, int clienteId, bool includeCorretora);
-        Task<ClienteDto[]> GetAllClientesByCorretoraAsync(int userId, int corretoraId, bool includeCorretora);
+        Task<PageList<ClienteDto>> GetAllClientesByCorretoraAsync(int userId, PageParams pageParams, int corretoraId, bool includeCorretora);
     }
 }

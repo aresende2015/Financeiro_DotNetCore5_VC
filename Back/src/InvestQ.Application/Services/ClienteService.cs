@@ -6,6 +6,7 @@ using AutoMapper;
 using InvestQ.Application.Dtos;
 using InvestQ.Application.Interfaces;
 using InvestQ.Data.Interfaces;
+using InvestQ.Data.Paginacao;
 using InvestQ.Domain.Entities;
 
 namespace InvestQ.Application.Services
@@ -105,15 +106,20 @@ namespace InvestQ.Application.Services
             return await _clienteRepo.SalvarMudancasAsync();
         }
 
-        public async Task<ClienteDto[]> GetAllClientesAsync(int userId, bool includeCorretora = false)
+        public async Task<PageList<ClienteDto>> GetAllClientesAsync(int userId, PageParams pageParams, bool includeCorretora = false)
         {
             try
             {
-                var clientes = await _clienteRepo.GetAllClientesAsync(userId, includeCorretora);
+                var clientes = await _clienteRepo.GetAllClientesAsync(userId, pageParams, includeCorretora);
 
                 if (clientes == null) return null;
 
-                var RetornoDto = _mapper.Map<ClienteDto[]>(clientes);
+                var RetornoDto = _mapper.Map<PageList<ClienteDto>>(clientes);
+
+                RetornoDto.CurrentPage = clientes.CurrentPage;
+                RetornoDto.TotalPages = clientes.TotalPages;
+                RetornoDto.PageSize = clientes.PageSize;
+                RetornoDto.TotalCount = clientes.TotalCount;
 
                 return RetornoDto;     
             }
@@ -123,15 +129,20 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<ClienteDto[]> GetAllClientesByCorretoraAsync(int userId, int corretoraId, bool includeCorretora)
+        public async Task<PageList<ClienteDto>> GetAllClientesByCorretoraAsync(int userId, PageParams pageParams, int corretoraId, bool includeCorretora)
         {
             try
             {
-                var clientes = await _clienteRepo.GetAllClientesByCorretoraId(userId, corretoraId, includeCorretora);
+                var clientes = await _clienteRepo.GetAllClientesByCorretoraId(userId, pageParams, corretoraId, includeCorretora);
 
                 if (clientes == null) return null;
 
-                var RetornoDto = _mapper.Map<ClienteDto[]>(clientes);
+                var RetornoDto = _mapper.Map<PageList<ClienteDto>>(clientes);
+
+                RetornoDto.CurrentPage = clientes.CurrentPage;
+                RetornoDto.TotalPages = clientes.TotalPages;
+                RetornoDto.PageSize = clientes.PageSize;
+                RetornoDto.TotalCount = clientes.TotalCount;
 
                 return RetornoDto;     
             }

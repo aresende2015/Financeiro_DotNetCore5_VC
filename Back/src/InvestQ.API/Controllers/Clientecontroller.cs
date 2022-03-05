@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using InvestQ.API.Extensions;
 using InvestQ.Application.Dtos;
 using InvestQ.Application.Interfaces;
+using InvestQ.Data.Paginacao;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,13 +28,15 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get() 
+        public async Task<IActionResult> Get([FromQuery]PageParams pageParams) 
         {
             try
             {
-                 var clientes = await _clienteService.GetAllClientesAsync(User.GetUserId(), true);
+                 var clientes = await _clienteService.GetAllClientesAsync(User.GetUserId(), pageParams, true);
 
                  if (clientes == null) return NoContent();
+
+                 Response.AddPagination(clientes.CurrentPage, clientes.PageSize, clientes.TotalCount, clientes.TotalPages);
 
                  return Ok(clientes);
             }

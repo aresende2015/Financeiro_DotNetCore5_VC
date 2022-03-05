@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using InvestQ.Application.Dtos;
 using InvestQ.Application.Helpers;
+using InvestQ.Data.Paginacao;
 using InvestQ.Domain.Entities;
 using InvestQ.Domain.Identity;
 
