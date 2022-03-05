@@ -9,7 +9,7 @@
           type="text"
           class="form-control"
           placeholder="Filtrar por cpf ou nome"
-          [(ngModel)]="filtroLista"
+          (input)="filtrarClientes($event.target)"
         >
       </div>
     </div>
@@ -34,7 +34,7 @@
       </tr>
     </thead>
     <tbody *ngIf="clientes && clientes.length">
-      <tr *ngFor="let cliente of clientesFiltrados">
+      <tr *ngFor="let cliente of clientes">
         <td>{{cliente.id}}</td>
         <td>{{cliente.cpf}}</td>
         <td>{{cliente.nomeCompleto}}</td>
@@ -61,6 +61,22 @@
       </tr>
     </tfoot>
   </table>
+  <div class="d-flex justify-content-center">
+    <pagination
+      [boundaryLinks]="true"
+
+      [totalItems]="pagination.totalItems"
+      [itemsPerPage]="pagination.itemsPerPage"
+      [(ngModel)]="pagination.currentPage"
+      (pageChanged)="pageChanged($event)"
+      pageBtnClass="btn"
+
+      previousText="&lsaquo;"
+      nextText="&rsaquo;"
+      firstText="&laquo;"
+      lastText="&raquo;">
+    </pagination>
+  </div>
 </div>
 
 <ng-template #template>

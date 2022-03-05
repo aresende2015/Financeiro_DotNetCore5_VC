@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Cliente } from '@app/models/Cliente';
 import { ClienteService } from '@app/services/cliente.service';
 import { Router } from '@angular/router';
+import { PaginatedResult, Pagination } from '@app/models/pagination/Pagination';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-cliente-lista',
@@ -16,28 +18,36 @@ export class ClienteListaComponent implements OnInit {
 
   modalRef?: BsModalRef;
 
+  public pagination = {} as Pagination;
+
   public clientes: Cliente[] = [];
-  public clientesFiltrados: Cliente[] = [];
   public clienteId =0;
 
-  private _filtroLista: string = '';
+  termoBuscaChanged: Subject<string> = new Subject<string>();
 
-  public get filtroLista(): string {
-    return this._filtroLista;
-  }
-
-  public set filtroLista(value: string) {
-    this._filtroLista = value;
-    this.clientesFiltrados = this.filtroLista ? this.filtrarClientes(this.filtroLista) : this.clientes;
-  }
-
-  filtrarClientes(filtrarPor: string): Cliente[] {
-    filtrarPor = filtrarPor.toLocaleLowerCase();
-    return this.clientes.filter(
-      ( cliente: { nomeCompleto: string; cpf: string; }) =>
-            cliente.nomeCompleto.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
-            cliente.cpf.toLocaleLowerCase().indexOf(filtrarPor) !== -1
-    )
+  filtrarClientes(evt: any): void {
+    if (this.termoBuscaChanged.observers.length === 0) {
+      this.termoBuscaChanged.pipe(debounceTime(1000)).subscribe(
+        filtrarPor => {
+          this.spinner.show();
+          this.clienteService.getAllClientes(
+            this.pagination.currentPage,
+            this.pagination.itemsPerPage,
+            filtrarPor
+        ).subscribe(
+          (paginatedResult: PaginatedResult<Cliente[]>) => {
+            this.clientes = paginatedResult.result;
+            this.pagination = paginatedResult.pagination;
+          },
+          (error: any) => {
+            console.log(error.error)
+            this.toastr.error('Erro ao carregar a tela...', 'Error!');
+          }
+        ).add(() => this.spinner.hide());
+        }
+      )
+    }
+    this.termoBuscaChanged.next(evt.value);
   }
 
   constructor(
@@ -49,7 +59,8 @@ export class ClienteListaComponent implements OnInit {
   ) { }
 
   public ngOnInit() {
-    this.spinner.show();
+    this.pagination = {currentPage: 1, itemsPerPage: 2, totalItems: 1} as Pagination;
+
     this.carregarClientes();
 
     setTimeout(() => {
@@ -59,21 +70,20 @@ export class ClienteListaComponent implements OnInit {
   }
 
   public carregarClientes(): void {
+    this.spinner.show();
     const observer = {
-      next: (_clientes: Cliente[]) => {
-        this.clientes = _clientes;
-        this.clientesFiltrados = this.clientes;
+      next: (paginatedResult: PaginatedResult<Cliente[]>) => {
+        this.clientes = paginatedResult.result;
+        this.pagination = paginatedResult.pagination;
       },
       error: (error: any) => {
-        this.spinner.hide()
+        console.log(error.error)
         this.toastr.error('Erro ao carregar a tela...', 'Error!');
-      },
-      complete: () => {
-        this.spinner.hide()
       }
-
     };
-    this.clienteService.getAllClientes().subscribe(observer);
+    this.clienteService.getAllClientes(this.pagination.currentPage, this.pagination.itemsPerPage, null)
+                       .subscribe(observer)
+                       .add(() => this.spinner.hide());
   }
 
   public openModal(event: any, template: TemplateRef<any>, clienteId: number): void {
@@ -101,9 +111,6 @@ export class ClienteListaComponent implements OnInit {
       },
       //() => {this.spinner.hide();}
     ).add(() => {this.spinner.hide();});
-
-
-
   }
 
   public decline(): void {
@@ -112,6 +119,11 @@ export class ClienteListaComponent implements OnInit {
 
   public detalheCliente(id: number): void {
     this.router.navigate([`clientes/detalhe/${id}`])
+  }
+
+  public pageChanged(event): void {
+    this.pagination.currentPage = event.page;
+    this.carregarClientes();
   }
 
 }

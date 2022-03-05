@@ -29,7 +29,9 @@ namespace InvestQ.Data.Repositories
                              .ThenInclude(cc => cc.Corretora);
 
             query = query.AsNoTracking()
-                         .Where(c => c.UserId == userId)
+                         .Where(c => ((c.Nome + ' ' + c.SobreNome).ToLower().Contains(pageParams.Term.ToLower()) ||
+                                      c.Cpf.Contains(pageParams.Term)) &&
+                                      c.UserId == userId)
                          .OrderBy(c => c.Id);
 
             return await PageList<Cliente>.CreateAsync(query, pageParams.PageNumber, pageParams.pageSize);
