@@ -21,7 +21,8 @@ namespace InvestQ.Data.Repositories
         {
             IQueryable<Segmento> query = _context.Segmentos;
 
-            query = query.Include(ss => ss.Subsetor)
+            query = query.Include(s => s.Acoes)
+                        .Include(s => s.Subsetor)
                         .ThenInclude(s => s.Setor);
             
             query = query.AsNoTracking()
@@ -33,6 +34,10 @@ namespace InvestQ.Data.Repositories
         public async Task<Segmento> GetSegmentoByIdsAsync(int subsetorId, int segmentoId)
         {
             IQueryable<Segmento> query = _context.Segmentos;
+
+            query = query.Include(s => s.Acoes)
+                        .Include(s => s.Subsetor)
+                        .ThenInclude(s => s.Setor);
 
             query = query.AsNoTracking()
                         .Where(s => s.SubsetorId == subsetorId

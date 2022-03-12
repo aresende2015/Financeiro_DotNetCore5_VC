@@ -24,16 +24,17 @@ namespace InvestQ.Data.Context
         }
 
         public DbSet<Corretora> Corretoras { get; set; }
-
         public DbSet<Cliente> Clientes { get; set; }
-
         public DbSet<ClienteCorretora> ClientesCorretoras { get; set; }
-
         public DbSet<Setor> Setores { get; set; }
-
         public DbSet<Subsetor> Subsetores { get; set; }
-
         public DbSet<Segmento> Segmentos { get; set; }
+        public DbSet<SegmentoAnbima> SegmentosAnbimas { get; set; }
+        public DbSet<FundoImobiliario> FundosImobiliarios { get; set; }
+        public DbSet<TipoDeInvestimento> TiposDeInvestimentos { get; set; }
+        public DbSet<TesouroDireto> TesourosDiretos { get; set; }
+        public DbSet<AdministradorDeFundoImobiliario> AdministradoresDeFundosImobiliarios { get; set; }
+        public DbSet<Acao> Acoes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -44,6 +45,14 @@ namespace InvestQ.Data.Context
             builder.ApplyConfiguration(new SetorMap());
             builder.ApplyConfiguration(new SubsetorMap());
             builder.ApplyConfiguration(new SegmentoMap());
+            builder.ApplyConfiguration(new SegmentoAnbimaMap());
+            builder.ApplyConfiguration(new FundoImobiliarioMap());
+            builder.ApplyConfiguration(new TipoDeInvestimentoMap());
+            builder.ApplyConfiguration(new AdministradorDeFundoImobiliarioMap());
+            builder.ApplyConfiguration(new TesouroDiretoMap());
+            builder.ApplyConfiguration(new AcaoMap());
+            
+
             builder.ApplyConfiguration(new UserRoleMap());
 
             // builder.Entity<Cliente>()

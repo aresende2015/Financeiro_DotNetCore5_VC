@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using InvestQ.Application.Dtos;
 using InvestQ.Application.Helpers;
-using InvestQ.Data.Paginacao;
 using InvestQ.Domain.Entities;
 using InvestQ.Domain.Identity;
 
@@ -36,6 +31,18 @@ namespace InvestQ.Application.Profiles
             CreateMap<Subsetor, SubsetorDto>().ReverseMap();
 
             CreateMap<Segmento, SegmentoDto>().ReverseMap();
+
+            CreateMap<Acao, AcaoDto>().ReverseMap();
+
+            CreateMap<AdministradorDeFundoImobiliario, AdministradorDeFundoImobiliarioDto>().ReverseMap();
+
+            CreateMap<FundoImobiliario, FundoImobiliarioDto>().ReverseMap();
+
+            CreateMap<SegmentoAnbima, SegmentoAnbimaDto>().ReverseMap();
+
+            CreateMap<TesouroDireto, TesouroDiretoDto>().ReverseMap();
+
+            CreateMap<TipoDeInvestimento, TipoDeInvestimentoDto>().ReverseMap();
 
             CreateMap<User, UserDto>().ReverseMap();
 

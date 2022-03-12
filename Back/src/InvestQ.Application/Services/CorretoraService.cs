@@ -51,7 +51,7 @@ namespace InvestQ.Application.Services
             try
             {
                 if (model.Inativo)
-                                throw new Exception("Não é possível atualizar uma Corretora já inativa.");
+                    throw new Exception("Não é possível atualizar uma Corretora já inativa.");
 
                 var corretora = await _corretoraRepo.GetCorretoraByIdAsync(model.Id, false);
 

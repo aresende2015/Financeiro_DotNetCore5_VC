@@ -38,5 +38,6 @@ namespace InvestQ.Domain.Entities
         public bool Inativo { get; set; } = false;
         public int SubsetorId {get; set;}
         public Subsetor Subsetor { get; set; }
+        public IEnumerable<Acao> Acoes { get; set; }
     }
 }
