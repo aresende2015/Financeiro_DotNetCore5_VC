@@ -83,6 +83,12 @@ namespace InvestQ.API
             services.AddScoped<ISetorRepo, SetorRepo>();
             services.AddScoped<ISubsetorRepo, SubsetorRepo>();
             services.AddScoped<ISegmentoRepo, SegmentoRepo>();
+            services.AddScoped<ISegmentoAnbimaRepo, SegmentoAnbimaRepo>();
+            services.AddScoped<IFundoImobiliarioRepo, FundoImobiliarioRepo>();
+            services.AddScoped<IAdministradorDeFundoImobiliarioRepo, AdministradorDeFundoImobiliarioRepo>();
+            services.AddScoped<ITipoDeInvestimentoRepo, TipoDeInvestimentoRepo>();
+            services.AddScoped<ITesouroDiretoRepo, TesouroDiretoRepo>();
+            services.AddScoped<IAcaoRepo, AcaoRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
 
             services.AddScoped<IGeralRepo, GeralRepo>();
@@ -92,6 +98,12 @@ namespace InvestQ.API
             services.AddScoped<ISetorService, SetorService>();
             services.AddScoped<ISubsetorService, SubsetorService>();
             services.AddScoped<ISegmentoService, SegmentoService>();
+            services.AddScoped<ISegmentoAnbimaService, SegmentoAnbimaService>();
+            services.AddScoped<IFundoImobiliarioService, FundoImobiliarioService>();
+            services.AddScoped<IAdministradorDeFundoImobiliarioService, AdministradorDeFundoImobiliarioService>();
+            services.AddScoped<ITipoDeInvestimentoService, TipoDeInvestimentoService>();
+            services.AddScoped<ITesouroDiretoService, TesouroDiretoService>();
+            services.AddScoped<IAcaoService, AcaoService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITokenService, TokenService>();
 

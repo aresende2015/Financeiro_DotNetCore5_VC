@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Application.Dtos;
 using InvestQ.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvestQ.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class SetorController : ControllerBase
