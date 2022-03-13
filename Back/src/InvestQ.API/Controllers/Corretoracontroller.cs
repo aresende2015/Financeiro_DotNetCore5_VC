@@ -15,12 +15,12 @@ namespace InvestQ.API.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class Corretoracontroller : ControllerBase
+    public class CorretoraController : ControllerBase
     {
         private readonly ICorretoraService _corretoraService;
         private readonly IWebHostEnvironment _hostEnvironment;
 
-        public Corretoracontroller(ICorretoraService corretoraService, IWebHostEnvironment hostEnvironment)
+        public CorretoraController(ICorretoraService corretoraService, IWebHostEnvironment hostEnvironment)
         {
             _hostEnvironment = hostEnvironment;
             _corretoraService = corretoraService;
