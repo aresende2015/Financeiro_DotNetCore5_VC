@@ -44,6 +44,8 @@ namespace InvestQ.Application.Profiles
 
             CreateMap<TipoDeInvestimento, TipoDeInvestimentoDto>().ReverseMap();
 
+            CreateMap<TipoDeAtivo, TipoDeAtivoDto>().ReverseMap();
+
             CreateMap<User, UserDto>().ReverseMap();
 
             CreateMap<User, UserUpdateDto>().ReverseMap();
