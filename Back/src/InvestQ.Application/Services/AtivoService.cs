@@ -136,7 +136,7 @@ namespace InvestQ.Application.Services
 
                 if (ativo == null) return null;
 
-                return = _mapper.Map<AtivoDto>(ativo);  
+                return _mapper.Map<AtivoDto>(ativo);  
             }
             catch (Exception ex)
             {
