@@ -25,5 +25,7 @@ namespace InvestQ.Application.Dtos
         public SegmentoDto Segmento { get; set; }
         public int TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimentoDto TipoDeInvestimento { get; set; }
+        public int AtivoId { get; set; }
+        public AtivoDto Ativo { get; set; }        
     }
 }

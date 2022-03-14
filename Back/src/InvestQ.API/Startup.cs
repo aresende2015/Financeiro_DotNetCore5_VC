@@ -88,8 +88,9 @@ namespace InvestQ.API
             services.AddScoped<IAdministradorDeFundoImobiliarioRepo, AdministradorDeFundoImobiliarioRepo>();
             services.AddScoped<ITipoDeInvestimentoRepo, TipoDeInvestimentoRepo>();
             services.AddScoped<ITesouroDiretoRepo, TesouroDiretoRepo>();
-            services.AddScoped<ITipoDeAtivoRepo, TipoDeAtivoRepo>();
+            services.AddScoped<IProventoRepo, ProventoRepo>();
             services.AddScoped<IAcaoRepo, AcaoRepo>();
+            services.AddScoped<IAtivoRepo, AtivoRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
 
             services.AddScoped<IGeralRepo, GeralRepo>();
@@ -104,8 +105,9 @@ namespace InvestQ.API
             services.AddScoped<IAdministradorDeFundoImobiliarioService, AdministradorDeFundoImobiliarioService>();
             services.AddScoped<ITipoDeInvestimentoService, TipoDeInvestimentoService>();
             services.AddScoped<ITesouroDiretoService, TesouroDiretoService>();
-            services.AddScoped<ITipoDeAtivoService, TipoDeAtivoService>();
+            services.AddScoped<IProventoService, ProventoService>();            
             services.AddScoped<IAcaoService, AcaoService>();
+            services.AddScoped<IAtivoService, AtivoService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITokenService, TokenService>();
 

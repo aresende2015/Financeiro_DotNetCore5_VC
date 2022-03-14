@@ -48,5 +48,7 @@ namespace InvestQ.Domain.Entities
         public Segmento Segmento { get; set; }
         public int TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimento TipoDeInvestimento { get; set; }
+        public int AtivoId { get; set; }
+        public Ativo Ativo { get; set; }
     }
 }

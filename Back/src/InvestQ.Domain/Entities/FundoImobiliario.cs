@@ -58,5 +58,7 @@ namespace InvestQ.Domain.Entities
         public SegmentoAnbima SegmentoAnbima { get; set; }
         public int AdministradorDeFundoImobiliarioId { get; set; }
         public AdministradorDeFundoImobiliario AdministradorDeFundoImobiliario { get; set; }
+        public int AtivoId { get; set; }
+        public Ativo Ativo { get; set; }
     }
 }

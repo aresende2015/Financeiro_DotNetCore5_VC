@@ -35,7 +35,8 @@ namespace InvestQ.Data.Context
         public DbSet<TesouroDireto> TesourosDiretos { get; set; }
         public DbSet<AdministradorDeFundoImobiliario> AdministradoresDeFundosImobiliarios { get; set; }
         public DbSet<Acao> Acoes { get; set; }
-        public DbSet<TipoDeAtivo> TiposDeAtivos { get; set; }
+        public DbSet<Provento> Proventos { get; set; }
+        public DbSet<Ativo> Ativos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -52,7 +53,8 @@ namespace InvestQ.Data.Context
             builder.ApplyConfiguration(new AdministradorDeFundoImobiliarioMap());
             builder.ApplyConfiguration(new TesouroDiretoMap());
             builder.ApplyConfiguration(new AcaoMap());
-            builder.ApplyConfiguration(new TipoDeAtivoMap());
+            builder.ApplyConfiguration(new ProventoMap());
+            builder.ApplyConfiguration(new AtivoMap());
             
 
             builder.ApplyConfiguration(new UserRoleMap());

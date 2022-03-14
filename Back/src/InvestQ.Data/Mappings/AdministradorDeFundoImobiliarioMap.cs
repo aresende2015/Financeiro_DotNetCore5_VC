@@ -14,6 +14,10 @@ namespace InvestQ.Data.Mappings
         {
             builder.ToTable("AdministradoresDeFundosImobiliarios");
 
+            builder.HasMany(af => af.FundosImobiliarios)
+                    .WithOne(fi => fi.AdministradorDeFundoImobiliario)
+                    .OnDelete(DeleteBehavior.Cascade);
+
             builder.Property(a => a.CNPJ)
                 .HasColumnType("varchar(14)")
                 .IsRequired();

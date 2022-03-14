@@ -26,6 +26,8 @@ namespace InvestQ.Data.Mappings
             builder.Property(a => a.RazaoSocial)
                 .IsRequired()
                 .HasMaxLength(150);
+
+            builder.HasOne(a => a.Ativo).WithOne(a => a.Acao).IsRequired();
         }
     }
 }

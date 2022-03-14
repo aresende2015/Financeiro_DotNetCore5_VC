@@ -18,5 +18,7 @@ namespace InvestQ.Application.Dtos
         public bool Inativo { get; set; } = false;
         public int TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimentoDto TipoDeInvestimento { get; set; }
+        public int AtivoId { get; set; }
+        public AtivoDto Ativo { get; set; } 
     }
 }

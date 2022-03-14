@@ -14,6 +14,18 @@ namespace InvestQ.Data.Mappings
         {
             builder.ToTable("TiposDeInvestimentos");
 
+            builder.HasMany(ti => ti.FundosImobiliarios)
+                    .WithOne(fi => fi.TipoDeInvestimento)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(ti => ti.TesourosDiretos)
+                    .WithOne(td => td.TipoDeInvestimento)
+                    .OnDelete(DeleteBehavior.Cascade); 
+
+            builder.HasMany(ti => ti.Acoes)
+                    .WithOne(a => a.TipoDeInvestimento)
+                    .OnDelete(DeleteBehavior.Cascade);
+
             builder
                 .Property(ti => ti.Descricao)
                 .IsRequired()

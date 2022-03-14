@@ -18,6 +18,8 @@ namespace InvestQ.Data.Mappings
                 .Property(td => td.Descricao)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            builder.HasOne(td => td.Ativo).WithOne(a => a.TesouroDireto).IsRequired();
         }
     }
 }

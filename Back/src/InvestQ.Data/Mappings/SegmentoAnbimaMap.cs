@@ -14,6 +14,10 @@ namespace InvestQ.Data.Mappings
         {
             builder.ToTable("SegmentosAnbimas");
 
+            builder.HasMany(sa => sa.FundosImobiliarios)
+                    .WithOne(fi => fi.SegmentoAnbima)
+                    .OnDelete(DeleteBehavior.Cascade);
+
             builder
                 .Property(sa => sa.Descricao)
                 .IsRequired()

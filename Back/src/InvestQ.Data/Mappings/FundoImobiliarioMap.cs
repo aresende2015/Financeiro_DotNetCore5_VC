@@ -26,6 +26,8 @@ namespace InvestQ.Data.Mappings
                 .IsRequired()
                 .HasMaxLength(50);
 
+            builder.HasOne(fi => fi.Ativo).WithOne(a => a.FundoImobiliario).IsRequired();
+
         }
     }
 }

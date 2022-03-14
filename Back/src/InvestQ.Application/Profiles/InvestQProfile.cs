@@ -1,7 +1,9 @@
 using AutoMapper;
 using InvestQ.Application.Dtos;
+using InvestQ.Application.Dtos.Enum;
 using InvestQ.Application.Helpers;
 using InvestQ.Domain.Entities;
+using InvestQ.Domain.Entities.Enum;
 using InvestQ.Domain.Identity;
 
 namespace InvestQ.Application.Profiles
@@ -44,13 +46,17 @@ namespace InvestQ.Application.Profiles
 
             CreateMap<TipoDeInvestimento, TipoDeInvestimentoDto>().ReverseMap();
 
-            CreateMap<TipoDeAtivo, TipoDeAtivoDto>().ReverseMap();
+            CreateMap<Provento, ProventoDto>().ReverseMap();
+            
+            CreateMap<Ativo, AtivoDto>().ReverseMap();
 
             CreateMap<User, UserDto>().ReverseMap();
 
             CreateMap<User, UserUpdateDto>().ReverseMap();
 
             CreateMap<User, UserLoginDto>().ReverseMap();
+
+            CreateMap<TipoDeAtivo, TipoDeAtivoDto>().ReverseMap();
             
         }
     }

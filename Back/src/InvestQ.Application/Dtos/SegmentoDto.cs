@@ -17,7 +17,6 @@ namespace InvestQ.Application.Dtos
         public bool Inativo { get; set; } = false;
         public int SubsetorId { get; set; }
         public SubsetorDto Subsetor { get; set; }
-
-        //public IEnumerable<AcaoDto> Acoes { get; set; }
+        public IEnumerable<AcaoDto> Acoes { get; set; }
     }
 }

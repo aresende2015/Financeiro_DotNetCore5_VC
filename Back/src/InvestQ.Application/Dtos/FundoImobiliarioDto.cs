@@ -31,5 +31,7 @@ namespace InvestQ.Application.Dtos
         public SegmentoAnbimaDto SegmentoAnbima { get; set; }
         public int AdministradorDeFundoImobiliarioId { get; set; }
         public AdministradorDeFundoImobiliarioDto AdministradorDeFundoImobiliario { get; set; }
+        public int AtivoId { get; set; }
+        public AtivoDto Ativo { get; set; } 
     }
 }
