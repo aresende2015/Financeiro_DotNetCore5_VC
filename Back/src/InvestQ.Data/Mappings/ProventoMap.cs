@@ -13,6 +13,10 @@ namespace InvestQ.Data.Mappings
         public void Configure(EntityTypeBuilder<Provento> builder)
         {
             builder.ToTable("Proventos");
+
+            builder.Property(p => p.Valor)
+                   .HasColumnType("decimal(7,2)")
+                   .IsRequired();
             
         }
     }

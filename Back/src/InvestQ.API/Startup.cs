@@ -36,8 +36,11 @@ namespace InvestQ.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // services.AddDbContext<InvestQContext>(
+            //     context => context.UseSqlite(_configuration.GetConnectionString("Default"))
+            // );
             services.AddDbContext<InvestQContext>(
-                context => context.UseSqlite(_configuration.GetConnectionString("Default"))
+                context => context.UseSqlServer(_configuration.GetConnectionString("Default"))
             );
 
             services.AddIdentityCore<User>(opt => 
