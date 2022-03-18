@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using InvestQ.Domain.Entities.Acoes;
+using InvestQ.Domain.Entities.FundosImobiliarios;
+using InvestQ.Domain.Entities.TesourosDiretos;
 
 namespace InvestQ.Domain.Entities
 {
-    public class TipoDeInvestimento
+    public class TipoDeInvestimento : Entity
     {
         public TipoDeInvestimento() 
         {
         }
-        public TipoDeInvestimento(int id, string descricao)
+        public TipoDeInvestimento(Guid id, string descricao)
         {
             Id = id;
             Descricao = descricao;
@@ -29,10 +30,7 @@ namespace InvestQ.Domain.Entities
             else
                 throw new Exception($"O Tipo de Investimento já estava ativo.");
         }
-        public int Id { get; set; }
         public string Descricao { get; set; }
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
         public IEnumerable<TesouroDireto> TesourosDiretos { get; set; }
         public IEnumerable<Acao> Acoes { get; set; }
         public IEnumerable<FundoImobiliario> FundosImobiliarios { get; set; }

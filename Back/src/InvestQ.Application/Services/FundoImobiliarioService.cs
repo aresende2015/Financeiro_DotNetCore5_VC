@@ -6,7 +6,7 @@ using AutoMapper;
 using InvestQ.Application.Dtos;
 using InvestQ.Application.Interfaces;
 using InvestQ.Data.Interfaces;
-using InvestQ.Domain.Entities;
+using InvestQ.Domain.Entities.FundosImobiliarios;
 
 namespace InvestQ.Application.Services
 {

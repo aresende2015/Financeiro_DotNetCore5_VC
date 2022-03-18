@@ -1,9 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using InvestQ.Domain.Entities;
 using InvestQ.Domain.Entities.Enum;
 
 namespace InvestQ.Application.Dtos
@@ -18,6 +13,6 @@ namespace InvestQ.Application.Dtos
         public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
         public bool Inativo { get; set; } = false;
         public int AtivoId { get; set; }
-        public Ativo Ativo { get; set; }
+        public AtivoDto Ativo { get; set; }
     }
 }

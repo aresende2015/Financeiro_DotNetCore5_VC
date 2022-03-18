@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Domain.Entities.Enum;
 
-namespace InvestQ.Domain.Entities
+namespace InvestQ.Domain.Entities.Ativos
 {
     public class Provento
     {

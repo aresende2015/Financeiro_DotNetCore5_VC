@@ -7,7 +7,7 @@ using InvestQ.Application.Dtos;
 using InvestQ.Application.Dtos.Enum;
 using InvestQ.Application.Interfaces;
 using InvestQ.Data.Interfaces;
-using InvestQ.Domain.Entities;
+using InvestQ.Domain.Entities.Ativos;
 using InvestQ.Domain.Entities.Enum;
 
 namespace InvestQ.Application.Services

@@ -9,6 +9,6 @@ namespace InvestQ.Data.Interfaces
     public interface ITipoDeInvestimentoRepo: IGeralRepo
     {
         Task<TipoDeInvestimento[]> GetAllTipoDeInvestimentoAsync();  
-        Task<TipoDeInvestimento> GetTipoDeInvestimentoByIdAsync(int id);
+        Task<TipoDeInvestimento> GetTipoDeInvestimentoByIdAsync(Guid id);
     }
 }

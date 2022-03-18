@@ -3,41 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InvestQ.Domain.Entities
+namespace InvestQ.Domain.Entities.Acoes
 {
-    public class Segmento
+    public class Subsetor
     {
-        public Segmento() 
+        public Subsetor() 
         {
         }
-        public Segmento(int id, 
+        public Subsetor(int id, 
                         string descricao,
-                        int subsetorId)
+                        int setorId)
         {
             Id = id;
             Descricao = descricao;
-            SubsetorId = subsetorId;
+            SetorId =  setorId;
         }
         public void Inativar()
         {
             if (Inativo)
                 Inativo = true;
             else
-                throw new Exception($"O Segmento já estava inativo.");
+                throw new Exception($"O Subsetor já estava inativo.");
         }
         public void Reativar()
         {
             if (!Inativo)
                 Inativo = false;
             else
-                throw new Exception($"O Segmento já estava ativo.");
+                throw new Exception($"O Subsetor já estava ativo.");
         }
         public int Id { get; set; }
         public string Descricao { get; set; }
         public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
         public bool Inativo { get; set; } = false;
-        public int SubsetorId {get; set;}
-        public Subsetor Subsetor { get; set; }
-        public IEnumerable<Acao> Acoes { get; set; }
+        public int SetorId {get; set;}
+        public Setor Setor { get; set; }
+        public IEnumerable<Segmento> Segmentos { get; set; }
     }
 }

@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using InvestQ.Data.Mappings;
 using InvestQ.Domain.Entities;
+using InvestQ.Domain.Entities.Acoes;
+using InvestQ.Domain.Entities.Ativos;
+using InvestQ.Domain.Entities.FundosImobiliarios;
+using InvestQ.Domain.Entities.TesourosDiretos;
 using InvestQ.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

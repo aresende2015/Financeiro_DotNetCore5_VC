@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using InvestQ.Domain.Entities;
+using InvestQ.Domain.Entities.Ativos;
 using InvestQ.Domain.Entities.Enum;
 
 namespace InvestQ.Data.Interfaces

@@ -3,7 +3,11 @@ using InvestQ.Application.Dtos;
 using InvestQ.Application.Dtos.Enum;
 using InvestQ.Application.Helpers;
 using InvestQ.Domain.Entities;
+using InvestQ.Domain.Entities.Acoes;
+using InvestQ.Domain.Entities.Ativos;
 using InvestQ.Domain.Entities.Enum;
+using InvestQ.Domain.Entities.FundosImobiliarios;
+using InvestQ.Domain.Entities.TesourosDiretos;
 using InvestQ.Domain.Identity;
 
 namespace InvestQ.Application.Profiles

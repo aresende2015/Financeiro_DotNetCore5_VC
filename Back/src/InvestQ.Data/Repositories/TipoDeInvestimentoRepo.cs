@@ -26,7 +26,7 @@ namespace InvestQ.Data.Repositories
             return await query.ToArrayAsync();
         }
 
-        public async Task<TipoDeInvestimento> GetTipoDeInvestimentoByIdAsync(int id)
+        public async Task<TipoDeInvestimento> GetTipoDeInvestimentoByIdAsync(Guid id)
         {
             IQueryable<TipoDeInvestimento> query = _context.TiposDeInvestimentos;
 

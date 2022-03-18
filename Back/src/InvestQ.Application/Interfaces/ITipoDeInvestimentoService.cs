@@ -10,12 +10,12 @@ namespace InvestQ.Application.Interfaces
     {
         Task<TipoDeInvestimentoDto> AdicionarTipoDeInvestimento(TipoDeInvestimentoDto model);
         Task<TipoDeInvestimentoDto> AtualizarTipoDeInvestimento(TipoDeInvestimentoDto model);
-        Task<bool> DeletarTipoDeInvestimento(int tipoDeInvestimentoId);
+        Task<bool> DeletarTipoDeInvestimento(Guid tipoDeInvestimentoId);
         
         Task<bool> InativarTipoDeInvestimento(TipoDeInvestimentoDto model);
         Task<bool> ReativarTipoDeInvestimento(TipoDeInvestimentoDto model);
 
         Task<TipoDeInvestimentoDto[]> GetAllTiposDeInvestimentosAsync();
-        Task<TipoDeInvestimentoDto> GetTipoDeInvestimentoByIdAsync(int tipoDeInvestimentoId);
+        Task<TipoDeInvestimentoDto> GetTipoDeInvestimentoByIdAsync(Guid tipoDeInvestimentoId);
     }
 }

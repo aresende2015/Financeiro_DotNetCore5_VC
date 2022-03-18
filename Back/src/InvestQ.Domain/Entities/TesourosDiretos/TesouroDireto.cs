@@ -1,27 +1,23 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using InvestQ.Domain.Entities.Ativos;
 
-namespace InvestQ.Domain.Entities
+namespace InvestQ.Domain.Entities.TesourosDiretos
 {
-    public class Acao
+    public class TesouroDireto
     {
-        public Acao() 
+        public TesouroDireto() 
         {
         }
-        public Acao(int id, 
-                    string codigo,
-                    string cnpj,
-                    string razaoSocial,
-                    int segmentoId,
-                    int tipoDeInvestimentoId)
+        public TesouroDireto(int id, 
+                             string descricao,
+                             DateTime dataDeVencimento,
+                             bool jurosSemestrais,
+                             int tipoDeInvestimentoId)
         {
             Id = id;
-            Codigo = codigo;
-            CNPJ = cnpj;
-            RazaoSocial = razaoSocial;
-            SegmentoId = segmentoId;
+            Descricao = descricao;
+            DataDeVencimento = dataDeVencimento;
+            JurosSemestrais = jurosSemestrais;
             TipoDeInvestimentoId= tipoDeInvestimentoId;
         }
         public void Inativar()
@@ -39,13 +35,11 @@ namespace InvestQ.Domain.Entities
                 throw new Exception($"O Tipo de Investimento já estava ativo.");
         }
         public int Id { get; set; }
-        public string Codigo { get; set; }
-        public string CNPJ { get; set; }
-        public string RazaoSocial { get; set; }        
+        public string Descricao { get; set; }
+        public DateTime DataDeVencimento { get; set; }
+        public bool JurosSemestrais { get; set; }
         public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
         public bool Inativo { get; set; } = false;
-        public int SegmentoId {get; set;}
-        public Segmento Segmento { get; set; }
         public int TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimento TipoDeInvestimento { get; set; }
         public int AtivoId { get; set; }

@@ -22,10 +22,7 @@ namespace InvestQ.Application.Services
             _mapper = mapper;
         }  
         public async Task<TipoDeInvestimentoDto> AdicionarTipoDeInvestimento(TipoDeInvestimentoDto model)
-        {
-            if (model.Inativo)
-                throw new Exception("Não é possível incluir um Tipo de Investimento já inativo.");
-            
+        {            
             var tipoDeInvestimento = _mapper.Map<TipoDeInvestimento>(model);
 
             if( await _TipoDeInvestimentoRepo.GetTipoDeInvestimentoByIdAsync(tipoDeInvestimento.Id) == null)
@@ -47,18 +44,12 @@ namespace InvestQ.Application.Services
         {
             try
             {
-                if (model.Inativo)
-                    throw new Exception("Não é possível atualizar um Tipo de Investimento já inativo.");
-
                 var tipoDeInvestimento = await _TipoDeInvestimentoRepo.GetTipoDeInvestimentoByIdAsync(model.Id);
 
                 if (tipoDeInvestimento != null)
                 {
                     if (tipoDeInvestimento.Inativo)
                         throw new Exception("Não se pode alterar um Tipo de Investimento inativo.");
-
-                    model.Inativo = tipoDeInvestimento.Inativo;
-                    model.DataDeCriacao = tipoDeInvestimento.DataDeCriacao;
 
                     _mapper.Map(model, tipoDeInvestimento);
 
@@ -76,7 +67,7 @@ namespace InvestQ.Application.Services
             } 
         }
 
-        public async Task<bool> DeletarTipoDeInvestimento(int tipoDeInvestimentoId)
+        public async Task<bool> DeletarTipoDeInvestimento(Guid tipoDeInvestimentoId)
         {
             var tipoDeInvestimento = await _TipoDeInvestimentoRepo.GetTipoDeInvestimentoByIdAsync(tipoDeInvestimentoId);
 
@@ -104,7 +95,7 @@ namespace InvestQ.Application.Services
             }
         }
 
-        public async Task<TipoDeInvestimentoDto> GetTipoDeInvestimentoByIdAsync(int tipoDeInvestimentoId)
+        public async Task<TipoDeInvestimentoDto> GetTipoDeInvestimentoByIdAsync(Guid tipoDeInvestimentoId)
         {
             try
             {
