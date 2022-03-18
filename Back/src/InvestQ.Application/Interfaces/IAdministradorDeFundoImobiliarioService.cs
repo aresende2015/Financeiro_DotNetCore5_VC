@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using InvestQ.Application.Dtos;
+using InvestQ.Application.Dtos.FundosImobiliarios;
 
 namespace InvestQ.Application.Interfaces
 {

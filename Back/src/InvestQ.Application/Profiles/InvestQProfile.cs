@@ -10,6 +10,11 @@ using InvestQ.Domain.Enum;
 using InvestQ.Domain.Entities.FundosImobiliarios;
 using InvestQ.Domain.Entities.TesourosDiretos;
 using InvestQ.Domain.Identity;
+using InvestQ.Application.Dtos.Clientes;
+using InvestQ.Application.Dtos.Acoes;
+using InvestQ.Application.Dtos.Ativos;
+using InvestQ.Application.Dtos.FundosImobiliarios;
+using InvestQ.Application.Dtos.TesourosDiretos;
 
 namespace InvestQ.Application.Profiles
 {

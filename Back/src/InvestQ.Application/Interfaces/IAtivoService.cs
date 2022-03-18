@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using InvestQ.Application.Dtos;
+using InvestQ.Application.Dtos.Ativos;
 using InvestQ.Application.Dtos.Enum;
 
 namespace InvestQ.Application.Interfaces

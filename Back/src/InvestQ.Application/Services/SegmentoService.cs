@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using InvestQ.Application.Dtos;
+using InvestQ.Application.Dtos.Acoes;
 using InvestQ.Application.Interfaces;
 using InvestQ.Data.Interfaces;
 using InvestQ.Domain.Entities.Acoes;

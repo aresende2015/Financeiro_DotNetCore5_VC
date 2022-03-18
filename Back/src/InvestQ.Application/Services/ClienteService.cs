@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using InvestQ.Application.Dtos;
+using InvestQ.Application.Dtos.Clientes;
 using InvestQ.Application.Interfaces;
 using InvestQ.Data.Interfaces;
 using InvestQ.Data.Paginacao;

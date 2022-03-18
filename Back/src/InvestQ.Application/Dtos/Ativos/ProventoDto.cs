@@ -1,7 +1,7 @@
 using System;
 using InvestQ.Domain.Enum;
 
-namespace InvestQ.Application.Dtos
+namespace InvestQ.Application.Dtos.Ativos
 {
     public class ProventoDto
     {

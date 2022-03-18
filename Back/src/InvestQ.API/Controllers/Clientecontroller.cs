@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.API.Extensions;
-using InvestQ.Application.Dtos;
+using InvestQ.Application.Dtos.Clientes;
 using InvestQ.Application.Interfaces;
 using InvestQ.Data.Paginacao;
 using Microsoft.AspNetCore.Authorization;

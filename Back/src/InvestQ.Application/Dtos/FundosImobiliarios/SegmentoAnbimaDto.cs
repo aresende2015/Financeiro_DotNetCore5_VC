@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace InvestQ.Application.Dtos
+namespace InvestQ.Application.Dtos.FundosImobiliarios
 {
     public class SegmentoAnbimaDto
     {

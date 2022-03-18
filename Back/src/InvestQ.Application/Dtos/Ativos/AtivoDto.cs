@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using InvestQ.Application.Dtos.Acoes;
+using InvestQ.Application.Dtos.FundosImobiliarios;
+using InvestQ.Application.Dtos.TesourosDiretos;
 using InvestQ.Domain.Enum;
 
-namespace InvestQ.Application.Dtos
+namespace InvestQ.Application.Dtos.Ativos
 {
     public class AtivoDto
     {
