@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Application.Dtos.Clientes;
-using InvestQ.Application.Interfaces;
+using InvestQ.Application.Interfaces.Clientes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

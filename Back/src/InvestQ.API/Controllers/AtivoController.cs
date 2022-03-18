@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using InvestQ.Application.Dtos.Ativos;
 using InvestQ.Application.Dtos.Enum;
-using InvestQ.Application.Interfaces;
+using InvestQ.Application.Interfaces.Ativos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

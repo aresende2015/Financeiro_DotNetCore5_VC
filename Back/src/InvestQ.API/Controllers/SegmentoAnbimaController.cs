@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using InvestQ.Application.Dtos.FundosImobiliarios;
-using InvestQ.Application.Interfaces;
+using InvestQ.Application.Interfaces.FundosImobiliarios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

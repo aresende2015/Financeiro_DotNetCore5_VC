@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InvestQ.Application.Dtos
+namespace InvestQ.Application.Dtos.Identity
 {
     public class UserUpdateDto
     {

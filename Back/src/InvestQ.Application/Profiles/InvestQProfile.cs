@@ -15,6 +15,7 @@ using InvestQ.Application.Dtos.Acoes;
 using InvestQ.Application.Dtos.Ativos;
 using InvestQ.Application.Dtos.FundosImobiliarios;
 using InvestQ.Application.Dtos.TesourosDiretos;
+using InvestQ.Application.Dtos.Identity;
 
 namespace InvestQ.Application.Profiles
 {

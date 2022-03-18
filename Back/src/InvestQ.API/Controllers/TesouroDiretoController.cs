@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using InvestQ.Application.Dtos.TesourosDiretos;
-using InvestQ.Application.Interfaces;
+using InvestQ.Application.Interfaces.TesourosDiretos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using InvestQ.API.Extensions;
-using InvestQ.Application.Dtos;
-using InvestQ.Application.Interfaces;
+using InvestQ.Application.Dtos.Identity;
+using InvestQ.Application.Interfaces.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
