@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using InvestQ.Domain.Entities.Acoes;
-using InvestQ.Domain.Entities.Enum;
+using InvestQ.Domain.Enum;
 using InvestQ.Domain.Entities.FundosImobiliarios;
 using InvestQ.Domain.Entities.TesourosDiretos;
 

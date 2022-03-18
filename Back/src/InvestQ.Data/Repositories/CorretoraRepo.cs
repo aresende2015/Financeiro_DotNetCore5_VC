@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Data.Context;
 using InvestQ.Data.Interfaces;
-using InvestQ.Domain.Entities;
+using InvestQ.Domain.Entities.Clientes;
 using Microsoft.EntityFrameworkCore;
 
 namespace InvestQ.Data.Repositories

@@ -1,5 +1,5 @@
 using System;
-using InvestQ.Domain.Entities.Enum;
+using InvestQ.Domain.Enum;
 
 namespace InvestQ.Application.Dtos
 {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using InvestQ.Data.Context;
 using InvestQ.Data.Interfaces;
 using InvestQ.Domain.Entities.Ativos;
-using InvestQ.Domain.Entities.Enum;
+using InvestQ.Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 
 namespace InvestQ.Data.Repositories

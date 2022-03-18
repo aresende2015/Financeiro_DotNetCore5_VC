@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using InvestQ.Domain.Entities.Enum;
+using InvestQ.Domain.Enum;
 
 namespace InvestQ.Application.Dtos
 {

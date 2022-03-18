@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using InvestQ.Domain.Entities.Enum;
+using InvestQ.Domain.Enum;
 using Microsoft.AspNetCore.Identity;
 
 namespace InvestQ.Domain.Identity

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using InvestQ.Domain.Identity;
 
-namespace InvestQ.Domain.Entities
+namespace InvestQ.Domain.Entities.Clientes
 {
     public class Cliente
     {

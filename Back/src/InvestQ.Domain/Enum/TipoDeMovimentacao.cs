@@ -1,4 +1,4 @@
-namespace InvestQ.Domain.Entities.Enum
+namespace InvestQ.Domain.Enum
 {
     public enum TipoDeMovimentacao
     {

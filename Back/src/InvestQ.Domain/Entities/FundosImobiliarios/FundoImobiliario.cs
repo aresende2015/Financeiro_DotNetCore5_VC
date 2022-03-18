@@ -1,6 +1,6 @@
 using System;
 using InvestQ.Domain.Entities.Ativos;
-using InvestQ.Domain.Entities.Enum;
+using InvestQ.Domain.Enum;
 
 namespace InvestQ.Domain.Entities.FundosImobiliarios
 {

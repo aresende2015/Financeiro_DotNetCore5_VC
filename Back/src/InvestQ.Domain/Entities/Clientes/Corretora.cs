@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace InvestQ.Domain.Entities
+namespace InvestQ.Domain.Entities.Clientes
 {
     public class Corretora
     {

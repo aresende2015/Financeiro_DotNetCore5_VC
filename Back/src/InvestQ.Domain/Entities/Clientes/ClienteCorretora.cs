@@ -1,4 +1,4 @@
-namespace InvestQ.Domain.Entities
+namespace InvestQ.Domain.Entities.Clientes
 {
     public class ClienteCorretora
     {
