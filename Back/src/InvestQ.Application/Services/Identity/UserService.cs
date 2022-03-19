@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using InvestQ.Application.Dtos.Identity;
 using InvestQ.Application.Interfaces.Identity;
-using InvestQ.Data.Interfaces;
+using InvestQ.Data.Interfaces.Identity;
 using InvestQ.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

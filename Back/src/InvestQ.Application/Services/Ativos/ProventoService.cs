@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using InvestQ.Application.Dtos.Ativos;
 using InvestQ.Application.Interfaces.Ativos;
-using InvestQ.Data.Interfaces;
+using InvestQ.Data.Interfaces.Ativos;
 using InvestQ.Domain.Entities.Ativos;
 
 namespace InvestQ.Application.Services.Ativos

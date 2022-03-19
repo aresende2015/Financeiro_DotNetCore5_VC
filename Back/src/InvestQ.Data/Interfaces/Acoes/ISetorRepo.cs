@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using InvestQ.Domain.Entities.Acoes;
 
-namespace InvestQ.Data.Interfaces
+namespace InvestQ.Data.Interfaces.Acoes
 {
     public interface ISetorRepo: IGeralRepo
     {

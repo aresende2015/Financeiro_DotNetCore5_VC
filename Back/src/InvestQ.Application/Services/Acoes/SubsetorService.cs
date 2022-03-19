@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using InvestQ.Application.Dtos.Acoes;
 using InvestQ.Application.Interfaces.Acoes;
-using InvestQ.Data.Interfaces;
+using InvestQ.Data.Interfaces.Acoes;
 using InvestQ.Domain.Entities.Acoes;
 
 namespace InvestQ.Application.Services.Acoes

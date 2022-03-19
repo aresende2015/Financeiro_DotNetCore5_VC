@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using InvestQ.Application.Dtos.TesourosDiretos;
 using InvestQ.Application.Interfaces.TesourosDiretos;
-using InvestQ.Data.Interfaces;
+using InvestQ.Data.Interfaces.TesourosDiretos;
 using InvestQ.Domain.Entities.TesourosDiretos;
 
 namespace InvestQ.Application.Services.TesourosDiretos

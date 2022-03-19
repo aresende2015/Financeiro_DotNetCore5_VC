@@ -1,11 +1,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Data.Context;
-using InvestQ.Data.Interfaces;
+using InvestQ.Data.Interfaces.Clientes;
 using InvestQ.Domain.Entities.Clientes;
 using Microsoft.EntityFrameworkCore;
 
-namespace InvestQ.Data.Repositories
+namespace InvestQ.Data.Repositories.Clientes
 {
     public class CorretoraRepo : GeralRepo, ICorretoraRepo
     {

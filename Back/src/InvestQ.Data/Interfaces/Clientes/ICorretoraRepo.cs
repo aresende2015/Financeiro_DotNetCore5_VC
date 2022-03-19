@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using InvestQ.Domain.Entities.Clientes;
 
-namespace InvestQ.Data.Interfaces
+namespace InvestQ.Data.Interfaces.Clientes
 {
     public interface ICorretoraRepo : IGeralRepo
     {

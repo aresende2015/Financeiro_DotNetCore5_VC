@@ -1,11 +1,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Data.Context;
-using InvestQ.Data.Interfaces;
+using InvestQ.Data.Interfaces.Acoes;
 using InvestQ.Domain.Entities.Acoes;
 using Microsoft.EntityFrameworkCore;
 
-namespace InvestQ.Data.Repositories
+namespace InvestQ.Data.Repositories.Acoes
 {
     public class AcaoRepo : GeralRepo, IAcaoRepo
     {

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using InvestQ.Application.Dtos.Clientes;
 using InvestQ.Application.Interfaces.Clientes;
-using InvestQ.Data.Interfaces;
+using InvestQ.Data.Interfaces.Clientes;
 using InvestQ.Domain.Entities.Clientes;
 
 namespace InvestQ.Application.Services.Clientes

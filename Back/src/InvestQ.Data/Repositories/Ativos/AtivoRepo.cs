@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Data.Context;
-using InvestQ.Data.Interfaces;
+using InvestQ.Data.Interfaces.Ativos;
 using InvestQ.Domain.Entities.Ativos;
 using InvestQ.Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 
-namespace InvestQ.Data.Repositories
+namespace InvestQ.Data.Repositories.Ativos
 {
     public class AtivoRepo : GeralRepo, IAtivoRepo
     {

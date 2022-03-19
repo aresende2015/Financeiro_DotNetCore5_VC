@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Domain.Identity;
 
-namespace InvestQ.Data.Interfaces
+namespace InvestQ.Data.Interfaces.Identity
 {
     public interface IUserRepo : IGeralRepo
     {

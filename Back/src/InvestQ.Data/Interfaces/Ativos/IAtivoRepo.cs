@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using InvestQ.Domain.Entities.Ativos;
 using InvestQ.Domain.Enum;
 
-namespace InvestQ.Data.Interfaces
+namespace InvestQ.Data.Interfaces.Ativos
 {
     public interface IAtivoRepo : IGeralRepo
     {

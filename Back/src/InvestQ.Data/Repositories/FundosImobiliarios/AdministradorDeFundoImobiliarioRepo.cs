@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Data.Context;
-using InvestQ.Data.Interfaces;
+using InvestQ.Data.Interfaces.FundosImobiliarios;
 using InvestQ.Domain.Entities.FundosImobiliarios;
 using Microsoft.EntityFrameworkCore;
 
-namespace InvestQ.Data.Repositories
+namespace InvestQ.Data.Repositories.FundosImobiliarios
 {
     public class AdministradorDeFundoImobiliarioRepo : GeralRepo, IAdministradorDeFundoImobiliarioRepo
     {

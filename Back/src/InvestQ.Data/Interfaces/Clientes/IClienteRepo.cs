@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using InvestQ.Data.Paginacao;
 using InvestQ.Domain.Entities.Clientes;
 
-namespace InvestQ.Data.Interfaces
+namespace InvestQ.Data.Interfaces.Clientes
 {
     public interface IClienteRepo : IGeralRepo
     {

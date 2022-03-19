@@ -4,7 +4,7 @@ using AutoMapper;
 using InvestQ.Application.Dtos.Ativos;
 using InvestQ.Application.Dtos.Enum;
 using InvestQ.Application.Interfaces.Ativos;
-using InvestQ.Data.Interfaces;
+using InvestQ.Data.Interfaces.Ativos;
 using InvestQ.Domain.Entities.Ativos;
 using InvestQ.Domain.Enum;
 

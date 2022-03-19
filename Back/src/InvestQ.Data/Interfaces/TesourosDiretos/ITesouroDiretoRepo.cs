@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using InvestQ.Domain.Entities.TesourosDiretos;
 
-namespace InvestQ.Data.Interfaces
+namespace InvestQ.Data.Interfaces.TesourosDiretos
 {
     public interface ITesouroDiretoRepo: IGeralRepo
     {

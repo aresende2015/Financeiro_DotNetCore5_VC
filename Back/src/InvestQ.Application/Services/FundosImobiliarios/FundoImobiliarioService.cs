@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using InvestQ.Application.Dtos.FundosImobiliarios;
 using InvestQ.Application.Interfaces.FundosImobiliarios;
-using InvestQ.Data.Interfaces;
+using InvestQ.Data.Interfaces.FundosImobiliarios;
 using InvestQ.Domain.Entities.FundosImobiliarios;
 
 namespace InvestQ.Application.Services.FundosImobiliarios

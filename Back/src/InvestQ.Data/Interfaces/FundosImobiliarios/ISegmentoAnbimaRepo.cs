@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using InvestQ.Domain.Entities.FundosImobiliarios;
 
-namespace InvestQ.Data.Interfaces
+namespace InvestQ.Data.Interfaces.FundosImobiliarios
 {
     public interface ISegmentoAnbimaRepo: IGeralRepo
     {

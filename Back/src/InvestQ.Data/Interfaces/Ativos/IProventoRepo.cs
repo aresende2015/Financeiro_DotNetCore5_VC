@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using InvestQ.Domain.Entities.Ativos;
 
-namespace InvestQ.Data.Interfaces
+namespace InvestQ.Data.Interfaces.Ativos
 {
     public interface IProventoRepo: IGeralRepo
     {

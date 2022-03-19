@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Data.Context;
-using InvestQ.Data.Interfaces;
+using InvestQ.Data.Interfaces.TesourosDiretos;
 using InvestQ.Domain.Entities.TesourosDiretos;
 using Microsoft.EntityFrameworkCore;
 
-namespace InvestQ.Data.Repositories
+namespace InvestQ.Data.Repositories.TesourosDiretos
 {
     public class TesouroDiretoRepo : GeralRepo, ITesouroDiretoRepo
     {
