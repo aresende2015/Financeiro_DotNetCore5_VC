@@ -40,7 +40,7 @@ namespace InvestQ.Data.Repositories.Ativos
             return await query.ToArrayAsync();
         }
 
-        public async Task<Ativo> GetAtivoByIdAsync(int id)
+        public async Task<Ativo> GetAtivoByIdAsync(Guid id)
         {
             IQueryable<Ativo> query = _context.Ativos;
 
@@ -50,7 +50,7 @@ namespace InvestQ.Data.Repositories.Ativos
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<Ativo> GetAtivoByIdsAsync(int id, TipoDeAtivo tipoDeAtivo)
+        public async Task<Ativo> GetAtivoByIdsAsync(Guid id, TipoDeAtivo tipoDeAtivo)
         {
             IQueryable<Ativo> query = _context.Ativos;
 

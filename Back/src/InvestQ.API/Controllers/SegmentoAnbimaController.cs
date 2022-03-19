@@ -38,7 +38,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetSegmentoAnbimaById(int id)
+        public async Task<IActionResult> GetSegmentoAnbimaById(Guid id)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, SegmentoAnbimaDto model)
+        public async Task<IActionResult> Put(Guid id, SegmentoAnbimaDto model)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {

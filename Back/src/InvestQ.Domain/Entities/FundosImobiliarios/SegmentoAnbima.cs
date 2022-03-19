@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 namespace InvestQ.Domain.Entities.FundosImobiliarios
 {
-    public class SegmentoAnbima
+    public class SegmentoAnbima : Entity
     {
         public SegmentoAnbima() 
         {
         }
-        public SegmentoAnbima(int id, string descricao)
+        public SegmentoAnbima(Guid id, string descricao)
         {
             Id = id;
             Descricao = descricao;            
@@ -26,10 +26,7 @@ namespace InvestQ.Domain.Entities.FundosImobiliarios
             else
                 throw new Exception($"O Segmento ANBIMA já estava ativo.");
         }
-        public int Id { get; set; }
         public string Descricao { get; set; }
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
         public IEnumerable<FundoImobiliario> FundosImobiliarios { get; set; }
     }
 }

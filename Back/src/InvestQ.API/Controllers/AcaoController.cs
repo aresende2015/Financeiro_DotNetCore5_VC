@@ -39,7 +39,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAcaoById(int id)
+        public async Task<IActionResult> GetAcaoById(Guid id)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{tipoDeInvestimentoId}/tipodeinvestimentoid")]
-        public async Task<IActionResult> GetAcaoByTipoDeInvestimentoId(int tipoDeInvestimentoId) 
+        public async Task<IActionResult> GetAcaoByTipoDeInvestimentoId(Guid tipoDeInvestimentoId) 
         {
             try
             {
@@ -94,7 +94,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{segumentoId}/segmentoid")]
-        public async Task<IActionResult> GetAcaoBySegmentoId(int segumentoId) 
+        public async Task<IActionResult> GetAcaoBySegmentoId(Guid segumentoId) 
         {
             try
             {
@@ -130,7 +130,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, AcaoDto model)
+        public async Task<IActionResult> Put(Guid id, AcaoDto model)
         {
             try
             {
@@ -151,7 +151,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {

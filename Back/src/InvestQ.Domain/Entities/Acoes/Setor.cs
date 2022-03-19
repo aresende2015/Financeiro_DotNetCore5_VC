@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace InvestQ.Domain.Entities.Acoes
 {
-    public class Setor
+    public class Setor : Entity
     {
         public Setor() 
         {
         }
-        public Setor(int id, 
-                         string descricao)
+        public Setor(Guid id, 
+                     string descricao)
         {
             Id = id;
             Descricao = descricao;
@@ -30,10 +30,7 @@ namespace InvestQ.Domain.Entities.Acoes
             else
                 throw new Exception($"O Setor já estava ativo.");
         }
-        public int Id { get; set; }
         public string Descricao { get; set; }
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
         public IEnumerable<Subsetor> Subsetores { get; set; }
     }
 }

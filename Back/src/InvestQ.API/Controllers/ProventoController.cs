@@ -21,7 +21,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{ativoId}")]
-        public async Task<IActionResult> Get(int ativoId) 
+        public async Task<IActionResult> Get(Guid ativoId) 
         {
             try
             {
@@ -39,7 +39,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProventoById(int id)
+        public async Task<IActionResult> GetProventoById(Guid id)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, ProventoDto model)
+        public async Task<IActionResult> Put(Guid id, ProventoDto model)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {

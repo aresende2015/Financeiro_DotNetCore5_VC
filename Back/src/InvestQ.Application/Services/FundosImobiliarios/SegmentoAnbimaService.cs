@@ -21,9 +21,6 @@ namespace InvestQ.Application.Services.FundosImobiliarios
         }        
         public async Task<SegmentoAnbimaDto> AdicionarSegmentoAnbima(SegmentoAnbimaDto model)
         {
-            if (model.Inativo)
-                throw new Exception("Não é possível incluir um Segmento ANBIMA já inativo.");
-            
             var segmentoAnbima = _mapper.Map<SegmentoAnbima>(model);
 
             if (await _segmentoAnbimaRepo.GetSegmentoAnbimaByDescricaoAsync(segmentoAnbima.Descricao, false) != null)
@@ -48,18 +45,12 @@ namespace InvestQ.Application.Services.FundosImobiliarios
         {
             try
             {
-                if (model.Inativo)
-                    throw new Exception("Não é possível atualizar um Segmento ANBIMA já inativo.");
-
                 var segmentoAnbima = await _segmentoAnbimaRepo.GetSegmentoAnbimaByIdAsync(model.Id, false);
 
                 if (segmentoAnbima != null)
                 {
                     if (segmentoAnbima.Inativo)
                         throw new Exception("Não se pode alterar um Segmento ANBIMA inativo.");
-
-                    model.Inativo = segmentoAnbima.Inativo;
-                    model.DataDeCriacao = segmentoAnbima.DataDeCriacao;
 
                     _mapper.Map(model, segmentoAnbima);
 
@@ -77,7 +68,7 @@ namespace InvestQ.Application.Services.FundosImobiliarios
             }  
         }
 
-        public async Task<bool> DeletarSegmentoAnbima(int segmentoAnbimaId)
+        public async Task<bool> DeletarSegmentoAnbima(Guid segmentoAnbimaId)
         {
             var segmentoAnbima = await _segmentoAnbimaRepo.GetSegmentoAnbimaByIdAsync(segmentoAnbimaId, false);
 
@@ -121,7 +112,7 @@ namespace InvestQ.Application.Services.FundosImobiliarios
             }
         }
 
-        public async Task<SegmentoAnbimaDto> GetSegmentoAnbimaByIdAsync(int segmentoAnbimaId, bool includeFundoImobiliario)
+        public async Task<SegmentoAnbimaDto> GetSegmentoAnbimaByIdAsync(Guid segmentoAnbimaId, bool includeFundoImobiliario)
         {
             try
             {

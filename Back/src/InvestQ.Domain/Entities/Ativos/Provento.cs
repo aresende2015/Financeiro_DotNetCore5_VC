@@ -6,23 +6,25 @@ using InvestQ.Domain.Enum;
 
 namespace InvestQ.Domain.Entities.Ativos
 {
-    public class Provento
+    public class Provento : Entity
     {
         public Provento()
         {
             
         }
 
-        public Provento(int id, 
-                           DateTime dataCom,
-                           DateTime dataEx,
-                           Decimal valor,
-                           TipoDeMovimentacao tipoDeMovimentacao)
+        public Provento(Guid id, 
+                        DateTime dataCom,
+                        DateTime dataEx,
+                        Decimal valor,
+                        Guid ativoId,
+                        TipoDeMovimentacao tipoDeMovimentacao)
         {
             Id = id;
             DataCom = dataCom;
             DataEx = dataEx;
             Valor = valor;
+            AtivoId = ativoId;
             TipoDeMovimentacao = tipoDeMovimentacao;
         }
         public void Inativar()
@@ -40,14 +42,11 @@ namespace InvestQ.Domain.Entities.Ativos
                 throw new Exception($"O Provento já estava ativo.");
         }
 
-        public int Id { get; set; }
         public DateTime DataCom { get; set; }
         public DateTime DataEx { get; set; }
         public decimal Valor { get; set; }
         public TipoDeMovimentacao TipoDeMovimentacao { get; set; }
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
-        public int AtivoId { get; set; }
+        public Guid AtivoId { get; set; }
         public Ativo Ativo { get; set; }
     }
 }

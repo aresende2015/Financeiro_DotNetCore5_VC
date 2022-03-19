@@ -39,7 +39,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetTesouroDiretoById(int id)
+        public async Task<IActionResult> GetTesouroDiretoById(Guid id)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{tipoDeInvestimentoId}/tipodeinvestimentoid")]
-        public async Task<IActionResult> GetTesouroDiretoByTipoDeInvestimentoId(int tipoDeInvestimentoId) 
+        public async Task<IActionResult> GetTesouroDiretoByTipoDeInvestimentoId(Guid tipoDeInvestimentoId) 
         {
             try
             {
@@ -111,7 +111,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, TesouroDiretoDto model)
+        public async Task<IActionResult> Put(Guid id, TesouroDiretoDto model)
         {
             try
             {
@@ -132,7 +132,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {

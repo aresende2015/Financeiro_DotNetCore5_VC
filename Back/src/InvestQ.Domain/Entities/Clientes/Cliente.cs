@@ -5,12 +5,12 @@ using InvestQ.Domain.Identity;
 
 namespace InvestQ.Domain.Entities.Clientes
 {
-    public class Cliente
+    public class Cliente : Entity
     {
         public Cliente() 
         {
         }
-        public Cliente(int id, 
+        public Cliente(Guid id, 
                        string cpf, 
                        string nome, 
                        string sobreNome,
@@ -37,8 +37,7 @@ namespace InvestQ.Domain.Entities.Clientes
                 Inativo = false;
             else
                 throw new Exception($"O Cliente já estava ativo.");
-        }
-        public int Id { get; set; }        
+        }    
         public string Cpf { get; set; }
         public string Nome { get; set; }
         public string SobreNome { get; set; }
@@ -46,8 +45,6 @@ namespace InvestQ.Domain.Entities.Clientes
         public DateTime DataDeNascimento { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-        public DateTime? DataDeCriacao { get; set; } = DateTime.Now;
-        public bool Inativo { get; set; } = false;
         public IEnumerable<ClienteCorretora> ClientesCorretoras { get; set; }
     }
 }

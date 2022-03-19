@@ -17,7 +17,7 @@ namespace InvestQ.Data.Repositories.Acoes
             _context = context;
         }
 
-        public async Task<Subsetor> GetSubsetorByIdAsync(int id)
+        public async Task<Subsetor> GetSubsetorByIdAsync(Guid id)
         {
             IQueryable<Subsetor> query = _context.Subsetores;
 
@@ -29,7 +29,7 @@ namespace InvestQ.Data.Repositories.Acoes
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<Subsetor> GetSubsetorByIdsAsync(int setorId, int subsetorId)
+        public async Task<Subsetor> GetSubsetorByIdsAsync(Guid setorId, Guid subsetorId)
         {
             IQueryable<Subsetor> query = _context.Subsetores;
 
@@ -42,7 +42,7 @@ namespace InvestQ.Data.Repositories.Acoes
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<Subsetor[]> GetSubsetoresBySetorIdAsync(int setorId)
+        public async Task<Subsetor[]> GetSubsetoresBySetorIdAsync(Guid setorId)
         {
             IQueryable<Subsetor> query = _context.Subsetores;
 

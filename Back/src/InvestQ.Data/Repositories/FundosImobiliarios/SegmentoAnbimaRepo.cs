@@ -42,7 +42,7 @@ namespace InvestQ.Data.Repositories.FundosImobiliarios
             return await query.FirstOrDefaultAsync(sa => sa.Descricao == descricao);
         }
 
-        public async Task<SegmentoAnbima> GetSegmentoAnbimaByIdAsync(int id, bool includeFundoImobiliario)
+        public async Task<SegmentoAnbima> GetSegmentoAnbimaByIdAsync(Guid id, bool includeFundoImobiliario)
         {
             IQueryable<SegmentoAnbima> query = _context.SegmentosAnbimas;
 

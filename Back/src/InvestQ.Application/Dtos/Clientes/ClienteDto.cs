@@ -7,7 +7,7 @@ namespace InvestQ.Application.Dtos.Clientes
 {
     public class ClienteDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(11, MinimumLength = 11, ErrorMessage = "O campo de {0} deve ter 11 caracteres.")]
@@ -28,8 +28,6 @@ namespace InvestQ.Application.Dtos.Clientes
 
         public int Idade { get; set; }
         public DateTime DataDeNascimento { get; set; }
-        public DateTime? DataDeCriacao { get; set; } = DateTime.Now;
-        public bool Inativo { get; set; }  = false;
         public int UserId { get; set; }
         public UserDto UserDto { get; set; }
         public IEnumerable<ClienteCorretoraDto> ClientesCorretoras { get; set; }

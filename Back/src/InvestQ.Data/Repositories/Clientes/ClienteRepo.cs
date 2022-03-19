@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Data.Context;
@@ -35,7 +36,7 @@ namespace InvestQ.Data.Repositories.Clientes
             return await PageList<Cliente>.CreateAsync(query, pageParams.PageNumber, pageParams.pageSize);
         }
 
-        public async Task<PageList<Cliente>> GetAllClientesByCorretoraId(int userId, PageParams pageParams, int corretoraId, bool includeCorretora)
+        public async Task<PageList<Cliente>> GetAllClientesByCorretoraId(int userId, PageParams pageParams, Guid corretoraId, bool includeCorretora)
         {
             IQueryable<Cliente> query = _context.Clientes;
 
@@ -61,7 +62,7 @@ namespace InvestQ.Data.Repositories.Clientes
             return await query.FirstOrDefaultAsync(c => c.Cpf == cpf);
         }
 
-        public async Task<Cliente> GetClienteByIdAsync(int userId, int id, bool includeCorretora)
+        public async Task<Cliente> GetClienteByIdAsync(int userId, Guid id, bool includeCorretora)
         {
             IQueryable<Cliente> query = _context.Clientes;
 

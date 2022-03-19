@@ -21,9 +21,6 @@ namespace InvestQ.Application.Services.TesourosDiretos
         }
         public async Task<TesouroDiretoDto> AdicionarTesouroDireto(TesouroDiretoDto model)
         {
-            if (model.Inativo)
-                throw new Exception("Não é possível incluir um Tesouro Direto inativo.");
-            
             var tesouroDireto = _mapper.Map<TesouroDireto>(model);
 
             if (await _tesouroDiretoRepo.GetTesouroDiretoByDescricaoAsync(tesouroDireto.Descricao) != null)
@@ -48,18 +45,12 @@ namespace InvestQ.Application.Services.TesourosDiretos
         {
             try
             {
-                if (model.Inativo)
-                    throw new Exception("Não é possível atualizar um Tesouro Direto já inativo.");
-
                 var tesouroDireto = await _tesouroDiretoRepo.GetTesouroDiretoByIdAsync(model.Id);
 
                 if (tesouroDireto != null)
                 {
                     if (tesouroDireto.Inativo)
                         throw new Exception("Não se pode alterar um Tesouro Direto inativo.");
-
-                    model.Inativo = tesouroDireto.Inativo;
-                    model.DataDeCriacao = tesouroDireto.DataDeCriacao;
 
                     _mapper.Map(model, tesouroDireto);
 
@@ -77,7 +68,7 @@ namespace InvestQ.Application.Services.TesourosDiretos
             } 
         }
 
-        public async Task<bool> DeletarTesouroDireto(int tesouroDiretoId)
+        public async Task<bool> DeletarTesouroDireto(Guid tesouroDiretoId)
         {
             var tesouroDireto = await _tesouroDiretoRepo.GetTesouroDiretoByIdAsync(tesouroDiretoId);
 
@@ -105,7 +96,7 @@ namespace InvestQ.Application.Services.TesourosDiretos
             }
         }
 
-        public async Task<TesouroDiretoDto[]> GetTeseourosDiretosByTipoDeInvestimentoIdAsync(int tipoDeInvestimentoId)
+        public async Task<TesouroDiretoDto[]> GetTeseourosDiretosByTipoDeInvestimentoIdAsync(Guid tipoDeInvestimentoId)
         {
             try
             {
@@ -139,7 +130,7 @@ namespace InvestQ.Application.Services.TesourosDiretos
             }
         }
 
-        public async Task<TesouroDiretoDto> GetTesouroDiretoByIdAsync(int id)
+        public async Task<TesouroDiretoDto> GetTesouroDiretoByIdAsync(Guid id)
         {
             try
             {

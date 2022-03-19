@@ -20,7 +20,7 @@ namespace InvestQ.Application.Services.Acoes
             _mapper = mapper;
         }
 
-        public async Task AdicionarSegmento(int subsetorId, SegmentoDto model)
+        public async Task AdicionarSegmento(Guid subsetorId, SegmentoDto model)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<bool> DeletarSegmento(int subsetorId, int segmentoId)
+        public async Task<bool> DeletarSegmento(Guid subsetorId, Guid segmentoId)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<SegmentoDto> GetSegmentoByIdsAsync(int subsetorId, int segmentoId)
+        public async Task<SegmentoDto> GetSegmentoByIdsAsync(Guid subsetorId, Guid segmentoId)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<SegmentoDto[]> GetSegmentosBySubsetorIdAsync(int subsetorId)
+        public async Task<SegmentoDto[]> GetSegmentosBySubsetorIdAsync(Guid subsetorId)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<SegmentoDto> SalvarSegmento(int subsetorId, int segmentoId, SegmentoDto model)
+        public async Task<SegmentoDto> SalvarSegmento(Guid subsetorId, Guid segmentoId, SegmentoDto model)
         {
            try
            {
@@ -119,7 +119,7 @@ namespace InvestQ.Application.Services.Acoes
            }
         }
 
-        public async Task<SegmentoDto[]> SalvarSegmentos(int subsetorId, SegmentoDto[] models)
+        public async Task<SegmentoDto[]> SalvarSegmentos(Guid subsetorId, SegmentoDto[] models)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace InvestQ.Application.Services.Acoes
 
                     foreach (var model in models)
                     {
-                        if (model.Id == 0) 
+                        if (model.Id == null || model.Id == Guid.Empty) 
                         {
                             await AdicionarSegmento(subsetorId, model);
                         }

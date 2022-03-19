@@ -3,17 +3,17 @@ using InvestQ.Domain.Entities.Ativos;
 
 namespace InvestQ.Domain.Entities.Acoes
 {
-    public class Acao
+    public class Acao : Entity
     {
         public Acao() 
         {
         }
-        public Acao(int id, 
+        public Acao(Guid id, 
                     string codigo,
                     string cnpj,
                     string razaoSocial,
-                    int segmentoId,
-                    int tipoDeInvestimentoId)
+                    Guid segmentoId,
+                    Guid tipoDeInvestimentoId)
         {
             Id = id;
             Codigo = codigo;
@@ -36,15 +36,12 @@ namespace InvestQ.Domain.Entities.Acoes
             else
                 throw new Exception($"O Tipo de Investimento já estava ativo.");
         }
-        public int Id { get; set; }
         public string Codigo { get; set; }
         public string CNPJ { get; set; }
-        public string RazaoSocial { get; set; }        
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
-        public int SegmentoId {get; set;}
+        public string RazaoSocial { get; set; }  
+        public Guid SegmentoId {get; set;}
         public Segmento Segmento { get; set; }
-        public int TipoDeInvestimentoId { get; set; }
+        public Guid TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimento TipoDeInvestimento { get; set; }
         public int AtivoId { get; set; }
         public Ativo Ativo { get; set; }

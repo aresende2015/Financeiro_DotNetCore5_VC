@@ -23,9 +23,6 @@ namespace InvestQ.Application.Services.Ativos
         }
         public async Task<AtivoDto> AdicionarAtivo(AtivoDto model)
         {
-            if (model.Inativo)
-                throw new Exception("Não é possível incluir um Ativo já inativo.");
-            
             var ativo = _mapper.Map<Ativo>(model);
 
             if( await _ativoRepo.GetAtivoByIdAsync(ativo.Id) == null)
@@ -47,18 +44,12 @@ namespace InvestQ.Application.Services.Ativos
         {
             try
             {
-                if (model.Inativo)
-                    throw new Exception("Não é possível atualizar um Ativo já inativo.");
-
                 var ativo = await _ativoRepo.GetAtivoByIdAsync(model.Id);
 
                 if (ativo != null)
                 {
                     if (ativo.Inativo)
                         throw new Exception("Não se pode alterar um Ativo inativo.");
-
-                    model.Inativo = ativo.Inativo;
-                    model.DataDeCriacao = ativo.DataDeCriacao;
 
                     _mapper.Map(model, ativo);
 
@@ -76,7 +67,7 @@ namespace InvestQ.Application.Services.Ativos
             }
         }
 
-        public async Task<bool> DeletarAtivo(int ativoId)
+        public async Task<bool> DeletarAtivo(Guid ativoId)
         {
             var ativo = await _ativoRepo.GetAtivoByIdAsync(ativoId);
 
@@ -108,7 +99,7 @@ namespace InvestQ.Application.Services.Ativos
             }
         }
 
-        public async Task<AtivoDto> GetAtivoByIdAsync(int id)
+        public async Task<AtivoDto> GetAtivoByIdAsync(Guid id)
         {
             try
             {
@@ -124,7 +115,7 @@ namespace InvestQ.Application.Services.Ativos
             }
         }
 
-        public async Task<AtivoDto> GetAtivoByIdsAsync(int id, TipoDeAtivoDto tipoDeAtivoDto)
+        public async Task<AtivoDto> GetAtivoByIdsAsync(Guid id, TipoDeAtivoDto tipoDeAtivoDto)
         {
             try
             {

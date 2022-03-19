@@ -3,16 +3,16 @@ using InvestQ.Domain.Entities.Ativos;
 
 namespace InvestQ.Domain.Entities.TesourosDiretos
 {
-    public class TesouroDireto
+    public class TesouroDireto : Entity
     {
         public TesouroDireto() 
         {
         }
-        public TesouroDireto(int id, 
+        public TesouroDireto(Guid id, 
                              string descricao,
                              DateTime dataDeVencimento,
                              bool jurosSemestrais,
-                             int tipoDeInvestimentoId)
+                             Guid tipoDeInvestimentoId)
         {
             Id = id;
             Descricao = descricao;
@@ -34,15 +34,12 @@ namespace InvestQ.Domain.Entities.TesourosDiretos
             else
                 throw new Exception($"O Tipo de Investimento já estava ativo.");
         }
-        public int Id { get; set; }
         public string Descricao { get; set; }
         public DateTime DataDeVencimento { get; set; }
         public bool JurosSemestrais { get; set; }
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
-        public int TipoDeInvestimentoId { get; set; }
+        public Guid TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimento TipoDeInvestimento { get; set; }
-        public int AtivoId { get; set; }
+        public Guid AtivoId { get; set; }
         public Ativo Ativo { get; set; }
     }
 }

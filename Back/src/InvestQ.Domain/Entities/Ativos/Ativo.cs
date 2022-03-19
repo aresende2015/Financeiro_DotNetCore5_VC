@@ -7,12 +7,12 @@ using InvestQ.Domain.Entities.TesourosDiretos;
 
 namespace InvestQ.Domain.Entities.Ativos
 {
-    public class Ativo
+    public class Ativo : Entity
     {
         public Ativo() 
         {
         }
-        public Ativo(int id, 
+        public Ativo(Guid id, 
                      TipoDeAtivo tipoDeAtivo)
         {
             Id = id;
@@ -32,9 +32,6 @@ namespace InvestQ.Domain.Entities.Ativos
             else
                 throw new Exception($"O Tipo de Investimento já estava ativo.");
         }
-        public int Id { get; set; }
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
         public TipoDeAtivo TipoDeAtivo { get; set; }
         public IEnumerable<Provento> Proventos { get; set; }
         //public virtual int AcaoId {get; set;}

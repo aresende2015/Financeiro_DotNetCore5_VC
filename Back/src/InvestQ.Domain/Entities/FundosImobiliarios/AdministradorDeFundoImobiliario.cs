@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace InvestQ.Domain.Entities.FundosImobiliarios
 {
-    public class AdministradorDeFundoImobiliario
+    public class AdministradorDeFundoImobiliario : Entity
     {
         public AdministradorDeFundoImobiliario() 
         {
         }
-        public AdministradorDeFundoImobiliario(int id,
+        public AdministradorDeFundoImobiliario(Guid id,
                                                string cnpj,
                                                string razaoSocial,
                                                string telefone,
@@ -38,14 +38,11 @@ namespace InvestQ.Domain.Entities.FundosImobiliarios
             else
                 throw new Exception($"O Administrador DeF undoImobiliario já estava ativo.");
         }
-        public int Id { get; set; }
         public string CNPJ { get; set; }
         public string RazaoSocial { get; set; }
         public string Telefone { get; set; }
         public string Site { get; set; }
         public string Email { get; set; }
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
         public IEnumerable<FundoImobiliario> FundosImobiliarios { get; set; }
     }
 }

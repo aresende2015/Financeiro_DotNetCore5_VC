@@ -22,9 +22,6 @@ namespace InvestQ.Application.Services.FundosImobiliarios
         }
         public async Task<AdministradorDeFundoImobiliarioDto> AdicionarAdministradorDeFundoImobiliario(AdministradorDeFundoImobiliarioDto model)
         {
-            if (model.Inativo)
-                throw new Exception("Não é possível incluir um Administrador de Fundo Imobiliário já inativo.");
-            
             var administradorDeFundoImobiliario = _mapper.Map<AdministradorDeFundoImobiliario>(model);
 
             if( await _administradorDeFundoImobiliarioRepo.GetAdministradorDeFundoImobiliarioByIdAsync(administradorDeFundoImobiliario.Id, false) == null)
@@ -46,18 +43,12 @@ namespace InvestQ.Application.Services.FundosImobiliarios
         {
             try
             {
-                if (model.Inativo)
-                    throw new Exception("Não é possível atualizar um Administrador de Fundo Imobiliario já inativo.");
-
                 var administradorDeFundoImobiliario = await _administradorDeFundoImobiliarioRepo.GetAdministradorDeFundoImobiliarioByIdAsync(model.Id, false);
 
                 if (administradorDeFundoImobiliario != null)
                 {
                     if (administradorDeFundoImobiliario.Inativo)
                         throw new Exception("Não se pode alterar um Administrador de Fundo Imobiliario inativo.");
-
-                    model.Inativo = administradorDeFundoImobiliario.Inativo;
-                    model.DataDeCriacao = administradorDeFundoImobiliario.DataDeCriacao;
 
                     _mapper.Map(model, administradorDeFundoImobiliario);
 
@@ -75,7 +66,7 @@ namespace InvestQ.Application.Services.FundosImobiliarios
             } 
         }
 
-        public async Task<bool> DeletarAdministradorDeFundoImobiliario(int administradorDeFundoImobiliarioId)
+        public async Task<bool> DeletarAdministradorDeFundoImobiliario(Guid administradorDeFundoImobiliarioId)
         {
             var administradorDeFundoImobiliario = await _administradorDeFundoImobiliarioRepo.GetAdministradorDeFundoImobiliarioByIdAsync(administradorDeFundoImobiliarioId, false);
 
@@ -87,7 +78,7 @@ namespace InvestQ.Application.Services.FundosImobiliarios
             return await _administradorDeFundoImobiliarioRepo.SalvarMudancasAsync();
         }
 
-        public async Task<AdministradorDeFundoImobiliarioDto> GetAdministradorDeFundoImobiliarioByIdAsync(int administradorDeFundoImobiliarioId, bool includeFundoImobiliario)
+        public async Task<AdministradorDeFundoImobiliarioDto> GetAdministradorDeFundoImobiliarioByIdAsync(Guid administradorDeFundoImobiliarioId, bool includeFundoImobiliario)
         {
             try
             {

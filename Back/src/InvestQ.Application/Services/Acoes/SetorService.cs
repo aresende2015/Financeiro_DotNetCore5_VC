@@ -51,15 +51,12 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<SetorDto> AtualizarSetor(int setorId, SetorDto model)
+        public async Task<SetorDto> AtualizarSetor(Guid setorId, SetorDto model)
         {
             try
             {
                 if (setorId != model.Id)
                     throw new Exception("Está tentando alterar o Id errado.");
-
-                if (model.Inativo)
-                    throw new Exception("Não é possível atualizar um Setor já inativo.");
 
                 var setor = await _setorRepo.GetSetorByIdAsync(setorId, false);
                 
@@ -67,9 +64,6 @@ namespace InvestQ.Application.Services.Acoes
                 {
                     if (setor.Inativo)
                         throw new Exception("Não se pode alterar um Setor inativo.");
-
-                    model.Inativo = setor.Inativo;
-                    model.DataDeCriacao = setor.DataDeCriacao;
 
                     _mapper.Map(model, setor);
 
@@ -88,7 +82,7 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<bool> DeletarSetor(int setorId)
+        public async Task<bool> DeletarSetor(Guid setorId)
         {
             var setor = await _setorRepo.GetSetorByIdAsync(setorId, false);
 
@@ -118,7 +112,7 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<SetorDto> GetSetorByIdAsync(int setorId, bool includeSubsetor)
+        public async Task<SetorDto> GetSetorByIdAsync(Guid setorId, bool includeSubsetor)
         {
             try
             {

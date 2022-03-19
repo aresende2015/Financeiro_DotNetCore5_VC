@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using InvestQ.Application.Dtos.FundosImobiliarios;
 
@@ -7,12 +8,12 @@ namespace InvestQ.Application.Interfaces.FundosImobiliarios
     {
         Task<AdministradorDeFundoImobiliarioDto> AdicionarAdministradorDeFundoImobiliario(AdministradorDeFundoImobiliarioDto model);
         Task<AdministradorDeFundoImobiliarioDto> AtualizarAdministradorDeFundoImobiliario(AdministradorDeFundoImobiliarioDto model);
-        Task<bool> DeletarAdministradorDeFundoImobiliario(int administradorDeFundoImobiliarioId);
+        Task<bool> DeletarAdministradorDeFundoImobiliario(Guid administradorDeFundoImobiliarioId);
         
         Task<bool> InativarAdministradorDeFundoImobiliario(AdministradorDeFundoImobiliarioDto model);
         Task<bool> ReativarAdministradorDeFundoImobiliario(AdministradorDeFundoImobiliarioDto model);
 
         Task<AdministradorDeFundoImobiliarioDto[]> GetAllAdministradoresDeFundosImobiliariosAsync(bool includeFundoImobiliario);
-        Task<AdministradorDeFundoImobiliarioDto> GetAdministradorDeFundoImobiliarioByIdAsync(int administradorDeFundoImobiliarioId, bool includeFundoImobiliario);
+        Task<AdministradorDeFundoImobiliarioDto> GetAdministradorDeFundoImobiliarioByIdAsync(Guid administradorDeFundoImobiliarioId, bool includeFundoImobiliario);
     }
 }

@@ -30,7 +30,7 @@ namespace InvestQ.Data.Repositories.FundosImobiliarios
             return await query.ToArrayAsync();
         }
 
-        public async Task<FundoImobiliario> GetFundoImobiliarioByIdAsync(int id)
+        public async Task<FundoImobiliario> GetFundoImobiliarioByIdAsync(Guid id)
         {
             IQueryable<FundoImobiliario> query = _context.FundosImobiliarios;
 
@@ -58,7 +58,7 @@ namespace InvestQ.Data.Repositories.FundosImobiliarios
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<FundoImobiliario[]> GetFundosImobliariosByAdministradorDeFundoImobiliarioIdAsync(int administradorDeFundoImobiliarioId)
+        public async Task<FundoImobiliario[]> GetFundosImobliariosByAdministradorDeFundoImobiliarioIdAsync(Guid administradorDeFundoImobiliarioId)
         {
             IQueryable<FundoImobiliario> query = _context.FundosImobiliarios;
 
@@ -72,7 +72,7 @@ namespace InvestQ.Data.Repositories.FundosImobiliarios
             return await query.ToArrayAsync();
         }
 
-        public async Task<FundoImobiliario[]> GetFundosImobliariosBySegmentoAnbimaIdAsync(int segmentoAnbimaId)
+        public async Task<FundoImobiliario[]> GetFundosImobliariosBySegmentoAnbimaIdAsync(Guid segmentoAnbimaId)
         {
             IQueryable<FundoImobiliario> query = _context.FundosImobiliarios;
 
@@ -86,7 +86,7 @@ namespace InvestQ.Data.Repositories.FundosImobiliarios
             return await query.ToArrayAsync();
         }
 
-        public async Task<FundoImobiliario[]> GetFundosImobliariosByTipoDeInvestimentoIdAsync(int tipoDeInvestimentoId)
+        public async Task<FundoImobiliario[]> GetFundosImobliariosByTipoDeInvestimentoIdAsync(Guid tipoDeInvestimentoId)
         {
             IQueryable<FundoImobiliario> query = _context.FundosImobiliarios;
 

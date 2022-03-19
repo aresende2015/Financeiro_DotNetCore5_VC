@@ -20,7 +20,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("setor/{setorId}")]
-        public async Task<IActionResult> Get(int setorId) 
+        public async Task<IActionResult> Get(Guid setorId) 
         {
             try
             {
@@ -38,7 +38,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{subsetorId}")]
-        public async Task<IActionResult> GetSubsetor(int subsetorId) 
+        public async Task<IActionResult> GetSubsetor(Guid subsetorId) 
         {
             try
             {
@@ -56,7 +56,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPut("{setorId}")]
-        public async Task<IActionResult> Put(int setorId, SubsetorDto[] models)
+        public async Task<IActionResult> Put(Guid setorId, SubsetorDto[] models)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpDelete("{setorId}/{subsetorId}")]
-        public async Task<IActionResult> Delete(int setorId, int subsetorId)
+        public async Task<IActionResult> Delete(Guid setorId, Guid subsetorId)
         {
             try
             {

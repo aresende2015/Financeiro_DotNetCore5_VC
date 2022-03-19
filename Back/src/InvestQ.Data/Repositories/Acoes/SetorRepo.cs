@@ -45,7 +45,7 @@ namespace InvestQ.Data.Repositories.Acoes
             return await query.FirstOrDefaultAsync(s => s.Descricao == descricao);
         }
 
-        public async Task<Setor> GetSetorByIdAsync(int id, bool includeSubsetor)
+        public async Task<Setor> GetSetorByIdAsync(Guid id, bool includeSubsetor)
         {
             IQueryable<Setor> query = _context.Setores;
 

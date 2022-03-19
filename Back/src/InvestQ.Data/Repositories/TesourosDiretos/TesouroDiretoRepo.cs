@@ -29,7 +29,7 @@ namespace InvestQ.Data.Repositories.TesourosDiretos
             return await query.ToArrayAsync();
         }
 
-        public async Task<TesouroDireto[]> GetTeseourosDiretosByTipoDeInvestimentoIdAsync(int tipoDeInvestimentoId)
+        public async Task<TesouroDireto[]> GetTeseourosDiretosByTipoDeInvestimentoIdAsync(Guid tipoDeInvestimentoId)
         {
             IQueryable<TesouroDireto> query = _context.TesourosDiretos;
 
@@ -53,7 +53,7 @@ namespace InvestQ.Data.Repositories.TesourosDiretos
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<TesouroDireto> GetTesouroDiretoByIdAsync(int id)
+        public async Task<TesouroDireto> GetTesouroDiretoByIdAsync(Guid id)
         {
             IQueryable<TesouroDireto> query = _context.TesourosDiretos;
 

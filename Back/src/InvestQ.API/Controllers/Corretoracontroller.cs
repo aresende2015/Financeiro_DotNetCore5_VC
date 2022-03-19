@@ -44,7 +44,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCorretoraById(int id)
+        public async Task<IActionResult> GetCorretoraById(Guid id)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPost("upload-image/{corretoraId}")]
-        public async Task<IActionResult> UploadImage(int corretoraId) 
+        public async Task<IActionResult> UploadImage(Guid corretoraId) 
         {
             try
             {
@@ -125,7 +125,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, CorretoraDto model)
+        public async Task<IActionResult> Put(Guid id, CorretoraDto model)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {

@@ -21,9 +21,6 @@ namespace InvestQ.Application.Services.Clientes
         }
         public async Task<CorretoraDto> AdicionarCorretora(CorretoraDto model)
         {
-            if (model.Inativo)
-                throw new Exception("Não é possível incluir uma Corretora já inativa.");
-            
             var corretora = _mapper.Map<Corretora>(model);
 
             if (await _corretoraRepo.GetCorretoraByDescricaoAsync(corretora.Descricao, false) != null)
@@ -48,18 +45,12 @@ namespace InvestQ.Application.Services.Clientes
         {
             try
             {
-                if (model.Inativo)
-                    throw new Exception("Não é possível atualizar uma Corretora já inativa.");
-
                 var corretora = await _corretoraRepo.GetCorretoraByIdAsync(model.Id, false);
 
                 if (corretora != null)
                 {
                     if (corretora.Inativo)
                         throw new Exception("Não se pode alterar uma Corretora inativa.");
-
-                    model.Inativo = corretora.Inativo;
-                    model.DataDeCriacao = corretora.DataDeCriacao;
 
                     _mapper.Map(model, corretora);
 
@@ -77,7 +68,7 @@ namespace InvestQ.Application.Services.Clientes
             }            
         }
 
-        public async Task<bool> DeletarCorretora(int corretoraId)
+        public async Task<bool> DeletarCorretora(Guid corretoraId)
         {
             var corretora = await _corretoraRepo.GetCorretoraByIdAsync(corretoraId, false);
 
@@ -105,7 +96,7 @@ namespace InvestQ.Application.Services.Clientes
             }
         }
 
-        public async Task<CorretoraDto[]> GetAllCorretorasByClienteAsync(int clienteId, bool includeCliente)
+        public async Task<CorretoraDto[]> GetAllCorretorasByClienteAsync(Guid clienteId, bool includeCliente)
         {
             try
             {
@@ -137,7 +128,7 @@ namespace InvestQ.Application.Services.Clientes
             }
         }
 
-        public async Task<CorretoraDto> GetCorretoraByIdAsync(int corretoraId, bool includeCliente = false)
+        public async Task<CorretoraDto> GetCorretoraByIdAsync(Guid corretoraId, bool includeCliente = false)
         {
             try
             {

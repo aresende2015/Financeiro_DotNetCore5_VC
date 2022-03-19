@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Data.Context;
@@ -27,7 +28,7 @@ namespace InvestQ.Data.Repositories.Acoes
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<Acao> GetAcaoByIdAsync(int id)
+        public async Task<Acao> GetAcaoByIdAsync(Guid id)
         {
             IQueryable<Acao> query = _context.Acoes;
 
@@ -40,7 +41,7 @@ namespace InvestQ.Data.Repositories.Acoes
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<Acao[]> GetAcoesBySegmentoIdAsync(int segmentoId)
+        public async Task<Acao[]> GetAcoesBySegmentoIdAsync(Guid segmentoId)
         {
             IQueryable<Acao> query = _context.Acoes;
 
@@ -53,7 +54,7 @@ namespace InvestQ.Data.Repositories.Acoes
             return await query.ToArrayAsync();
         }
 
-        public async Task<Acao[]> GetAcoesByTipoDeInvestimentoIdAsync(int tipoDeInvestimentoId)
+        public async Task<Acao[]> GetAcoesByTipoDeInvestimentoIdAsync(Guid tipoDeInvestimentoId)
         {
             IQueryable<Acao> query = _context.Acoes;
 

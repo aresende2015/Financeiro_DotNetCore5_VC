@@ -38,7 +38,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetFundoImobiliarioById(int id)
+        public async Task<IActionResult> GetFundoImobiliarioById(Guid id)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{segmentoAnbimaId}/segmentoanbimaid")]
-        public async Task<IActionResult> GetFundoImobiliarioBySegmentoAnbimaId(int segmentoAnbimaId) 
+        public async Task<IActionResult> GetFundoImobiliarioBySegmentoAnbimaId(Guid segmentoAnbimaId) 
         {
             try
             {
@@ -93,7 +93,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{tipoDeInvestimentoId}/tipodeinvestimentoid")]
-        public async Task<IActionResult> GetFundoImobiliarioByTipoDeInvestimentoId(int tipoDeInvestimentoId) 
+        public async Task<IActionResult> GetFundoImobiliarioByTipoDeInvestimentoId(Guid tipoDeInvestimentoId) 
         {
             try
             {
@@ -112,7 +112,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{administradorDeFundoImobiliarioId}/administradordefundoimobiliarioid")]
-        public async Task<IActionResult> GetFundoImobiliarioByAdministradorDeFundoImobiliarioId(int administradorDeFundoImobiliarioId) 
+        public async Task<IActionResult> GetFundoImobiliarioByAdministradorDeFundoImobiliarioId(Guid administradorDeFundoImobiliarioId) 
         {
             try
             {
@@ -148,7 +148,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, FundoImobiliarioDto model)
+        public async Task<IActionResult> Put(Guid id, FundoImobiliarioDto model)
         {
             try
             {
@@ -169,7 +169,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {

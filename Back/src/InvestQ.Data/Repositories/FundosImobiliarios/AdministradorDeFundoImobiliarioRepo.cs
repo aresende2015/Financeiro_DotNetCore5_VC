@@ -28,7 +28,7 @@ namespace InvestQ.Data.Repositories.FundosImobiliarios
 
             return await query.ToArrayAsync();
         }
-        public async Task<AdministradorDeFundoImobiliario> GetAdministradorDeFundoImobiliarioByIdAsync(int id, bool includeFundoImobiliario)
+        public async Task<AdministradorDeFundoImobiliario> GetAdministradorDeFundoImobiliarioByIdAsync(Guid id, bool includeFundoImobiliario)
         {
             IQueryable<AdministradorDeFundoImobiliario> query = _context.AdministradoresDeFundosImobiliarios;
 

@@ -9,9 +9,7 @@ namespace InvestQ.Application.Dtos.Ativos
 {
     public class AtivoDto
     {
-        public int Id { get; set; }
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
+        public Guid Id { get; set; }
         public TipoDeAtivo TipoDeAtivo { get; set; }
         public IEnumerable<ProventoDto> Proventos { get; set; }
         //public virtual int AcaoId {get; set;}

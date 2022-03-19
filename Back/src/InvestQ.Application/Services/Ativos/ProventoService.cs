@@ -21,9 +21,6 @@ namespace InvestQ.Application.Services.Ativos
         } 
         public async Task<ProventoDto> AdicionarProvento(ProventoDto model)
         {
-            if (model.Inativo)
-                throw new Exception("Não é possível incluir um Provento já inativo.");
-            
             var provento = _mapper.Map<Provento>(model);
 
             if( await _proventoRepo.GetProventoByIdAsync(provento.Id) == null)
@@ -45,18 +42,12 @@ namespace InvestQ.Application.Services.Ativos
         {
             try
             {
-                if (model.Inativo)
-                    throw new Exception("Não é possível atualizar um Provento já inativo.");
-
                 var provento = await _proventoRepo.GetProventoByIdAsync(model.Id);
 
                 if (provento != null)
                 {
                     if (provento.Inativo)
                         throw new Exception("Não se pode alterar um Provento inativo.");
-
-                    model.Inativo = provento.Inativo;
-                    model.DataDeCriacao = provento.DataDeCriacao;
 
                     _mapper.Map(model, provento);
 
@@ -74,7 +65,7 @@ namespace InvestQ.Application.Services.Ativos
             } 
         }
 
-        public async Task<bool> DeletarProvento(int proventoId)
+        public async Task<bool> DeletarProvento(Guid proventoId)
         {
             var provento = await _proventoRepo.GetProventoByIdAsync(proventoId);
 
@@ -86,7 +77,7 @@ namespace InvestQ.Application.Services.Ativos
             return await _proventoRepo.SalvarMudancasAsync();
         }
 
-        public async Task<ProventoDto[]> GetAllProventosByAtivoIdAsync(int ativoId)
+        public async Task<ProventoDto[]> GetAllProventosByAtivoIdAsync(Guid ativoId)
         {
             try
             {
@@ -102,7 +93,7 @@ namespace InvestQ.Application.Services.Ativos
             }
         }
 
-        public async Task<ProventoDto> GetProventoByIdAsync(int id)
+        public async Task<ProventoDto> GetProventoByIdAsync(Guid id)
         {
             try
             {

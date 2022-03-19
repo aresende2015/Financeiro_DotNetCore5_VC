@@ -21,9 +21,6 @@ namespace InvestQ.Application.Services.FundosImobiliarios
         }
         public async Task<FundoImobiliarioDto> AdicionarFundoImobiliario(FundoImobiliarioDto model)
         {
-            if (model.Inativo)
-                throw new Exception("Não é possível incluir um Fundo Imobiliário inativo.");
-            
             var fundoImobiliario = _mapper.Map<FundoImobiliario>(model);
 
             if (await _fundoImobiliarioRepo.GetFundoImobiliarioByNomePregaoAsync(fundoImobiliario.NomePregao) != null)
@@ -48,18 +45,12 @@ namespace InvestQ.Application.Services.FundosImobiliarios
         {
             try
             {
-                if (model.Inativo)
-                    throw new Exception("Não é possível atualizar um Fundo Imobiliário já inativo.");
-
                 var fundoImobiliario = await _fundoImobiliarioRepo.GetFundoImobiliarioByIdAsync(model.Id);
 
                 if (fundoImobiliario != null)
                 {
                     if (fundoImobiliario.Inativo)
                         throw new Exception("Não se pode alterar um Fundo Imobiliário inativo.");
-
-                    model.Inativo = fundoImobiliario.Inativo;
-                    model.DataDeCriacao = fundoImobiliario.DataDeCriacao;
 
                     _mapper.Map(model, fundoImobiliario);
 
@@ -77,7 +68,7 @@ namespace InvestQ.Application.Services.FundosImobiliarios
             } 
         }
 
-        public async Task<bool> DeletarFundoImobiliario(int fundoImobiliarioId)
+        public async Task<bool> DeletarFundoImobiliario(Guid fundoImobiliarioId)
         {
             var fundoImobiliario = await _fundoImobiliarioRepo.GetFundoImobiliarioByIdAsync(fundoImobiliarioId);
 
@@ -105,7 +96,7 @@ namespace InvestQ.Application.Services.FundosImobiliarios
             }
         }
 
-        public async Task<FundoImobiliarioDto> GetFundoImobiliarioByIdAsync(int id)
+        public async Task<FundoImobiliarioDto> GetFundoImobiliarioByIdAsync(Guid id)
         {
             try
             {
@@ -137,7 +128,7 @@ namespace InvestQ.Application.Services.FundosImobiliarios
             }
         }
 
-        public async Task<FundoImobiliarioDto[]> GetFundosImobliariosByAdministradorDeFundoImobiliarioIdAsync(int administradorDeFundoImobiliarioId)
+        public async Task<FundoImobiliarioDto[]> GetFundosImobliariosByAdministradorDeFundoImobiliarioIdAsync(Guid administradorDeFundoImobiliarioId)
         {
             try
             {
@@ -155,7 +146,7 @@ namespace InvestQ.Application.Services.FundosImobiliarios
             }
         }
 
-        public async Task<FundoImobiliarioDto[]> GetFundosImobliariosBySegmentoAnbimaIdAsync(int segmentoAnbimaId)
+        public async Task<FundoImobiliarioDto[]> GetFundosImobliariosBySegmentoAnbimaIdAsync(Guid segmentoAnbimaId)
         {
             try
             {
@@ -173,7 +164,7 @@ namespace InvestQ.Application.Services.FundosImobiliarios
             }
         }
 
-        public async Task<FundoImobiliarioDto[]> GetFundosImobliariosByTipoDeInvestimentoIdAsync(int tipoDeInvestimentoId)
+        public async Task<FundoImobiliarioDto[]> GetFundosImobliariosByTipoDeInvestimentoIdAsync(Guid tipoDeInvestimentoId)
         {
             try
             {

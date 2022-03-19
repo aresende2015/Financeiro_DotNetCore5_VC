@@ -21,7 +21,7 @@ namespace InvestQ.Application.Services.Acoes
             _mapper = mapper;
         }
         
-        public async Task AddSubsetor(int setorId, SubsetorDto model)
+        public async Task AddSubsetor(Guid setorId, SubsetorDto model)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<SubsetorDto[]> SalvarSubsetores(int setorId, SubsetorDto[] models)
+        public async Task<SubsetorDto[]> SalvarSubsetores(Guid setorId, SubsetorDto[] models)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace InvestQ.Application.Services.Acoes
 
                     foreach (var model in models)
                     {
-                        if (model.Id == 0) 
+                        if (model.Id == null | model.Id == Guid.Empty) 
                         {
                             await AddSubsetor(setorId, model);
                         }
@@ -83,7 +83,7 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<bool> DeletarSubsetor(int setorId, int subsetorId)
+        public async Task<bool> DeletarSubsetor(Guid setorId, Guid subsetorId)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace InvestQ.Application.Services.Acoes
                 throw new Exception(ex.Message);
             }
         }
-        public async Task<SubsetorDto[]> GetSubsetoresBySetorIdAsync(int setorId)
+        public async Task<SubsetorDto[]> GetSubsetoresBySetorIdAsync(Guid setorId)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<SubsetorDto> GetSubsetorByIdsAsync(int setorId, int subsetorId)
+        public async Task<SubsetorDto> GetSubsetorByIdsAsync(Guid setorId, Guid subsetorId)
         {
             try
             {
@@ -137,7 +137,7 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<SubsetorDto> GetSubsetorByIdAsync(int subsetorId)
+        public async Task<SubsetorDto> GetSubsetorByIdAsync(Guid subsetorId)
         {
             try
             {

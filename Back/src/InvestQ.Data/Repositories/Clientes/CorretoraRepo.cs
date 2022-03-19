@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Data.Context;
@@ -30,7 +31,7 @@ namespace InvestQ.Data.Repositories.Clientes
             return await query.ToArrayAsync();
         }
 
-        public async Task<Corretora[]> GetAllCorretorasByClienteId(int clienteId, bool includeCliente)
+        public async Task<Corretora[]> GetAllCorretorasByClienteId(Guid clienteId, bool includeCliente)
         {
             IQueryable<Corretora> query = _context.Corretoras;
 
@@ -59,7 +60,7 @@ namespace InvestQ.Data.Repositories.Clientes
             return await query.FirstOrDefaultAsync(c => c.Descricao == descricao);
         }
 
-        public async Task<Corretora> GetCorretoraByIdAsync(int id, bool includeCliente = false)
+        public async Task<Corretora> GetCorretoraByIdAsync(Guid id, bool includeCliente = false)
         {
             IQueryable<Corretora> query = _context.Corretoras;
 

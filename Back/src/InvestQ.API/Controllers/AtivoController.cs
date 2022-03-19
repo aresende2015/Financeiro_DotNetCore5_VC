@@ -57,7 +57,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, AtivoDto model)
+        public async Task<IActionResult> Put(Guid id, AtivoDto model)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {

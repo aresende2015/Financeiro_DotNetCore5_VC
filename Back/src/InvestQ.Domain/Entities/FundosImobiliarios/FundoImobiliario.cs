@@ -4,19 +4,19 @@ using InvestQ.Domain.Enum;
 
 namespace InvestQ.Domain.Entities.FundosImobiliarios
 {
-    public class FundoImobiliario
+    public class FundoImobiliario : Entity
     {
         public FundoImobiliario() 
         {
         }
-        public FundoImobiliario(int id, 
+        public FundoImobiliario(Guid id, 
                                 string cnpj, 
                                 string razaoSocial, 
                                 string nomePregao,
                                 DateTime dataDeInicio,
                                 DateTime dataDeFim,
                                 TipoDeGestao tipoDeGestao,
-                                int tipoDeInvestimentoId)
+                                Guid tipoDeInvestimentoId)
         {
             Id = id;
             CNPJ = cnpj;
@@ -41,22 +41,19 @@ namespace InvestQ.Domain.Entities.FundosImobiliarios
             else
                 throw new Exception($"O Fundo Imobiliário já estava ativo.");
         }
-        public int Id { get; set; }
         public string CNPJ { get; set; }
         public string RazaoSocial { get; set; }        
         public string NomePregao { get; set; }
         public DateTime DataDeInicio { get; set; }
         public DateTime DataDeFim { get; set; }
         public TipoDeGestao TipoDeGestao {get; set;}
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
-        public int TipoDeInvestimentoId { get; set; }
+        public Guid TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimento TipoDeInvestimento { get; set; }
-        public int SegmentoAnbimaId { get; set; }
+        public Guid SegmentoAnbimaId { get; set; }
         public SegmentoAnbima SegmentoAnbima { get; set; }
-        public int AdministradorDeFundoImobiliarioId { get; set; }
+        public Guid AdministradorDeFundoImobiliarioId { get; set; }
         public AdministradorDeFundoImobiliario AdministradorDeFundoImobiliario { get; set; }
-        public int AtivoId { get; set; }
+        public Guid AtivoId { get; set; }
         public Ativo Ativo { get; set; }
     }
 }

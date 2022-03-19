@@ -8,7 +8,7 @@ namespace InvestQ.Application.Dtos.FundosImobiliarios
 {
     public class AdministradorDeFundoImobiliarioDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(14, MinimumLength = 14, ErrorMessage = "O campo de {0} deve ter 14 caracteres.")]
@@ -19,8 +19,6 @@ namespace InvestQ.Application.Dtos.FundosImobiliarios
         public string Telefone { get; set; }
         public string Site { get; set; }
         public string Email { get; set; }
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
         public IEnumerable<FundoImobiliarioDto> FundosImobiliarios { get; set; }
     }
 }

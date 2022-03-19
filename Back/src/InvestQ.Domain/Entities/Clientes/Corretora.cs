@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InvestQ.Domain.Entities.Clientes
 {
-    public class Corretora
+    public class Corretora : Entity
     {
         public Corretora() 
         {
         }
-        public Corretora(int id, 
+        public Corretora(Guid id, 
                          string descricao,
                          string imagem)
         {
@@ -31,11 +31,8 @@ namespace InvestQ.Domain.Entities.Clientes
             else
                 throw new Exception($"A Corretora já estava ativa.");
         }
-        public int Id { get; set; }
         public string Descricao { get; set; }
         public string Imagen { get; set; }
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
         public IEnumerable<ClienteCorretora> ClientesCorretoras { get; set; }
     }
 }

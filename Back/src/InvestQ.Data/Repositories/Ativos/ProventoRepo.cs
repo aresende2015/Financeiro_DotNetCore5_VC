@@ -16,7 +16,7 @@ namespace InvestQ.Data.Repositories.Ativos
         {
             _context = context;
         }
-        public async Task<Provento[]> GetAllProventosByAtivoIdAsync(int ativoId)
+        public async Task<Provento[]> GetAllProventosByAtivoIdAsync(Guid ativoId)
         {
             IQueryable<Provento> query = _context.Proventos;
 
@@ -28,7 +28,7 @@ namespace InvestQ.Data.Repositories.Ativos
 
             return await query.ToArrayAsync();
         }
-        public async Task<Provento> GetProventoByIdAsync(int id)
+        public async Task<Provento> GetProventoByIdAsync(Guid id)
         {
             IQueryable<Provento> query = _context.Proventos;
 

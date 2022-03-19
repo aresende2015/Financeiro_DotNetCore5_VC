@@ -53,15 +53,12 @@ namespace InvestQ.Application.Services.Clientes
             }
         }
 
-        public async Task<ClienteDto> AtualizarCliente(int userId, int clienteId, ClienteDto model)
+        public async Task<ClienteDto> AtualizarCliente(int userId, Guid clienteId, ClienteDto model)
         {
             try
             {
                 if (clienteId != model.Id)
                     throw new Exception("Está tentando alterar o Id errado.");
-
-                if (model.Inativo)
-                    throw new Exception("Não é possível atualizar um Cliente já inativo.");
 
                 var cliente = await _clienteRepo.GetClienteByIdAsync(userId, clienteId, false);
                 
@@ -70,8 +67,6 @@ namespace InvestQ.Application.Services.Clientes
                     if (cliente.Inativo)
                         throw new Exception("Não se pode alterar um Cliente inativo.");
 
-                    model.Inativo = cliente.Inativo;
-                    model.DataDeCriacao = cliente.DataDeCriacao;
                     model.UserId = userId;
 
                     _mapper.Map(model, cliente);
@@ -92,7 +87,7 @@ namespace InvestQ.Application.Services.Clientes
             
         }
 
-        public async Task<bool> DeletarCliente(int userId, int clienteId)
+        public async Task<bool> DeletarCliente(int userId, Guid clienteId)
         {
             var cliente = await _clienteRepo.GetClienteByIdAsync(userId, clienteId, false);
 
@@ -127,7 +122,7 @@ namespace InvestQ.Application.Services.Clientes
             }
         }
 
-        public async Task<PageList<ClienteDto>> GetAllClientesByCorretoraAsync(int userId, PageParams pageParams, int corretoraId, bool includeCorretora)
+        public async Task<PageList<ClienteDto>> GetAllClientesByCorretoraAsync(int userId, PageParams pageParams, Guid corretoraId, bool includeCorretora)
         {
             try
             {
@@ -150,7 +145,7 @@ namespace InvestQ.Application.Services.Clientes
             }
         }
 
-        public async Task<ClienteDto> GetClienteByIdAsync(int userId, int clienteId, bool includeCorretora = false)
+        public async Task<ClienteDto> GetClienteByIdAsync(int userId, Guid clienteId, bool includeCorretora = false)
         {
             try
             {

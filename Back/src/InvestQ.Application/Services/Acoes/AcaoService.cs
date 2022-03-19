@@ -20,10 +20,7 @@ namespace InvestQ.Application.Services.Acoes
             _mapper = mapper;
         }
         public async Task<AcaoDto> AdicionarAcao(AcaoDto model)
-        {
-            if (model.Inativo)
-                throw new Exception("Não é possível incluir uma Ação já inativa.");
-            
+        {   
             var acao = _mapper.Map<Acao>(model);
 
             if (await _acaoRepo.GetAcaoByCodigoAsync(acao.Codigo) != null)
@@ -48,18 +45,12 @@ namespace InvestQ.Application.Services.Acoes
         {
             try
             {
-                if (model.Inativo)
-                    throw new Exception("Não é possível atualizar uma Ação já inativa.");
-
                 var acao = await _acaoRepo.GetAcaoByIdAsync(model.Id);
 
                 if (acao != null)
                 {
                     if (acao.Inativo)
                         throw new Exception("Não se pode alterar uma Ação inativa.");
-
-                    model.Inativo = acao.Inativo;
-                    model.DataDeCriacao = acao.DataDeCriacao;
 
                     _mapper.Map(model, acao);
 
@@ -77,7 +68,7 @@ namespace InvestQ.Application.Services.Acoes
             } 
         }
 
-        public async Task<bool> DeletarAcao(int acaoId)
+        public async Task<bool> DeletarAcao(Guid acaoId)
         {
             var acao = await _acaoRepo.GetAcaoByIdAsync(acaoId);
 
@@ -105,7 +96,7 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<AcaoDto> GetAcaoByIdAsync(int id)
+        public async Task<AcaoDto> GetAcaoByIdAsync(Guid id)
         {
             try
             {
@@ -121,7 +112,7 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<AcaoDto[]> GetAcoesBySegmentoIdAsync(int segmentoId)
+        public async Task<AcaoDto[]> GetAcoesBySegmentoIdAsync(Guid segmentoId)
         {
             try
             {
@@ -139,7 +130,7 @@ namespace InvestQ.Application.Services.Acoes
             }
         }
 
-        public async Task<AcaoDto[]> GetAcoesByTipoDeInvestimentoIdAsync(int tipoDeInvestimentoId)
+        public async Task<AcaoDto[]> GetAcoesByTipoDeInvestimentoIdAsync(Guid tipoDeInvestimentoId)
         {
             try
             {

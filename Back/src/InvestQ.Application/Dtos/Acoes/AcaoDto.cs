@@ -6,7 +6,7 @@ namespace InvestQ.Application.Dtos.Acoes
 {
     public class AcaoDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Codigo { get; set; }
@@ -17,13 +17,11 @@ namespace InvestQ.Application.Dtos.Acoes
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string RazaoSocial { get; set; }        
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
-        public int SegmentoId {get; set;}
+        public Guid SegmentoId {get; set;}
         public SegmentoDto Segmento { get; set; }
-        public int TipoDeInvestimentoId { get; set; }
+        public Guid TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimentoDto TipoDeInvestimento { get; set; }
-        public int AtivoId { get; set; }
+        public Guid AtivoId { get; set; }
         public AtivoDto Ativo { get; set; }        
     }
 }

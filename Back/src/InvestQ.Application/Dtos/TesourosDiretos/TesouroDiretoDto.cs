@@ -6,17 +6,15 @@ namespace InvestQ.Application.Dtos.TesourosDiretos
 {
     public class TesouroDiretoDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Descricao { get; set; }
         public DateTime DataDeVencimento { get; set; }
         public bool JurosSemestrais { get; set; }
-        public DateTime DataDeCriacao { get; set; }  = DateTime.Now;
-        public bool Inativo { get; set; } = false;
-        public int TipoDeInvestimentoId { get; set; }
+        public Guid TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimentoDto TipoDeInvestimento { get; set; }
-        public int AtivoId { get; set; }
+        public Guid AtivoId { get; set; }
         public AtivoDto Ativo { get; set; } 
     }
 }
