@@ -1,10 +1,11 @@
 import { Cliente } from "./Cliente";
 import { Corretora } from "./Corretora";
+import { Guid } from 'guid-typescript';
 
 export interface ClienteCorretora {
 
-  clienteId: number;
+  clienteId: Guid;
   cliente: Cliente;
-  corretoraId: number;
+  corretoraId: Guid;
   corretora: Corretora;
 }

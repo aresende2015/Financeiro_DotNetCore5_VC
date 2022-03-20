@@ -1,10 +1,9 @@
 import { Cliente } from "./Cliente";
 import { ClienteCorretora } from "./ClienteCorretora";
+import { Guid } from 'guid-typescript';
 export interface Corretora {
-  id: number;
+  id: Guid;
   descricao: string;
   imagen: string;
-  dataDeCriacao?: Date;
-  inativo: boolean;
   clientesCorretoras: ClienteCorretora[];
 }

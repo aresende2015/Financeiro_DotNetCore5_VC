@@ -47,7 +47,7 @@ export class ClienteService {
   //     .pipe(take(1));
   // }
 
-  public getClienteById(id: number): Observable<Cliente> {
+  public getClienteById(id: Guid): Observable<Cliente> {
     return this.http
       .get<Cliente>(`${this.baseURL}/${id}`)
       .pipe(take(1));
@@ -65,7 +65,7 @@ export class ClienteService {
       .pipe(take(1));
   }
 
-  public deleteCliente(id: number): Observable<any> {
+  public deleteCliente(id: Guid): Observable<any> {
     return this.http
       .delete(`${this.baseURL}/${id}`)
       .pipe(take(1));

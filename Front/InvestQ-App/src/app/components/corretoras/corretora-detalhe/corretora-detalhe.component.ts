@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CorretoraService } from '@app/services/corretora.service';
 import { Corretora } from '@app/models/Corretora';
 import { environment } from '@environments/environment';
+import { Guid } from 'guid-typescript';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class CorretoraDetalheComponent implements OnInit {
 
   imagemURL = 'assets/upload.png';
 
-  corretoraId: number;
+  corretoraId: Guid;
 
   file: File;
 
@@ -47,28 +48,33 @@ export class CorretoraDetalheComponent implements OnInit {
   }
 
   public carregarCorretora(): void {
-    this.corretoraId = +this.activatedRouter.snapshot.paramMap.get('id');
 
-    if (this.corretoraId !== null && this.corretoraId !== 0) {
-      this.spinner.show();
+    if (this.activatedRouter.snapshot.paramMap.get('id') === null)
+      this.corretoraId = Guid.createEmpty();
+    else {
+      this.corretoraId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
 
-      this.estadoSalvar = 'put';
+      if (this.corretoraId !== null && !this.corretoraId.isEmpty()) {
+        this.spinner.show();
 
-      this.corretoraService.getCorretoraById(this.corretoraId).subscribe({
-        next: (corretora: Corretora) => {
-          this.corretora = {...corretora};
-          this.form.patchValue(this.corretora);
-          if (this.corretora.imagen !== '') {
-            this.imagemURL = environment.apiURL + 'resources/images/' + this.corretora.imagen;
-          }
-        },
-        error: (error: any) => {
-          this.spinner.hide();
-          this.toastr.error('Erro ao tentar carregar a corretora.', 'Erro!');
-          console.error(error)
-        },
-        complete: () => {this.spinner.hide()}
-      });
+        this.estadoSalvar = 'put';
+
+        this.corretoraService.getCorretoraById(this.corretoraId).subscribe({
+          next: (corretora: Corretora) => {
+            this.corretora = {...corretora};
+            this.form.patchValue(this.corretora);
+            if (this.corretora.imagen !== '') {
+              this.imagemURL = environment.apiURL + 'resources/images/' + this.corretora.imagen;
+            }
+          },
+          error: (error: any) => {
+            this.spinner.hide();
+            this.toastr.error('Erro ao tentar carregar a corretora.', 'Erro!');
+            console.error(error)
+          },
+          complete: () => {this.spinner.hide()}
+        });
+      }
     }
   }
 
@@ -146,4 +152,5 @@ export class CorretoraDetalheComponent implements OnInit {
       }
     ).add(() => this.spinner.hide());
   }
+
 }

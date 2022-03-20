@@ -1,7 +1,8 @@
+import { Guid } from "guid-typescript";
 import { Corretora } from "./Corretora";
 
 export interface Cliente {
-  id: number;
+  id: Guid;
   cpf: string;
   nomeCompleto: string;
   nome: string;
@@ -9,7 +10,5 @@ export interface Cliente {
   email: string;
   idade: number;
   dataDeNascimento: Date;
-  dataDeCriacao?: Date;
-  inativo: boolean;
   clientesCorretoras: Corretora[];
 }

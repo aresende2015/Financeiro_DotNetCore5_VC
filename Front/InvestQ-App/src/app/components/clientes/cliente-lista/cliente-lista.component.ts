@@ -7,6 +7,7 @@ import { ClienteService } from '@app/services/cliente.service';
 import { Router } from '@angular/router';
 import { PaginatedResult, Pagination } from '@app/models/pagination/Pagination';
 import { debounceTime, Subject } from 'rxjs';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'app-cliente-lista',
@@ -21,7 +22,7 @@ export class ClienteListaComponent implements OnInit {
   public pagination = {} as Pagination;
 
   public clientes: Cliente[] = [];
-  public clienteId =0;
+  public clienteId = Guid.createEmpty();
 
   termoBuscaChanged: Subject<string> = new Subject<string>();
 
@@ -86,7 +87,7 @@ export class ClienteListaComponent implements OnInit {
                        .add(() => this.spinner.hide());
   }
 
-  public openModal(event: any, template: TemplateRef<any>, clienteId: number): void {
+  public openModal(event: any, template: TemplateRef<any>, clienteId: Guid): void {
     event.stopPropagation();
     this.clienteId = clienteId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
@@ -117,7 +118,7 @@ export class ClienteListaComponent implements OnInit {
     this.modalRef?.hide();
   }
 
-  public detalheCliente(id: number): void {
+  public detalheCliente(id: Guid): void {
     this.router.navigate([`clientes/detalhe/${id}`])
   }
 

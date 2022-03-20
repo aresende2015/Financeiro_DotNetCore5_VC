@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { Cliente } from '@app/models/Cliente';
 import { ClienteService } from '@app/services/cliente.service';
+import { Guid } from 'guid-typescript';
 @Component({
   selector: 'app-cliente-detalhe',
   templateUrl: './cliente-detalhe.component.html',
@@ -17,6 +18,7 @@ export class ClienteDetalheComponent implements OnInit {
 
   cliente = {} as Cliente;
   //cliente: Cliente;
+  clienteId: Guid;
 
   form!: FormGroup;
 
@@ -39,6 +41,7 @@ export class ClienteDetalheComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private localeService: BsLocaleService,
               private router: ActivatedRoute,
+              private activatedRouter: ActivatedRoute,
               private clienteService: ClienteService,
               private spinner: NgxSpinnerService,
               private toastr: ToastrService)
@@ -47,25 +50,30 @@ export class ClienteDetalheComponent implements OnInit {
   }
 
   public carregarCliente(): void {
-    const clienteIdParam = this.router.snapshot.paramMap.get('id');
+    if (this.activatedRouter.snapshot.paramMap.get('id') === null)
+      this.clienteId = Guid.createEmpty();
+    else {
+      this.clienteId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
 
-    if (clienteIdParam !== null) {
-      this.spinner.show();
+      if (this.clienteId !== null && !this.clienteId.isEmpty()) {
 
-      this.estadoSalvar = 'put';
+        this.spinner.show();
 
-      this.clienteService.getClienteById(+clienteIdParam).subscribe({
-        next: (cliente: Cliente) => {
-          this.cliente = {...cliente};
-          this.form.patchValue(this.cliente);
-        },
-        error: (error: any) => {
-          this.spinner.hide();
-          this.toastr.error('Erro ao tentar carregar o cliente.', 'Erro!');
-          console.error(error)
-        },
-        complete: () => {this.spinner.hide()}
-      });
+        this.estadoSalvar = 'put';
+
+        this.clienteService.getClienteById(this.clienteId).subscribe({
+          next: (cliente: Cliente) => {
+            this.cliente = {...cliente};
+            this.form.patchValue(this.cliente);
+          },
+          error: (error: any) => {
+            this.spinner.hide();
+            this.toastr.error('Erro ao tentar carregar o cliente.', 'Erro!');
+            console.error(error)
+          },
+          complete: () => {this.spinner.hide()}
+        });
+      }
     }
   }
 

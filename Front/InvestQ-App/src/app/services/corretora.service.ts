@@ -21,7 +21,7 @@ export class CorretoraService {
     return this.http.get<Corretora>(`${this.baseURL}/${descricao}/descricao`);
   }
 
-  public getCorretoraById(id: number): Observable<Corretora> {
+  public getCorretoraById(id: Guid): Observable<Corretora> {
     return this.http.get<Corretora>(`${this.baseURL}/${id}`);
   }
 
@@ -37,13 +37,13 @@ export class CorretoraService {
       .pipe(take(1));
   }
 
-  public deleteCorretora(id: number): Observable<any> {
+  public deleteCorretora(id: Guid): Observable<any> {
     return this.http
       .delete(`${this.baseURL}/${id}`)
       .pipe(take(1));
   }
 
-  public postUpload(corretoraId: number, file: File): Observable<Corretora> {
+  public postUpload(corretoraId: Guid, file: File): Observable<Corretora> {
     const fileToUpload = file[0] as File;
 
     const formData = new FormData();

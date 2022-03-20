@@ -6,6 +6,7 @@ import { Corretora } from '@app/models/Corretora';
 import { CorretoraService } from '@app/services/corretora.service';
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'app-corretora-lista',
@@ -18,7 +19,7 @@ export class CorretoraListaComponent implements OnInit {
 
   public corretoras: Corretora[] = [];
   public corretorasFiltradas: Corretora[] = [];
-  public corretoraId = 0;
+  public corretoraId = Guid.createEmpty();
 
   private _filtroLista: string = '';
 
@@ -91,7 +92,7 @@ export class CorretoraListaComponent implements OnInit {
 
   }
 
-  openModal(event: any, template: TemplateRef<any>, corretoraId: number): void {
+  openModal(event: any, template: TemplateRef<any>, corretoraId: Guid): void {
     event.stopPropagation();
     this.corretoraId = corretoraId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
@@ -124,7 +125,7 @@ export class CorretoraListaComponent implements OnInit {
     this.modalRef?.hide();
   }
 
-  public detalheCorretora(id: number): void {
+  public detalheCorretora(id: Guid): void {
     this.router.navigate([`corretoras/detalhe/${id}`])
   }
 
