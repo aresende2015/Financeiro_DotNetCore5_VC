@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { ActivatedRoute, Router } from '@angular/router';
 import { Segmento } from '@app/models/Segmento';
 import { SegmentoService } from '@app/services/segmento.service';
+import { Guid } from 'guid-typescript';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 
@@ -15,8 +16,8 @@ export class SegmentoDetalheComponent implements OnInit {
 
   form!: FormGroup;
 
-  segmentoId: number;
-  subsetorId: number;
+  segmentoId: Guid;
+  subsetorId: Guid;
 
   segmento = {} as Segmento;
 
@@ -39,25 +40,37 @@ export class SegmentoDetalheComponent implements OnInit {
   }
 
   public carregarSegmento(): void {
-    this.segmentoId = +this.activatedRouter.snapshot.paramMap.get('id')!;
-    this.subsetorId = +this.activatedRouter.snapshot.paramMap.get('subsetorId')!;
 
-    if (this.segmentoId !== null && this.segmentoId !== 0) {
-      this.spinner.show();
+    if (this.activatedRouter.snapshot.paramMap.get('id') === null ||
+        this.activatedRouter.snapshot.paramMap.get('subsetorId') === null) {
+      this.segmentoId = Guid.createEmpty();
+      this.subsetorId = Guid.createEmpty();
+    }
+    else {
 
-      this.estadoSalvar = 'put';
+      this.segmentoId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
+      this.subsetorId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('subsetorId').toString());
 
-      this.segmentoService.getSegmentoBySubsetorIdSegmentoId(this.subsetorId, this.segmentoId).subscribe({
-        next: (_segmento: Segmento) => {
-          this.segmento = {..._segmento};
-          this.form.patchValue(this.segmento);
-        },
-        error: (error: any) => {
-          this.toastr.error('Erro ao tentar carregar o segmento.', 'Erro!');
-          console.error(error);
-        }
-      }).add(() => this.spinner.hide());
+      //this.segmentoId = +this.activatedRouter.snapshot.paramMap.get('id')!;
+      //this.subsetorId = +this.activatedRouter.snapshot.paramMap.get('subsetorId')!;
 
+      if (this.segmentoId !== null && !this.segmentoId.isEmpty()) {
+        this.spinner.show();
+
+        this.estadoSalvar = 'put';
+
+        this.segmentoService.getSegmentoBySubsetorIdSegmentoId(this.subsetorId, this.segmentoId).subscribe({
+          next: (_segmento: Segmento) => {
+            this.segmento = {..._segmento};
+            this.form.patchValue(this.segmento);
+          },
+          error: (error: any) => {
+            this.toastr.error('Erro ao tentar carregar o segmento.', 'Erro!');
+            console.error(error);
+          }
+        }).add(() => this.spinner.hide());
+
+      }
     }
   }
 

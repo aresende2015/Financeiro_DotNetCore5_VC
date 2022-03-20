@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { Setor } from '@app/models/Setor';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'app-setor-lista',
@@ -17,7 +18,7 @@ export class SetorListaComponent implements OnInit {
 
   public setores: Setor[] = [];
   public setoresFiltrados: Setor[] = [];
-  public setorId = 0;
+  public setorId = Guid.createEmpty();
 
   private _filtroLista: string = '';
 
@@ -75,7 +76,7 @@ export class SetorListaComponent implements OnInit {
     this.setorService.getAllSetores().subscribe(observer);
   }
 
-  openModal(event: any, template: TemplateRef<any>, setorId: number): void {
+  openModal(event: any, template: TemplateRef<any>, setorId: Guid): void {
     event.stopPropagation();
     this.setorId = setorId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
@@ -108,11 +109,12 @@ export class SetorListaComponent implements OnInit {
     this.modalRef?.hide();
   }
 
-  public editarSetor(id: number): void {
+  public editarSetor(id: Guid): void {
+
     this.router.navigate([`setores/detalhe/${id}`])
   }
 
-  public listarSubsetores(id: number): void {
+  public listarSubsetores(id: Guid): void {
     this.router.navigate([`setores/listarsubsetores/${id}`])
   }
 

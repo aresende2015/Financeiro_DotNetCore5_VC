@@ -145,6 +145,11 @@ Criando um Guard
 
 ng g guard guard/auth
 
+===============
+Usar Guid no Angular
+
+npm i guid-typescript --save
+
 
 
 

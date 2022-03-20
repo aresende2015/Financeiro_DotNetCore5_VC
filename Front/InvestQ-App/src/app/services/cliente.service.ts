@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PaginatedResult } from '@app/models/pagination/Pagination';
+import { Guid } from 'guid-typescript';
 import { map, Observable, take } from 'rxjs';
 import { Cliente } from '../models/Cliente';
 

@@ -1,12 +1,11 @@
+import { Guid } from "guid-typescript";
 import { Segmento } from "./Segmento";
 import { Setor } from "./Setor";
 
 export class Subsetor {
-  id: number;
+  id: Guid;
   descricao: string;
-  dataDeCriacao?: Date;
-  inativo: boolean;
-  setorId: number;
+  setorId: Guid;
   setor: Setor;
   segmentos: Segmento[];
 }

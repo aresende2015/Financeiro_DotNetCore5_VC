@@ -10,6 +10,7 @@ import { Setor } from '@app/models/Setor';
 import { SetorService } from '@app/services/setor.service';
 import { Subsetor } from '@app/models/Subsetor';
 import { SubsetorService } from '@app/services/subsetor.service';
+import { Guid } from 'guid-typescript';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class SetorDetalheComponent implements OnInit {
 
   modalRef: BsModalRef;
 
-  setorId: number;
+  setorId: Guid;
 
   setor = {} as Setor;
 
@@ -29,7 +30,7 @@ export class SetorDetalheComponent implements OnInit {
 
   estadoSalvar = 'post';
 
-  subsetorAtual = {id: 0, descricao: '', indice: 0};
+  subsetorAtual = {id: Guid.createEmpty(), descricao: '', indice: 0};
 
   get f(): any {
     return this.form.controls;
@@ -53,29 +54,36 @@ export class SetorDetalheComponent implements OnInit {
               private modalService: BsModalService) { }
 
   public carregarSetor(): void {
-    this.setorId = +this.activatedRouter.snapshot.paramMap.get('id')!;
 
-    if (this.setorId !== null && this.setorId !== 0) {
-      this.spinner.show();
+    if (this.activatedRouter.snapshot.paramMap.get('id') === null)
+      this.setorId = Guid.createEmpty();
+    else {
+        this.setorId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
+        //this.setorId = +this.activatedRouter.snapshot.paramMap.get('id')!;
 
-      this.estadoSalvar = 'put';
+        if (this.setorId !== null && !this.setorId.isEmpty()) {
 
-      this.setorService.getSetorById(this.setorId).subscribe({
-        next: (_setor: Setor) => {
-          this.setor = {..._setor};
-          this.form.patchValue(this.setor);
-          this.setor.subsetores.forEach(subsetor => {
-            this.subsetores.push(this.criarSubsetor(subsetor));
-          });
-          //this.carregarSubsetores();
-        },
-        error: (error: any) => {
-          this.toastr.error('Erro ao tentar carregar o setor.', 'Erro!');
-          console.error(error);
+          this.spinner.show();
+
+          this.estadoSalvar = 'put';
+
+          this.setorService.getSetorById(this.setorId).subscribe({
+            next: (_setor: Setor) => {
+              this.setor = {..._setor};
+              this.form.patchValue(this.setor);
+              this.setor.subsetores.forEach(subsetor => {
+                this.subsetores.push(this.criarSubsetor(subsetor));
+              });
+              //this.carregarSubsetores();
+            },
+            error: (error: any) => {
+              this.toastr.error('Erro ao tentar carregar o setor.', 'Erro!');
+              console.error(error);
+            }
+          }).add(() => this.spinner.hide());
+
         }
-      }).add(() => this.spinner.hide());
-
-    }
+      }
   }
 
   /* public carregarSubsetores(): void {
@@ -105,12 +113,12 @@ export class SetorDetalheComponent implements OnInit {
   }
 
   public adicionarSubsetor(): void {
-    this.subsetores.push(this.criarSubsetor({id: 0} as Subsetor));
+    this.subsetores.push(this.criarSubsetor({id: Guid.createEmpty()} as Subsetor));
   }
 
   public criarSubsetor(subsetor: Subsetor): FormGroup {
     return this.fb.group({
-      id: [subsetor.id],
+      id: [subsetor.id.toString()],
       descricao: [subsetor.descricao, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]]
     });
   }
@@ -130,6 +138,7 @@ export class SetorDetalheComponent implements OnInit {
   public salvarSetor(): void {
 
     if (this.form.valid) {
+
       this.spinner.show();
 
       this.setor = (this.estadoSalvar === 'post')
@@ -178,7 +187,6 @@ export class SetorDetalheComponent implements OnInit {
     this.subsetorAtual.id = this.subsetores.get(indice + '.id').value;
     this.subsetorAtual.descricao = this.subsetores.get(indice + '.descricao').value;
     this.subsetorAtual.indice = indice;
-
     this.modalRef = this.modalService.show(template, {class:'modal-sm'})
     //this.subsetores.removeAt(indice);
   }
@@ -187,17 +195,23 @@ export class SetorDetalheComponent implements OnInit {
     this.modalRef.hide();
     this.spinner.show();
 
-    this.subsetorService.deleteSubsetor(this.setorId, this.subsetorAtual.id)
-      .subscribe(
-        () => {
-          this.toastr.success('Subsetor deletado com sucesso.', 'Sucesso');
-          this.subsetores.removeAt(this.subsetorAtual.indice);
-        },
-        (error: any) => {
-          this.toastr.error(`Erro ao deletar o subsetor com ID: ${this.subsetorAtual.id}`, 'Erro');
-          console.error(error);
-        }
-      ).add(() => this.spinner.hide());
+    if (this.subsetorAtual.id == Guid.createEmpty()) {
+      this.subsetores.removeAt(this.subsetorAtual.indice);
+      this.spinner.hide()
+    } else {
+      this.subsetorService.deleteSubsetor(this.setorId, this.subsetorAtual.id)
+        .subscribe(
+          () => {
+            this.toastr.success('Subsetor deletado com sucesso.', 'Sucesso');
+            this.subsetores.removeAt(this.subsetorAtual.indice);
+          },
+          (error: any) => {
+            this.toastr.error(`Erro ao deletar o subsetor com ID: ${this.subsetorAtual.id}`, 'Erro');
+            console.error(error);
+          }
+        ).add(() => this.spinner.hide());
+    }
+
   }
 
   public CancelarDelecaoSubsetor(): void {

@@ -6,6 +6,7 @@ import { SegmentoService } from '@app/services/segmento.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'app-segmentos-lista',
@@ -21,9 +22,12 @@ export class SegmentosListaComponent implements OnInit {
 
   public subsetor: Subsetor;
 
-  public segmentoId = 0;
+  public descricaoSubsetor: string = '';
+  public descricaoSetor: string = '';
 
-  subsetorId: number;
+  public segmentoId = Guid.createEmpty();
+
+  subsetorId: Guid;
 
   private _filtroLista: string = '';
 
@@ -60,27 +64,36 @@ export class SegmentosListaComponent implements OnInit {
   }
 
   public carregarSegmentos(): void {
-    this.subsetorId = +this.activatedRouter.snapshot.paramMap.get('id')!;
 
-    const observer = {
-      next: (_segmentos: Segmento[]) => {
-        this.segmentos = _segmentos;
-        this.segmentosFiltrados = this.segmentos;
+    if (this.activatedRouter.snapshot.paramMap.get('id') === null)
+      this.subsetorId = Guid.createEmpty();
+    else {
+      this.subsetorId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
+      //this.subsetorId = +this.activatedRouter.snapshot.paramMap.get('id')!;
 
-        this.subsetor = this.segmentos.find(s => s.subsetorId === this.subsetorId).subsetor;
+      const observer = {
+        next: (_segmentos: Segmento[]) => {
+          this.segmentos = _segmentos;
+          this.segmentosFiltrados = this.segmentos;
 
-      },
-      error: (error: any) => {
-        this.toastr.error('Erro ao carregar a tela...', 'Error"');
-        console.error(error);
-      },
-      complete: () => {}
+          if (this.segmentos !== null && this.segmentos.length > 0) {
+            this.descricaoSubsetor = this.segmentos.find(s => s.subsetorId == this.subsetorId).subsetor.descricao.toString();
+            this.descricaoSetor = this.segmentos.find(s => s.subsetorId == this.subsetorId).subsetor.setor.descricao.toString();
+          }
+        },
+        error: (error: any) => {
+          this.toastr.error('Erro ao carregar a tela...', 'Error"');
+          console.error(error);
+        },
+        complete: () => {}
+      }
+      this.segmentoService.getSegmentosBySubsetorId(this.subsetorId).subscribe(observer).add(() => {this.spinner.hide()});
     }
 
-    this.segmentoService.getSegmentosBySubsetorId(this.subsetorId).subscribe(observer).add(() => {this.spinner.hide()});
+
   }
 
-  openModal(event: any, template: TemplateRef<any>, segmentoId: number): void {
+  openModal(event: any, template: TemplateRef<any>, segmentoId: Guid): void {
     event.stopPropagation();
     this.segmentoId = segmentoId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
@@ -113,7 +126,7 @@ export class SegmentosListaComponent implements OnInit {
     this.modalRef?.hide();
   }
 
-  public editarSegmento(subsetorId: number, id: number): void {
+  public editarSegmento(subsetorId: Guid, id: Guid): void {
     this.router.navigate([`setores/segmentodetalhe/${subsetorId}/${id}`])
   }
 

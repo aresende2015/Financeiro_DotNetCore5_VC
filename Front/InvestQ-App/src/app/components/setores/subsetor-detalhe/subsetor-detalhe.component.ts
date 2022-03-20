@@ -8,6 +8,7 @@ import { SubsetorService } from '@app/services/subsetor.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'app-subsetor-detalhe',
@@ -18,7 +19,7 @@ export class SubsetorDetalheComponent implements OnInit {
 
   modalRef: BsModalRef;
 
-  subsetorId: number;
+  subsetorId: Guid;
 
   subsetor = {} as Subsetor;
 
@@ -26,7 +27,7 @@ export class SubsetorDetalheComponent implements OnInit {
 
   estadoSalvar = 'post';
 
-  segmentoAtual = {id: 0, descricao: '', indice: 0};
+  segmentoAtual = {id: Guid.createEmpty(), descricao: '', indice: 0};
 
   get f(): any {
     return this.form.controls;
@@ -50,27 +51,34 @@ export class SubsetorDetalheComponent implements OnInit {
               private modalService: BsModalService) { }
 
   public carregarSubsetor(): void {
-    this.subsetorId = +this.activatedRouter.snapshot.paramMap.get('id')!;
 
-    if (this.subsetorId !== null && this.subsetorId !== 0) {
-      this.spinner.show();
+    if (this.activatedRouter.snapshot.paramMap.get('id') === null)
+      this.subsetorId = Guid.createEmpty();
+    else {
+      this.subsetorId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
+      //this.subsetorId = +this.activatedRouter.snapshot.paramMap.get('id')!;
 
-      this.estadoSalvar = 'put';
+      if (this.subsetorId !== null && !this.subsetorId.isEmpty()) {
+        this.spinner.show();
 
-      this.subsetorService.getSubsetorById(this.subsetorId).subscribe(
-        (_subsetor: Subsetor) => {
-          this.subsetor = {..._subsetor};
-          this.form.patchValue(this.subsetor);
-          this.subsetor.segmentos.forEach(segmento => {
-            this.segmentos.push(this.criarSegmento(segmento));
-          })
-        },
-        (error: any) => {
-          this.toastr.error('Erro ao tentar carregar o subsetor.', 'Erro!');
-          console.error(error);
-        }
-      ).add(() => this.spinner.hide());
+        this.estadoSalvar = 'put';
+
+        this.subsetorService.getSubsetorById(this.subsetorId).subscribe(
+          (_subsetor: Subsetor) => {
+            this.subsetor = {..._subsetor};
+            this.form.patchValue(this.subsetor);
+            this.subsetor.segmentos.forEach(segmento => {
+              this.segmentos.push(this.criarSegmento(segmento));
+            })
+          },
+          (error: any) => {
+            this.toastr.error('Erro ao tentar carregar o subsetor.', 'Erro!');
+            console.error(error);
+          }
+        ).add(() => this.spinner.hide());
+      }
     }
+
   }
 
   ngOnInit(): void {
@@ -86,12 +94,12 @@ export class SubsetorDetalheComponent implements OnInit {
   }
 
   public adicionarSegmento(): void {
-    this.segmentos.push(this.criarSegmento({id: 0} as Segmento));
+    this.segmentos.push(this.criarSegmento({id: Guid.createEmpty()} as Segmento));
   }
 
   public criarSegmento(segmento: Segmento): FormGroup {
     return this.fb.group({
-      id: [segmento.id],
+      id: [segmento.id.toString()],
       descricao: [segmento.descricao, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]]
     });
   }

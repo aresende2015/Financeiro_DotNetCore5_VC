@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { Corretora } from '../models/Corretora';
 import { environment } from '@environments/environment';
+import { Guid } from 'guid-typescript';
 
 @Injectable(
   //{providedIn: 'root'}

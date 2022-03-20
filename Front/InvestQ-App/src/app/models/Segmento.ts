@@ -1,10 +1,9 @@
 import { Subsetor } from "./Subsetor";
+import { Guid } from 'guid-typescript';
 
 export class Segmento {
-  id: number;
+  id: Guid;
   descricao: string;
-  dataDeCriacao?: Date;
-  inativo: boolean;
-  subsetorId: number;
+  subsetorId: Guid;
   subsetor: Subsetor;
 }

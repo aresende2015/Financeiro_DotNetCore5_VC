@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Setor } from '@app/models/Setor';
 import { Subsetor } from '@app/models/Subsetor';
 import { SubsetorService } from '@app/services/subsetor.service';
+import { Guid } from 'guid-typescript';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -18,9 +19,9 @@ export class SubsetoresListaComponent implements OnInit {
 
   public subsetores: Subsetor[] = [];
   public subsetoresFiltrados: Subsetor[] = [];
-  public subsetorId = 0;
+  public subsetorId = Guid.createEmpty();
 
-  setorId: number;
+  setorId: Guid;
   setorDescricao: string;
 
   private _filtroLista: string = '';
@@ -58,26 +59,36 @@ export class SubsetoresListaComponent implements OnInit {
   }
 
   public carregarSubsetores(): void {
-    this.setorId = +this.activatedRouter.snapshot.paramMap.get('id')!;
 
-    const observer = {
-      next: (_subsetores: Subsetor[]) => {
-        this.subsetores = _subsetores;
-        this.subsetoresFiltrados = this.subsetores;
+    if (this.activatedRouter.snapshot.paramMap.get('id') === null)
+      this.setorId = Guid.createEmpty();
+    else {
 
-        this.setorDescricao = this.subsetores.find(s => s.setorId === this.setorId).setor.descricao;
+      this.setorId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
+      //this.setorId = +this.activatedRouter.snapshot.paramMap.get('id')!;
 
-      },
-      error: (error: any) => {
-        this.toastr.error('Erro ao carregar a tela...', 'Error"');
-      },
-      complete: () => {}
+      const observer = {
+        next: (_subsetores: Subsetor[]) => {
+          this.subsetores = _subsetores;
+          this.subsetoresFiltrados = this.subsetores;
+
+          if (this.subsetores !== null && this.subsetores.length > 0) {
+            this.setorDescricao = this.subsetores.find(s => s.setorId == this.setorId).setor.descricao;
+          }
+
+        },
+        error: (error: any) => {
+          this.toastr.error('Erro ao carregar a tela...', 'Error"');
+        },
+        complete: () => {}
+      }
+
+      this.subsetorService.getSubsetoresBySetorId(this.setorId).subscribe(observer).add(() => {this.spinner.hide()});
+
     }
-
-    this.subsetorService.getSubsetoresBySetorId(this.setorId).subscribe(observer).add(() => {this.spinner.hide()});
   }
 
-  openModal(event: any, template: TemplateRef<any>, subsetorId: number): void {
+  openModal(event: any, template: TemplateRef<any>, subsetorId: Guid): void {
     event.stopPropagation();
     this.subsetorId = subsetorId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
@@ -110,11 +121,11 @@ export class SubsetoresListaComponent implements OnInit {
     this.modalRef?.hide();
   }
 
-  public editarSubsetor(id: number): void {
+  public editarSubsetor(id: Guid): void {
     this.router.navigate([`setores/subsetordetalhe/${id}`])
   }
 
-  public listarSegmentos(id: number): void {
+  public listarSegmentos(id: Guid): void {
     this.router.navigate([`setores/listarsegmentos/${id}`])
   }
 

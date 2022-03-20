@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Setor } from '@app/models/Setor';
+import { Guid } from 'guid-typescript';
 import { Observable, take } from 'rxjs';
 
 @Injectable()
@@ -17,7 +18,7 @@ export class SetorService {
     return this.http.get<Setor>(`${this.baseURL}/${descricao}/descricao`);
   }
 
-  public getSetorById(id: number): Observable<Setor> {
+  public getSetorById(id: Guid): Observable<Setor> {
     return this.http.get<Setor>(`${this.baseURL}/${id}`);
   }
 
@@ -33,7 +34,7 @@ export class SetorService {
       .pipe(take(1));
   }
 
-  public deleteSetor(id: number): Observable<any> {
+  public deleteSetor(id: Guid): Observable<any> {
     return this.http
       .delete(`${this.baseURL}/${id}`)
       .pipe(take(1));
