@@ -13,10 +13,16 @@ namespace InvestQ.Domain.Entities.Ativos
         {
         }
         public Ativo(Guid id, 
+                     Guid acaoId,
+                     Guid fundoImobiliarioId,
+                     Guid tesourodDiretoId,
                      TipoDeAtivo tipoDeAtivo)
         {
             Id = id;
-            TipoDeAtivo= tipoDeAtivo;
+            AcaoId = acaoId;
+            FundoImobiliarioId = fundoImobiliarioId;
+            TesouroDiretoId = tesourodDiretoId;
+            TipoDeAtivo= tipoDeAtivo;            
         }
         public void Inativar()
         {
@@ -34,11 +40,11 @@ namespace InvestQ.Domain.Entities.Ativos
         }
         public TipoDeAtivo TipoDeAtivo { get; set; }
         public IEnumerable<Provento> Proventos { get; set; }
-        //public virtual int AcaoId {get; set;}
-        public virtual Acao Acao { get; set; }
-        //public int FundoImobiliarioId {get; set;}
+        public Guid? AcaoId {get; set;}
+        public Acao Acao { get; set; }
+        public virtual Guid? FundoImobiliarioId {get; set;}
         public virtual FundoImobiliario FundoImobiliario { get; set; }
-        //public int TesouroDiretoId {get; set;}
+        public virtual Guid? TesouroDiretoId {get; set;}
         public virtual TesouroDireto TesouroDireto { get; set; }
     }
 }

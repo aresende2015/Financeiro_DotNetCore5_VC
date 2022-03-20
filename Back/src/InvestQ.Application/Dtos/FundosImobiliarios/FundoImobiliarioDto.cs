@@ -27,7 +27,6 @@ namespace InvestQ.Application.Dtos.FundosImobiliarios
         public SegmentoAnbimaDto SegmentoAnbima { get; set; }
         public Guid AdministradorDeFundoImobiliarioId { get; set; }
         public AdministradorDeFundoImobiliarioDto AdministradorDeFundoImobiliario { get; set; }
-        public Guid AtivoId { get; set; }
         public AtivoDto Ativo { get; set; } 
     }
 }

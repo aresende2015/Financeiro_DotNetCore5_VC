@@ -9,8 +9,10 @@ namespace InvestQ.Data.Mappings
         public void Configure(EntityTypeBuilder<Ativo> builder)
         {
             builder.ToTable("Ativos");
-
-            //builder.HasOne(a => a.Acao).WithOne(a => a.Ativo).IsRequired(false);
+            
+            builder.HasOne(a => a.Acao).WithOne(a => a.Ativo).IsRequired(false);
+            builder.HasOne(a => a.FundoImobiliario).WithOne(a => a.Ativo).IsRequired(false);
+            builder.HasOne(a => a.TesouroDireto).WithOne(a => a.Ativo).IsRequired(false);
         }
     }
 }

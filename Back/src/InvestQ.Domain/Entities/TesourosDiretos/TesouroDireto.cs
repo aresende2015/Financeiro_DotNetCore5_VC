@@ -39,7 +39,7 @@ namespace InvestQ.Domain.Entities.TesourosDiretos
         public bool JurosSemestrais { get; set; }
         public Guid TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimento TipoDeInvestimento { get; set; }
-        public Guid AtivoId { get; set; }
+        //public Guid AtivoId { get; set; }
         public Ativo Ativo { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace InvestQ.Domain.Entities.Acoes
         public Segmento Segmento { get; set; }
         public Guid TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimento TipoDeInvestimento { get; set; }
-        public Guid AtivoId { get; set; }
+        //public Guid AtivoId { get; set; }
         public Ativo Ativo { get; set; }
     }
 }

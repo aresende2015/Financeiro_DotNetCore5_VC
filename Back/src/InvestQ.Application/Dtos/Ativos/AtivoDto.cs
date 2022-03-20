@@ -12,11 +12,11 @@ namespace InvestQ.Application.Dtos.Ativos
         public Guid Id { get; set; }
         public TipoDeAtivo TipoDeAtivo { get; set; }
         public IEnumerable<ProventoDto> Proventos { get; set; }
-        //public virtual int AcaoId {get; set;}
-        public virtual AcaoDto Acao { get; set; }
-        //public int FundoImobiliarioId {get; set;}
-        public virtual FundoImobiliarioDto FundoImobiliario { get; set; }
-        //public int TesouroDiretoId {get; set;}
-        public virtual TesouroDiretoDto TesouroDireto { get; set; }
+        public Guid? AcaoId {get; set;}
+        public AcaoDto Acao { get; set; }
+        public Guid? FundoImobiliarioId {get; set;}
+        public FundoImobiliarioDto FundoImobiliario { get; set; }
+        public Guid? TesouroDiretoId {get; set;}
+        public TesouroDiretoDto TesouroDireto { get; set; }
     }
 }
