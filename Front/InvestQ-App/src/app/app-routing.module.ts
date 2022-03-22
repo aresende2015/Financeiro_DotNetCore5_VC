@@ -19,6 +19,9 @@ import { SubsetoresListaComponent } from './components/setores/subsetores-lista/
 import { SegmentosListaComponent } from './components/setores/segmentos-lista/segmentos-lista.component';
 import { SubsetorDetalheComponent } from './components/setores/subsetor-detalhe/subsetor-detalhe.component';
 import { SegmentoDetalheComponent } from './components/setores/segmento-detalhe/segmento-detalhe.component';
+import { TiposdeinvestimentosComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos.component';
+import { TiposdeinvestimentosListaComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos-lista/tiposdeinvestimentos-lista.component';
+import { TiposdeinvestimentosDetalheComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos-detalhe/tiposdeinvestimentos-detalhe.component';
 import { AuthGuard } from './guard/auth.guard';
 import { HomeComponent } from './components/home/home.component';
 
@@ -64,6 +67,15 @@ const routes: Routes = [
           { path: 'lista', component: SetorListaComponent }
         ]
       },
+      { path: 'tiposdeinvestimentos', redirectTo: 'tiposdeinvestimentos/lista' },
+      {
+        path: 'tiposdeinvestimentos', component: TiposdeinvestimentosComponent,
+        children: [
+          { path: 'detalhe/:id', component: TiposdeinvestimentosDetalheComponent },
+          { path: 'detalhe', component: TiposdeinvestimentosDetalheComponent },
+          { path: 'lista', component: TiposdeinvestimentosListaComponent }
+        ]
+      },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'contatos', component: ContatosComponent },
     ]
@@ -81,6 +93,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-exports: [RouterModule]
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

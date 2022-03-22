@@ -50,7 +50,7 @@ namespace InvestQ.Application.Services.Acoes
 
                     foreach (var model in models)
                     {
-                        if (model.Id == null | model.Id == Guid.Empty) 
+                        if (model.Id == Guid.Empty) 
                         {
                             await AddSubsetor(setorId, model);
                         }

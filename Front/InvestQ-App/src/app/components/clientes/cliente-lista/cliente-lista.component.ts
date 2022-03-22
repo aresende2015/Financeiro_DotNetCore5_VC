@@ -61,7 +61,6 @@ export class ClienteListaComponent implements OnInit {
 
   public ngOnInit() {
     this.pagination = {currentPage: 1, itemsPerPage: 2, totalItems: 1} as Pagination;
-
     this.carregarClientes();
 
     setTimeout(() => {
