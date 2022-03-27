@@ -48,6 +48,9 @@ import { SegmentoDetalheComponent } from './components/setores/segmento-detalhe/
 import { TiposdeinvestimentosComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos.component';
 import { TiposdeinvestimentosListaComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos-lista/tiposdeinvestimentos-lista.component';
 import { TiposdeinvestimentosDetalheComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos-detalhe/tiposdeinvestimentos-detalhe.component';
+import { TesourosdiretosComponent } from './components/tesourosdiretos/tesourosdiretos.component';
+import { TesourosdiretosListaComponent } from './components/tesourosdiretos/tesourosdiretos-lista/tesourosdiretos-lista.component';
+import { TesourodiretoDetalheComponent } from './components/tesourosdiretos/tesourodireto-detalhe/tesourodireto-detalhe.component';
 
 import { CorretoraService } from './services/corretora.service';
 import { ClienteService } from './services/cliente.service';
@@ -56,6 +59,9 @@ import { SubsetorService } from './services/subsetor.service';
 import { SegmentoService } from './services/segmento.service';
 import { UserService } from './services/user.service';
 import { TipodeinvestimentoService } from './services/tipodeinvestimento.service';
+import { TesourodiretoService } from './services/tesourodireto.service';
+
+
 
 defineLocale('pt-br', ptBrLocale);
 @NgModule({
@@ -77,6 +83,9 @@ defineLocale('pt-br', ptBrLocale);
     TiposdeinvestimentosComponent,
     TiposdeinvestimentosListaComponent,
     TiposdeinvestimentosDetalheComponent,
+    TesourosdiretosComponent,
+    TesourosdiretosListaComponent,
+    TesourodiretoDetalheComponent,
     ContatosComponent,
     PerfilComponent,
     DashboardComponent,
@@ -117,6 +126,7 @@ defineLocale('pt-br', ptBrLocale);
     SubsetorService,
     SegmentoService,
     TipodeinvestimentoService,
+    TesourodiretoService,
     UserService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],

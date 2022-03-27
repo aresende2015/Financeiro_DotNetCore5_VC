@@ -10,7 +10,7 @@ namespace InvestQ.Application.Dtos.TesourosDiretos
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Descricao { get; set; }
-        public DateTime DataDeVencimento { get; set; }
+        public string DataDeVencimento { get; set; }
         public bool JurosSemestrais { get; set; }
         public Guid TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimentoDto TipoDeInvestimento { get; set; }

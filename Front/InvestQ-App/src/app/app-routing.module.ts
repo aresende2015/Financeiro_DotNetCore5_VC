@@ -22,6 +22,9 @@ import { SegmentoDetalheComponent } from './components/setores/segmento-detalhe/
 import { TiposdeinvestimentosComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos.component';
 import { TiposdeinvestimentosListaComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos-lista/tiposdeinvestimentos-lista.component';
 import { TiposdeinvestimentosDetalheComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos-detalhe/tiposdeinvestimentos-detalhe.component';
+import { TesourosdiretosComponent } from './components/tesourosdiretos/tesourosdiretos.component';
+import { TesourosdiretosListaComponent } from './components/tesourosdiretos/tesourosdiretos-lista/tesourosdiretos-lista.component';
+import { TesourodiretoDetalheComponent } from './components/tesourosdiretos/tesourodireto-detalhe/tesourodireto-detalhe.component';
 import { AuthGuard } from './guard/auth.guard';
 import { HomeComponent } from './components/home/home.component';
 
@@ -74,6 +77,15 @@ const routes: Routes = [
           { path: 'detalhe/:id', component: TiposdeinvestimentosDetalheComponent },
           { path: 'detalhe', component: TiposdeinvestimentosDetalheComponent },
           { path: 'lista', component: TiposdeinvestimentosListaComponent }
+        ]
+      },
+      //{ path: 'tiposdeinvestimentos', redirectTo: 'tiposdeinvestimentos/lista' },
+      {
+        path: 'tesourosdiretos', component: TesourosdiretosComponent,
+        children: [
+          { path: 'detalhe/:id', component: TesourodiretoDetalheComponent },
+          { path: 'detalhe', component: TesourodiretoDetalheComponent },
+          { path: 'lista', component: TesourosdiretosListaComponent }
         ]
       },
       { path: 'dashboard', component: DashboardComponent },

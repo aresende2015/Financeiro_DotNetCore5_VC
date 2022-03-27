@@ -27,7 +27,7 @@ namespace InvestQ.Application.Dtos.Clientes
         public string Email { get; set; }
 
         public int Idade { get; set; }
-        public DateTime DataDeNascimento { get; set; }
+        public string DataDeNascimento { get; set; }
         public int UserId { get; set; }
         public UserDto UserDto { get; set; }
         public IEnumerable<ClienteCorretoraDto> ClientesCorretoras { get; set; }

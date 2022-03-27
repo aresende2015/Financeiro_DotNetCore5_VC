@@ -83,7 +83,7 @@
           <input
             type="datetime" class="form-control"
             [ngClass]="cssValidator(f.dataDeNascimento)"
-            [bsValue]="cliente.dataDeNascimento | DateFormatPipe"
+            value="{{cliente.dataDeNascimento | DateFormatPipe }}"
             bsDatepicker
             [bsConfig]="bsConfig"
             formControlName="dataDeNascimento"

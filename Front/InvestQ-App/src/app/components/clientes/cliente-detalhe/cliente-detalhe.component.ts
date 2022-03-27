@@ -32,7 +32,7 @@ export class ClienteDetalheComponent implements OnInit {
     return {
       isAnimated: true,
       adaptivePosition: true,
-      dateInputFormat: 'YYYY/MM/DD hh:mm a',
+      dateInputFormat: 'DD/MM/YYYY',
       containerClass: 'theme-default',
       showWeekNumbers: false
     }

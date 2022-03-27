@@ -35,11 +35,12 @@
     </thead>
     <tbody *ngIf="clientes && clientes.length">
       <tr *ngFor="let cliente of clientes">
-        <td>{{cliente.id}}</td>
+        <td></td>
         <td>{{cliente.cpf}}</td>
         <td>{{cliente.nomeCompleto}}</td>
         <td class="d-none d-md-table-cell">{{cliente.idade}}</td>
-        <td class="d-none d-md-table-cell">{{cliente.dataDeNascimento | DateFormatPipe}}</td>
+        <!--<td class="d-none d-md-table-cell">{{cliente.dataDeNascimento | DateFormatPipe}}</td>-->
+        <td class="d-none d-md-table-cell">{{cliente.dataDeNascimento}}</td>
         <td>{{cliente.email}}</td>
         <td>
           <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="detalheCliente(cliente.id)">

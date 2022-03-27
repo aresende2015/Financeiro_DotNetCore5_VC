@@ -1,0 +1,77 @@
+<div class="card rounded shadow-sm">
+  <form [formGroup]="form">
+    <!--<p>Form value: {{form.value | json}}</p>
+    <p>Form value: {{form.status | json}}</p>-->
+    <div class="p-3">
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label>Descrição</label>
+          <input
+            type="text"
+            [ngClass]="cssValidator(f.descricao)"
+            class="form-control"
+            formControlName="descricao"
+            placeholder=""
+          >
+          <div *ngIf="f.descricao.errors?.required" class="invalid-feedback">
+            Descrição é obrigatório.
+          </div>
+          <div *ngIf="f.descricao.errors?.minlength" class="invalid-feedback">
+            Descrição deve possuir pelo menos 3 caracteres.
+          </div>
+          <div *ngIf="f.descricao.errors?.maxlength" class="invalid-feedback">
+            Descrição deve possuir no máximo 100 caracteres
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.jurosSemestrais)">
+          <label class="control-label">Juros Semestrais</label>
+          <div id="jurosSemestrais" class="row">
+            <div class="col-sm-3" *ngFor="let item of jurosSemestraisOp">
+              <label class="radio-inline">
+                <input type="radio" [value]="item.valor" formControlName="jurosSemestrais"/> {{item.desc}}
+              </label>
+            </div>
+          </div>
+          <div *ngIf="f.jurosSemestrais.errors?.required" class="invalid-feedback">
+            Juros semestrais é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Data de Vencimento</label>
+          <input
+            type="datetime" class="form-control"
+            [ngClass]="cssValidator(f.dataDeVencimento)"
+            value="{{tesouroDireto.dataDeVencimento | DateFormatPipe }}"
+            bsDatepicker
+            [bsConfig]="bsConfig"
+            formControlName="dataDeVencimento"
+            placeholder=""
+          >
+          <div *ngIf="f.dataDeVencimento.errors?.required" class="invalid-feedback">
+            Data de Vencimento é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.tipoDeInvestimentoId)">
+          <label class="control-label">Tipo de Investimento</label>
+          <select class="form-control" id="tipoDeInvestimentoId" formControlName="tipoDeInvestimentoId">
+            <option *ngFor="let tipoDeInvestimento of tiposDeInvestimentos" [value]="tipoDeInvestimento.id">{{ tipoDeInvestimento.descricao }}</option>
+          </select>
+          <div *ngIf="f.tipoDeInvestimentoId.errors?.required" class="invalid-feedback">
+            Tipo de investimento é obrigatório.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex">
+        <button class="btn btn-outline-secondary me-auto border" (click)="resetForm()">
+          Cancelar Alteração
+        </button>
+        <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarAlteracao()">
+          <!--<span class="spinner-border spinner-border-sm mr-1"></span>-->
+          Salvar Tesouro Direto
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
