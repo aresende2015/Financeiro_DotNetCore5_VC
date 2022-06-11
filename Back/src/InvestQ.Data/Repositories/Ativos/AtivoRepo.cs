@@ -40,6 +40,35 @@ namespace InvestQ.Data.Repositories.Ativos
             return await query.ToArrayAsync();
         }
 
+        public async Task<Ativo> GetAtivoByTipoDeAtivoDescricaoAsync(TipoDeAtivo tipoDeAtivo, string descricao)
+        {
+            IQueryable<Ativo> query = _context.Ativos;
+
+            switch (tipoDeAtivo)
+            {
+                case TipoDeAtivo.Acao:
+                    query = query.Include(a => a.Acao);
+                    query = query.AsNoTracking()
+                                 .Where(a => a.TipoDeAtivo == tipoDeAtivo &&
+                                             a.Acao.Descricao == descricao);
+                    break;
+                case TipoDeAtivo.FundoImobiliario:
+                    query = query.Include(a => a.FundoImobiliario);
+                    query = query.AsNoTracking()
+                                 .Where(a => a.TipoDeAtivo == tipoDeAtivo &&
+                                             a.FundoImobiliario.Descricao == descricao);
+                    break;
+                case TipoDeAtivo.TesouroDireto:
+                    query = query.Include(a => a.TesouroDireto);
+                    query = query.AsNoTracking()
+                                 .Where(a => a.TipoDeAtivo == tipoDeAtivo &&
+                                             a.TesouroDireto.Descricao == descricao);
+                    break;
+            }    
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         public async Task<Ativo> GetAtivoByIdAsync(Guid id)
         {
             IQueryable<Ativo> query = _context.Ativos;
@@ -69,6 +98,16 @@ namespace InvestQ.Data.Repositories.Ativos
 
             query = query.AsNoTracking()
                          .Where(a => a.Id == id);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<Ativo> GetAtivoByTesouroDiretoIdAsync(Guid tesouroDiretoId)
+        {
+            IQueryable<Ativo> query = _context.Ativos;
+
+            query = query.AsNoTracking()
+                         .Where(a => a.TesouroDiretoId == tesouroDiretoId);
 
             return await query.FirstOrDefaultAsync();
         }

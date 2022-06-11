@@ -14,11 +14,11 @@ namespace InvestQ.Domain.Entities.TesourosDiretos
                              bool jurosSemestrais,
                              Guid tipoDeInvestimentoId)
         {
-            Id = id;
-            Descricao = descricao;
-            DataDeVencimento = dataDeVencimento;
-            JurosSemestrais = jurosSemestrais;
-            TipoDeInvestimentoId= tipoDeInvestimentoId;
+            Id                      = id;
+            Descricao               = descricao;
+            DataDeVencimento        = dataDeVencimento;
+            JurosSemestrais         = jurosSemestrais;
+            TipoDeInvestimentoId    = tipoDeInvestimentoId;
         }
         public void Inativar()
         {
@@ -39,7 +39,6 @@ namespace InvestQ.Domain.Entities.TesourosDiretos
         public bool JurosSemestrais { get; set; }
         public Guid TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimento TipoDeInvestimento { get; set; }
-        //public Guid AtivoId { get; set; }
         public Ativo Ativo { get; set; }
     }
 }

@@ -79,7 +79,7 @@ const routes: Routes = [
           { path: 'lista', component: TiposdeinvestimentosListaComponent }
         ]
       },
-      //{ path: 'tiposdeinvestimentos', redirectTo: 'tiposdeinvestimentos/lista' },
+      { path: 'tesourosdiretos', redirectTo: 'tesourosdiretos/lista' },
       {
         path: 'tesourosdiretos', component: TesourosdiretosComponent,
         children: [

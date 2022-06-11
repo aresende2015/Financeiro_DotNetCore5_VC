@@ -16,6 +16,6 @@ namespace InvestQ.Application.Interfaces.Acoes
         Task<AcaoDto[]> GetAcoesBySegmentoIdAsync(Guid segmentoId);
         Task<AcaoDto[]> GetAcoesByTipoDeInvestimentoIdAsync(Guid tipoDeInvestimentoId);
         Task<AcaoDto> GetAcaoByIdAsync(Guid id);          
-        Task<AcaoDto> GetAcaoByCodigoAsync(string codigo);
+        Task<AcaoDto> GetAcaoByDescricaoAsync(string descricao);
     }
 }

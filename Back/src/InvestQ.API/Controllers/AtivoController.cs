@@ -21,6 +21,24 @@ namespace InvestQ.API.Controllers
             _ativoService = ativoService;
         }
 
+        [HttpGet("{tipoDeAtivoDto}/tipodeativodto/{descricao}")]
+        public async Task<IActionResult> GetAtivosByTipoDeAtivoDescricao(TipoDeAtivoDto tipoDeAtivoDto, string descricao)
+        {
+            try
+            {
+                 var ativo = await _ativoService.GetAtivoByTipoDeAtivoDescricaoAsync(tipoDeAtivoDto, descricao);
+
+                 if (ativo == null) return NoContent();
+
+                 return Ok(ativo);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                            $"Erro ao tentar recuperar o Ativo do tipo: ${tipoDeAtivoDto} e descrição: {descricao}. Erro: {ex.Message}");
+            }
+        }
+
         [HttpGet("{tipoDeAtivoDto}/tipodeativodto")]
         public async Task<IActionResult> GetAllAtivosByTipoDeAtivo(TipoDeAtivoDto tipoDeAtivoDto)
         {

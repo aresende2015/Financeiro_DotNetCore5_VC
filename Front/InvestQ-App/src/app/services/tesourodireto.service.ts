@@ -38,6 +38,7 @@ export class TesourodiretoService {
   }
 
   public put(tesouroDireto: TesouroDireto): Observable<TesouroDireto> {
+    //alert(tesouroDireto.id);
     return this.http
       .put<TesouroDireto>(`${this.baseURL}/${tesouroDireto.id}`, tesouroDireto)
       .pipe(take(1));

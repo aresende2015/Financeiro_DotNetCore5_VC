@@ -23,7 +23,7 @@ namespace InvestQ.Application.Services.Acoes
         {   
             var acao = _mapper.Map<Acao>(model);
 
-            if (await _acaoRepo.GetAcaoByCodigoAsync(acao.Codigo) != null)
+            if (await _acaoRepo.GetAcaoByDescricaoAsync(acao.Descricao) != null)
                 throw new Exception("Já existe uma Ação com esse código.");
 
             if( await _acaoRepo.GetAcaoByIdAsync(acao.Id) == null)
@@ -80,11 +80,11 @@ namespace InvestQ.Application.Services.Acoes
             return await _acaoRepo.SalvarMudancasAsync();
         }
 
-        public async Task<AcaoDto> GetAcaoByCodigoAsync(string codigo)
+        public async Task<AcaoDto> GetAcaoByDescricaoAsync(string descricao)
         {
             try
             {
-                var acao = await _acaoRepo.GetAcaoByCodigoAsync(codigo);
+                var acao = await _acaoRepo.GetAcaoByDescricaoAsync(descricao);
 
                 if (acao == null) return null;
 

@@ -56,11 +56,11 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{nomePregao}/nomepregao")]
-        public async Task<IActionResult> GetFundoImobiliarioByNomePregao(string nomePregao)
+        public async Task<IActionResult> GetFundoImobiliarioByDescricao(string descricao)
         {
             try
             {
-                 var fundoImobiliario = await _fundoImobiliarioService.GetFundoImobiliarioByNomePregaoAsync(nomePregao);
+                 var fundoImobiliario = await _fundoImobiliarioService.GetFundoImobiliarioByDescricaoAsync(descricao);
 
                  if (fundoImobiliario == null) return NoContent();
 
@@ -69,7 +69,7 @@ namespace InvestQ.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                            $"Erro ao tentar recuperar o Fundo Imobiliario com a ${nomePregao}. Erro: {ex.Message}");
+                            $"Erro ao tentar recuperar o Fundo Imobiliario com a ${descricao}. Erro: {ex.Message}");
             }
         }
 

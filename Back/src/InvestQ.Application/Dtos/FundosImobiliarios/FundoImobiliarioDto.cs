@@ -17,7 +17,7 @@ namespace InvestQ.Application.Dtos.FundosImobiliarios
         public string RazaoSocial { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public string NomePregao { get; set; }
+        public string Descricao { get; set; }
         public DateTime DataDeInicio { get; set; }
         public DateTime DataDeFim { get; set; }
         public TipoDeGestao TipoDeGestao {get; set;}

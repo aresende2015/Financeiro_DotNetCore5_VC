@@ -18,6 +18,6 @@ namespace InvestQ.Application.Interfaces.FundosImobiliarios
         Task<FundoImobiliarioDto[]> GetFundosImobliariosByTipoDeInvestimentoIdAsync(Guid tipoDeInvestimentoId);
         Task<FundoImobiliarioDto[]> GetFundosImobliariosByAdministradorDeFundoImobiliarioIdAsync(Guid administradorDeFundoImobiliarioId);
         Task<FundoImobiliarioDto> GetFundoImobiliarioByIdAsync(Guid id);
-        Task<FundoImobiliarioDto> GetFundoImobiliarioByNomePregaoAsync(string nomePregao);
+        Task<FundoImobiliarioDto> GetFundoImobiliarioByDescricaoAsync(string descricao);
     }
 }

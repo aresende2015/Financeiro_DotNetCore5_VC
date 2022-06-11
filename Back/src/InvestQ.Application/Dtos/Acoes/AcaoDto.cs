@@ -9,7 +9,7 @@ namespace InvestQ.Application.Dtos.Acoes
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public string Codigo { get; set; }
+        public string Descricao { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(14, MinimumLength = 14, ErrorMessage = "O campo de {0} deve ter 14 caracteres.")]

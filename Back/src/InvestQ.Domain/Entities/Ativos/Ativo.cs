@@ -42,9 +42,9 @@ namespace InvestQ.Domain.Entities.Ativos
         public IEnumerable<Provento> Proventos { get; set; }
         public Guid? AcaoId {get; set;}
         public Acao Acao { get; set; }
-        public virtual Guid? FundoImobiliarioId {get; set;}
-        public virtual FundoImobiliario FundoImobiliario { get; set; }
-        public virtual Guid? TesouroDiretoId {get; set;}
-        public virtual TesouroDireto TesouroDireto { get; set; }
+        public Guid? FundoImobiliarioId {get; set;}
+        public FundoImobiliario FundoImobiliario { get; set; }
+        public Guid? TesouroDiretoId {get; set;}
+        public TesouroDireto TesouroDireto { get; set; }
     }
 }

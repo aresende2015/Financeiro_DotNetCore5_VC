@@ -9,14 +9,14 @@ namespace InvestQ.Domain.Entities.Acoes
         {
         }
         public Acao(Guid id, 
-                    string codigo,
+                    string descricao,
                     string cnpj,
                     string razaoSocial,
                     Guid segmentoId,
                     Guid tipoDeInvestimentoId)
         {
             Id = id;
-            Codigo = codigo;
+            Descricao = descricao;
             CNPJ = cnpj;
             RazaoSocial = razaoSocial;
             SegmentoId = segmentoId;
@@ -36,7 +36,7 @@ namespace InvestQ.Domain.Entities.Acoes
             else
                 throw new Exception($"O Tipo de Investimento já estava ativo.");
         }
-        public string Codigo { get; set; }
+        public string Descricao { get; set; }
         public string CNPJ { get; set; }
         public string RazaoSocial { get; set; }  
         public Guid SegmentoId {get; set;}

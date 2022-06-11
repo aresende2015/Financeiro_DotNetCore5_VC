@@ -15,7 +15,7 @@ namespace InvestQ.Data.Repositories.Acoes
         {
             _context = context;
         }
-        public async Task<Acao> GetAcaoByCodigoAsync(string codigo)
+        public async Task<Acao> GetAcaoByDescricaoAsync(string descricao)
         {
             IQueryable<Acao> query = _context.Acoes;
 
@@ -23,7 +23,7 @@ namespace InvestQ.Data.Repositories.Acoes
                          .Include(a => a.TipoDeInvestimento);
 
             query = query.AsNoTracking()
-                         .Where(a => a.Codigo == codigo);
+                         .Where(a => a.Descricao == descricao);
 
             return await query.FirstOrDefaultAsync();
         }

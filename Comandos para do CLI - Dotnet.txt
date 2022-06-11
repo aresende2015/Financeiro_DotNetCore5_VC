@@ -150,7 +150,15 @@ Usar Guid no Angular
 
 npm i guid-typescript --save
 
+=====================
+slq server
+Server=localhost;Database=master;Trusted_Connection=True;
 
+sa - 12345678
+
+aresende - Teste@123
+
+-------------------------------------
 
 
 

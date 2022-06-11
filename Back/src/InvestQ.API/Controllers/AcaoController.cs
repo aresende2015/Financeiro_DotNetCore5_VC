@@ -57,11 +57,11 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{codigo}/codigo")]
-        public async Task<IActionResult> GetAcaoByCodigo(string codigo)
+        public async Task<IActionResult> GetAcaoByDescricao(string descricao)
         {
             try
             {
-                 var acao = await _acaoService.GetAcaoByCodigoAsync(codigo);
+                 var acao = await _acaoService.GetAcaoByDescricaoAsync(descricao);
 
                  if (acao == null) return NoContent();
 
@@ -70,7 +70,7 @@ namespace InvestQ.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                            $"Erro ao tentar recuperar o Fundo Imobiliario com a ${codigo}. Erro: {ex.Message}");
+                            $"Erro ao tentar recuperar a Ação com a ${descricao}. Erro: {ex.Message}");
             }
         }
 

@@ -23,7 +23,7 @@ namespace InvestQ.Application.Services.FundosImobiliarios
         {
             var fundoImobiliario = _mapper.Map<FundoImobiliario>(model);
 
-            if (await _fundoImobiliarioRepo.GetFundoImobiliarioByNomePregaoAsync(fundoImobiliario.NomePregao) != null)
+            if (await _fundoImobiliarioRepo.GetFundoImobiliarioByDescricaoAsync(fundoImobiliario.Descricao) != null)
                 throw new Exception("Já existe um Fundo Imobiliário com essa descrição.");
 
             if( await _fundoImobiliarioRepo.GetFundoImobiliarioByIdAsync(fundoImobiliario.Id) == null)
@@ -112,11 +112,11 @@ namespace InvestQ.Application.Services.FundosImobiliarios
             }
         }
 
-        public async Task<FundoImobiliarioDto> GetFundoImobiliarioByNomePregaoAsync(string nomePregao)
+        public async Task<FundoImobiliarioDto> GetFundoImobiliarioByDescricaoAsync(string descricao)
         {
             try
             {
-                var fundoImobiliario = await _fundoImobiliarioRepo.GetFundoImobiliarioByNomePregaoAsync(nomePregao);
+                var fundoImobiliario = await _fundoImobiliarioRepo.GetFundoImobiliarioByDescricaoAsync(descricao);
 
                 if (fundoImobiliario == null) return null;
 

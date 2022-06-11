@@ -133,6 +133,40 @@ namespace InvestQ.Application.Services.Ativos
             }
         }
 
+        public async Task<AtivoDto> GetAtivoByTesouroDiretoIdAsync(Guid tesouroDiretoId)
+        {
+            try
+            {
+                var ativo = await _ativoRepo.GetAtivoByTesouroDiretoIdAsync(tesouroDiretoId);
+
+                if (ativo == null) return null;
+
+                return _mapper.Map<AtivoDto>(ativo);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<AtivoDto> GetAtivoByTipoDeAtivoDescricaoAsync(TipoDeAtivoDto tipoDeAtivoDto, string descricao)
+        {
+            try
+            {
+                var tipoDeAtivo = _mapper.Map<TipoDeAtivo>(tipoDeAtivoDto);
+
+                var ativo = await _ativoRepo.GetAtivoByTipoDeAtivoDescricaoAsync(tipoDeAtivo, descricao);
+
+                if (ativo == null) return null;
+
+                return _mapper.Map<AtivoDto>(ativo);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<bool> InativarAtivo(AtivoDto model)
         {
             if (model != null)

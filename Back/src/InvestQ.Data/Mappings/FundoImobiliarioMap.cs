@@ -18,7 +18,7 @@ namespace InvestQ.Data.Mappings
                 .IsRequired()
                 .HasMaxLength(150);
 
-            builder.Property(fi => fi.NomePregao)
+            builder.Property(fi => fi.Descricao)
                 .IsRequired()
                 .HasMaxLength(50);
 

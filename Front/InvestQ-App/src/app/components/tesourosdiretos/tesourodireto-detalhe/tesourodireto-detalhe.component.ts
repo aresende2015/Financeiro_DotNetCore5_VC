@@ -66,6 +66,7 @@ export class TesourodiretoDetalheComponent implements OnInit {
       },
       error: (error: any) => {
         this.spinner.hide();
+        console.error(error);
         this.toastr.error('Erro ao carregar a tela...', 'Error"');
       },
       complete: () => {this.spinner.hide()}
@@ -94,7 +95,7 @@ export class TesourodiretoDetalheComponent implements OnInit {
           error: (error: any) => {
             this.spinner.hide();
             this.toastr.error('Erro ao tentar carregar o Tesouro Direto.', 'Erro!');
-            console.error(error)
+            console.error(error);
           },
           complete: () => {this.spinner.hide()}
         });
@@ -130,7 +131,7 @@ export class TesourodiretoDetalheComponent implements OnInit {
 
       this.tesourodiretoService[this.estadoSalvar](this.tesouroDireto).subscribe(
         (_tesouroDireto: TesouroDireto) => {
-          //this.spinner.hide();
+
           this.toastr.success('Tesouro Direto salvo com sucesso!', 'Sucesso');
           this.router.navigate([`tesourosdiretos/detalhe/${_tesouroDireto.id}`]);
         },

@@ -60,6 +60,7 @@ import { SegmentoService } from './services/segmento.service';
 import { UserService } from './services/user.service';
 import { TipodeinvestimentoService } from './services/tipodeinvestimento.service';
 import { TesourodiretoService } from './services/tesourodireto.service';
+import { AtivoService } from './services/ativo.service';
 
 
 
@@ -127,6 +128,7 @@ defineLocale('pt-br', ptBrLocale);
     SegmentoService,
     TipodeinvestimentoService,
     TesourodiretoService,
+    AtivoService,
     UserService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],

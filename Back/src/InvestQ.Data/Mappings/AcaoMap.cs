@@ -11,7 +11,7 @@ namespace InvestQ.Data.Mappings
             builder.ToTable("Acoes");
 
             builder
-                .Property(a => a.Codigo)
+                .Property(a => a.Descricao)
                 .IsRequired()
                 .HasMaxLength(50);
 

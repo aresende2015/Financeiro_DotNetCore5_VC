@@ -13,7 +13,7 @@ namespace InvestQ.Application.Dtos.TesourosDiretos
         public string DataDeVencimento { get; set; }
         public bool JurosSemestrais { get; set; }
         public Guid TipoDeInvestimentoId { get; set; }
-        public TipoDeInvestimentoDto TipoDeInvestimento { get; set; }
+        public TipoDeInvestimentoDto TipoDeInvestimento { get; set; }        
         public AtivoDto Ativo { get; set; } 
     }
 }

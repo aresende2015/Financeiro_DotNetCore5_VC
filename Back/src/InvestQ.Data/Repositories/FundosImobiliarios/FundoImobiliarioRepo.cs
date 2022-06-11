@@ -44,7 +44,7 @@ namespace InvestQ.Data.Repositories.FundosImobiliarios
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<FundoImobiliario> GetFundoImobiliarioByNomePregaoAsync(string nomePregao)
+        public async Task<FundoImobiliario> GetFundoImobiliarioByDescricaoAsync(string descricao)
         {
             IQueryable<FundoImobiliario> query = _context.FundosImobiliarios;
 
@@ -53,7 +53,7 @@ namespace InvestQ.Data.Repositories.FundosImobiliarios
                          .Include(fi => fi.AdministradorDeFundoImobiliario);
 
             query = query.AsNoTracking()
-                         .Where(fi => fi.NomePregao == nomePregao);
+                         .Where(fi => fi.Descricao == descricao);
 
             return await query.FirstOrDefaultAsync();
         }

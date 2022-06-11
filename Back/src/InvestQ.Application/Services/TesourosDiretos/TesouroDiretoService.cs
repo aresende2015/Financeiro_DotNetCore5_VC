@@ -2,27 +2,33 @@ using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using InvestQ.Application.Dtos.TesourosDiretos;
+using InvestQ.Application.Dtos.Ativos;
 using InvestQ.Application.Interfaces.TesourosDiretos;
 using InvestQ.Data.Interfaces.TesourosDiretos;
 using InvestQ.Domain.Entities.TesourosDiretos;
+using InvestQ.Data.Interfaces.Ativos;
+using InvestQ.Domain.Entities.Ativos;
 
 namespace InvestQ.Application.Services.TesourosDiretos
 {
     public class TesouroDiretoService : ITesouroDiretoService
     {
         private readonly ITesouroDiretoRepo _tesouroDiretoRepo;
+        private readonly IAtivoRepo _ativoRepo;
         private readonly IMapper _mapper;
 
         public TesouroDiretoService(ITesouroDiretoRepo tesouroDiretoRepo,
+                                    IAtivoRepo ativoRepo,
                                     IMapper mapper)
         {
             _tesouroDiretoRepo = tesouroDiretoRepo;
+            _ativoRepo = ativoRepo;
             _mapper = mapper;
         }
         public async Task<TesouroDiretoDto> AdicionarTesouroDireto(TesouroDiretoDto model)
         {
             var tesouroDireto = _mapper.Map<TesouroDireto>(model);
-
+            
             if (await _tesouroDiretoRepo.GetTesouroDiretoByDescricaoAsync(tesouroDireto.Descricao) != null)
                 throw new Exception("Já existe um Tesouro Direto com essa descrição.");
 
@@ -32,9 +38,22 @@ namespace InvestQ.Application.Services.TesourosDiretos
 
                 if (await _tesouroDiretoRepo.SalvarMudancasAsync())
                 {
-                    var retorno = await _tesouroDiretoRepo.GetTesouroDiretoByIdAsync(tesouroDireto.Id);
+                    var ativoDto = new AtivoDto();
+                    var bytes = new Byte[16];
+                    ativoDto.Id = new Guid(bytes);
+                    ativoDto.TesouroDiretoId = tesouroDireto.Id;
 
-                    return _mapper.Map<TesouroDiretoDto>(retorno);
+                    var ativo = _mapper.Map<Ativo>(ativoDto);
+                    
+                    _ativoRepo.Adicionar(ativo);
+
+                    if (await _ativoRepo.SalvarMudancasAsync())
+                    {
+                        var retorno = await _tesouroDiretoRepo.GetTesouroDiretoByIdAsync(tesouroDireto.Id);
+
+                        return _mapper.Map<TesouroDiretoDto>(retorno);
+                    }                   
+                    
                 }
             }
 
@@ -73,11 +92,18 @@ namespace InvestQ.Application.Services.TesourosDiretos
             var tesouroDireto = await _tesouroDiretoRepo.GetTesouroDiretoByIdAsync(tesouroDiretoId);
 
             if (tesouroDireto == null)
-                throw new Exception("O Tesouro Direto que tentou deletar não existe.");
+                throw new Exception("O Tesouro Direto que tentou deletar não existe.");            
 
-            _tesouroDiretoRepo.Deletar(tesouroDireto);
+            var ativo = await _ativoRepo.GetAtivoByTesouroDiretoIdAsync(tesouroDiretoId);
 
-            return await _tesouroDiretoRepo.SalvarMudancasAsync();
+            if (ativo == null)
+                throw new Exception("O Ativo que tentou deletar não existe.");
+
+            _ativoRepo.Deletar(ativo);
+
+            _tesouroDiretoRepo.Deletar(tesouroDireto);            
+
+            return await _tesouroDiretoRepo.SalvarMudancasAsync();              
         }
 
         public async Task<TesouroDiretoDto[]> GetAllTeseourosDiretosAsync()

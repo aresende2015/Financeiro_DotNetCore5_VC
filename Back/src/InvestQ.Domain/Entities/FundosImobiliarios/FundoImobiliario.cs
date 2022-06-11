@@ -12,7 +12,7 @@ namespace InvestQ.Domain.Entities.FundosImobiliarios
         public FundoImobiliario(Guid id, 
                                 string cnpj, 
                                 string razaoSocial, 
-                                string nomePregao,
+                                string descricao,
                                 DateTime dataDeInicio,
                                 DateTime dataDeFim,
                                 TipoDeGestao tipoDeGestao,
@@ -20,8 +20,8 @@ namespace InvestQ.Domain.Entities.FundosImobiliarios
         {
             Id = id;
             CNPJ = cnpj;
-            RazaoSocial = RazaoSocial;
-            NomePregao = NomePregao;
+            RazaoSocial = razaoSocial;
+            Descricao = descricao;
             DataDeInicio =dataDeInicio;
             DataDeFim = dataDeFim;
             TipoDeGestao = tipoDeGestao;
@@ -43,7 +43,7 @@ namespace InvestQ.Domain.Entities.FundosImobiliarios
         }
         public string CNPJ { get; set; }
         public string RazaoSocial { get; set; }        
-        public string NomePregao { get; set; }
+        public string Descricao { get; set; }
         public DateTime DataDeInicio { get; set; }
         public DateTime DataDeFim { get; set; }
         public TipoDeGestao TipoDeGestao {get; set;}
