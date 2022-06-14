@@ -19,6 +19,8 @@ import { SubsetoresListaComponent } from './components/setores/subsetores-lista/
 import { SegmentosListaComponent } from './components/setores/segmentos-lista/segmentos-lista.component';
 import { SubsetorDetalheComponent } from './components/setores/subsetor-detalhe/subsetor-detalhe.component';
 import { SegmentoDetalheComponent } from './components/setores/segmento-detalhe/segmento-detalhe.component';
+import { AdministradoresdefundosimobiliariosComponent } from './components/administradoresdefundosimobiliarios/administradoresdefundosimobiliarios.component';
+import { AdministradoresdefundosimobiliariosListaComponent } from './components/administradoresdefundosimobiliarios/administradoresdefundosimobiliarios-lista/administradoresdefundosimobiliarios-lista.component';
 import { TiposdeinvestimentosComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos.component';
 import { TiposdeinvestimentosListaComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos-lista/tiposdeinvestimentos-lista.component';
 import { TiposdeinvestimentosDetalheComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos-detalhe/tiposdeinvestimentos-detalhe.component';
@@ -27,6 +29,9 @@ import { TesourosdiretosListaComponent } from './components/tesourosdiretos/teso
 import { TesourodiretoDetalheComponent } from './components/tesourosdiretos/tesourodireto-detalhe/tesourodireto-detalhe.component';
 import { AuthGuard } from './guard/auth.guard';
 import { HomeComponent } from './components/home/home.component';
+import { AdministradoresdefundosimobiliariosDetalheComponent } from './components/administradoresdefundosimobiliarios/administradoresdefundosimobiliarios-detalhe/administradoresdefundosimobiliarios-detalhe.component';
+
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -77,6 +82,15 @@ const routes: Routes = [
           { path: 'detalhe/:id', component: TiposdeinvestimentosDetalheComponent },
           { path: 'detalhe', component: TiposdeinvestimentosDetalheComponent },
           { path: 'lista', component: TiposdeinvestimentosListaComponent }
+        ]
+      },
+      { path: 'administradoresdefundosimobiliarios', redirectTo: 'administradoresdefundosimobiliarios/lista' },
+      {
+        path: 'administradoresdefundosimobiliarios', component: AdministradoresdefundosimobiliariosComponent,
+        children: [
+          { path: 'detalhe/:id', component: AdministradoresdefundosimobiliariosDetalheComponent },
+          { path: 'detalhe', component: AdministradoresdefundosimobiliariosDetalheComponent },
+          { path: 'lista', component: AdministradoresdefundosimobiliariosListaComponent }
         ]
       },
       { path: 'tesourosdiretos', redirectTo: 'tesourosdiretos/lista' },

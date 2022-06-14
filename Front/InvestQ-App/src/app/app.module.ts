@@ -51,7 +51,8 @@ import { TiposdeinvestimentosDetalheComponent } from './components/tiposdeinvest
 import { TesourosdiretosComponent } from './components/tesourosdiretos/tesourosdiretos.component';
 import { TesourosdiretosListaComponent } from './components/tesourosdiretos/tesourosdiretos-lista/tesourosdiretos-lista.component';
 import { TesourodiretoDetalheComponent } from './components/tesourosdiretos/tesourodireto-detalhe/tesourodireto-detalhe.component';
-
+import { AdministradoresdefundosimobiliariosComponent } from './components/administradoresdefundosimobiliarios/administradoresdefundosimobiliarios.component';
+import { AdministradoresdefundosimobiliariosListaComponent } from './components/administradoresdefundosimobiliarios/administradoresdefundosimobiliarios-lista/administradoresdefundosimobiliarios-lista.component';
 import { CorretoraService } from './services/corretora.service';
 import { ClienteService } from './services/cliente.service';
 import { SetorService } from './services/setor.service';
@@ -61,13 +62,17 @@ import { UserService } from './services/user.service';
 import { TipodeinvestimentoService } from './services/tipodeinvestimento.service';
 import { TesourodiretoService } from './services/tesourodireto.service';
 import { AtivoService } from './services/ativo.service';
-
+import { AdministradordefundoimobiliarioService } from './services/administradordefundoimobiliario.service';
+import { AdministradoresdefundosimobiliariosDetalheComponent } from './components/administradoresdefundosimobiliarios/administradoresdefundosimobiliarios-detalhe/administradoresdefundosimobiliarios-detalhe.component';
 
 
 defineLocale('pt-br', ptBrLocale);
 @NgModule({
   declarations: [
     AppComponent,
+    AdministradoresdefundosimobiliariosComponent,
+    AdministradoresdefundosimobiliariosListaComponent,
+    AdministradoresdefundosimobiliariosDetalheComponent,
     ClientesComponent,
     ClienteDetalheComponent,
     ClienteListaComponent,
@@ -127,6 +132,7 @@ defineLocale('pt-br', ptBrLocale);
     SubsetorService,
     SegmentoService,
     TipodeinvestimentoService,
+    AdministradordefundoimobiliarioService,
     TesourodiretoService,
     AtivoService,
     UserService,

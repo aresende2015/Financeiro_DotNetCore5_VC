@@ -1,0 +1,114 @@
+<div class="card rounded shadow-sm">
+  <form [formGroup]="form">
+    <!--<p>Form value: {{form.value | json}}</p>
+    <p>Form value: {{form.status | json}}</p>-->
+    <div class="p-3">
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label>CNPJ</label>
+          <input
+            type="text" class="form-control"
+            [ngClass]="cssValidator(f.cnpj)"
+            formControlName="cnpj"
+            placeholder="Insira o CNPJ"
+          >
+          <div *ngIf="f.cnpj.errors?.required" class="invalid-feedback">
+            CNPJ é obrigatório.
+          </div>
+          <div *ngIf="f.cnpj.errors?.minlength" class="invalid-feedback">
+            CNPJ deve possuir 14 caracteres.
+          </div>
+          <div *ngIf="f.cnpj.errors?.maxlength" class="invalid-feedback">
+            CNPJ deve possuir 14 caracteres.
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Razão Social</label>
+          <input
+            type="text"
+            [ngClass]="cssValidator(f.razaoSocial)"
+            class="form-control"
+            formControlName="razaoSocial"
+            placeholder=""
+          >
+          <div *ngIf="f.razaoSocial.errors?.required" class="invalid-feedback">
+            Razão Social é obrigatório.
+          </div>
+          <div *ngIf="f.razaoSocial.errors?.minlength" class="invalid-feedback">
+            Razão Social deve possuir pelo menos 3 caracteres.
+          </div>
+          <div *ngIf="f.razaoSocial.errors?.maxlength" class="invalid-feedback">
+            Razão Social deve possuir no máximo 100 caracteres
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Telefone</label>
+          <input
+            type="text"
+            [ngClass]="cssValidator(f.telefone)"
+            class="form-control"
+            formControlName="telefone"
+            placeholder=""
+          >
+          <div *ngIf="f.telefone.errors?.required" class="invalid-feedback">
+            Telefone é obrigatório.
+          </div>
+          <div *ngIf="f.telefone.errors?.minlength" class="invalid-feedback">
+            Telefone deve possuir pelo menos 11 caracteres.
+          </div>
+          <div *ngIf="f.telefone.errors?.maxlength" class="invalid-feedback">
+            Telefone deve possuir no máximo 11 caracteres
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-8">
+          <label>e-mail</label>
+          <input
+            type="text"
+            [ngClass]="cssValidator(f.email)"
+            class="form-control"
+            formControlName="email"
+            placeholder=""
+          >
+          <div *ngIf="f.email.errors?.required" class="invalid-feedback">
+            E-mail é obrigatório.
+          </div>
+          <div *ngIf="f.email.errors?.email" class="invalid-feedback">
+            E-mail deve ser válido.
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Site</label>
+          <input
+            type="text"
+            [ngClass]="cssValidator(f.site)"
+            class="form-control"
+            formControlName="site"
+            placeholder=""
+          >
+          <div *ngIf="f.site.errors?.required" class="invalid-feedback">
+            Site é obrigatório.
+          </div>
+          <div *ngIf="f.site.errors?.minlength" class="invalid-feedback">
+            Site deve possuir pelo menos 3 caracteres.
+          </div>
+          <div *ngIf="f.site.errors?.maxlength" class="invalid-feedback">
+            Site deve possuir no máximo 100 caracteres
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex">
+        <button class="btn btn-outline-secondary me-auto border" (click)="resetForm()">
+          Cancelar Alteração
+        </button>
+        <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarAlteracao()">
+          <!--<span class="spinner-border spinner-border-sm mr-1"></span>-->
+          Salvar Administrador
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
