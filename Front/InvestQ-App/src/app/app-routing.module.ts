@@ -30,8 +30,9 @@ import { TesourodiretoDetalheComponent } from './components/tesourosdiretos/teso
 import { AuthGuard } from './guard/auth.guard';
 import { HomeComponent } from './components/home/home.component';
 import { AdministradoresdefundosimobiliariosDetalheComponent } from './components/administradoresdefundosimobiliarios/administradoresdefundosimobiliarios-detalhe/administradoresdefundosimobiliarios-detalhe.component';
-
-
+import { SegmentosanbimasComponent } from './components/segmentosanbimas/segmentosanbimas.component';
+import { SegmentosanbimasDetalheComponent } from './components/segmentosanbimas/segmentosanbimas-detalhe/segmentosanbimas-detalhe.component';
+import { SegmentosanbimasListaComponent } from './components/segmentosanbimas/segmentosanbimas-lista/segmentosanbimas-lista.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -91,6 +92,15 @@ const routes: Routes = [
           { path: 'detalhe/:id', component: AdministradoresdefundosimobiliariosDetalheComponent },
           { path: 'detalhe', component: AdministradoresdefundosimobiliariosDetalheComponent },
           { path: 'lista', component: AdministradoresdefundosimobiliariosListaComponent }
+        ]
+      },
+      { path: 'segmentosanbimas', redirectTo: 'segmentosanbimas/lista' },
+      {
+        path: 'segmentosanbimas', component: SegmentosanbimasComponent,
+        children: [
+          { path: 'detalhe/:id', component: SegmentosanbimasDetalheComponent },
+          { path: 'detalhe', component: SegmentosanbimasDetalheComponent },
+          { path: 'lista', component: SegmentosanbimasListaComponent }
         ]
       },
       { path: 'tesourosdiretos', redirectTo: 'tesourosdiretos/lista' },

@@ -64,6 +64,10 @@ import { TesourodiretoService } from './services/tesourodireto.service';
 import { AtivoService } from './services/ativo.service';
 import { AdministradordefundoimobiliarioService } from './services/administradordefundoimobiliario.service';
 import { AdministradoresdefundosimobiliariosDetalheComponent } from './components/administradoresdefundosimobiliarios/administradoresdefundosimobiliarios-detalhe/administradoresdefundosimobiliarios-detalhe.component';
+import { SegmentosanbimasComponent } from './components/segmentosanbimas/segmentosanbimas.component';
+import { SegmentosanbimasListaComponent } from './components/segmentosanbimas/segmentosanbimas-lista/segmentosanbimas-lista.component';
+import { SegmentosanbimasDetalheComponent } from './components/segmentosanbimas/segmentosanbimas-detalhe/segmentosanbimas-detalhe.component';
+import { SegmentoanbimaService } from './services/segmentoanbima.service';
 
 
 defineLocale('pt-br', ptBrLocale);
@@ -73,6 +77,9 @@ defineLocale('pt-br', ptBrLocale);
     AdministradoresdefundosimobiliariosComponent,
     AdministradoresdefundosimobiliariosListaComponent,
     AdministradoresdefundosimobiliariosDetalheComponent,
+    SegmentosanbimasComponent,
+    SegmentosanbimasListaComponent,
+    SegmentosanbimasDetalheComponent,
     ClientesComponent,
     ClienteDetalheComponent,
     ClienteListaComponent,
@@ -133,6 +140,7 @@ defineLocale('pt-br', ptBrLocale);
     SegmentoService,
     TipodeinvestimentoService,
     AdministradordefundoimobiliarioService,
+    SegmentoanbimaService,
     TesourodiretoService,
     AtivoService,
     UserService,

@@ -9,7 +9,7 @@ export class AdministradoresdefundosimobiliariosComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }
