@@ -68,6 +68,11 @@ import { SegmentosanbimasComponent } from './components/segmentosanbimas/segment
 import { SegmentosanbimasListaComponent } from './components/segmentosanbimas/segmentosanbimas-lista/segmentosanbimas-lista.component';
 import { SegmentosanbimasDetalheComponent } from './components/segmentosanbimas/segmentosanbimas-detalhe/segmentosanbimas-detalhe.component';
 import { SegmentoanbimaService } from './services/segmentoanbima.service';
+import { FundoimobiliarioService } from './services/fundoimobiliario.service';
+import { FundosimobiliariosComponent } from './components/fundosimobiliarios/fundosimobiliarios.component';
+import { FundosimobiliariosListaComponent } from './components/fundosimobiliarios/fundosimobiliarios-lista/fundosimobiliarios-lista.component';
+import { FundosimobiliariosDetalheComponent } from './components/fundosimobiliarios/fundosimobiliarios-detalhe/fundosimobiliarios-detalhe.component';
+import { SalvarComponent } from './shared/salvar/salvar.component';
 
 
 defineLocale('pt-br', ptBrLocale);
@@ -96,6 +101,9 @@ defineLocale('pt-br', ptBrLocale);
     TiposdeinvestimentosComponent,
     TiposdeinvestimentosListaComponent,
     TiposdeinvestimentosDetalheComponent,
+    FundosimobiliariosComponent,
+    FundosimobiliariosListaComponent,
+    FundosimobiliariosDetalheComponent,
     TesourosdiretosComponent,
     TesourosdiretosListaComponent,
     TesourodiretoDetalheComponent,
@@ -105,6 +113,7 @@ defineLocale('pt-br', ptBrLocale);
     NavComponent,
     DateTimeFormatPipe,
     TituloComponent,
+    SalvarComponent,
     UserComponent,
     HomeComponent,
     LoginComponent,
@@ -140,6 +149,7 @@ defineLocale('pt-br', ptBrLocale);
     SegmentoService,
     TipodeinvestimentoService,
     AdministradordefundoimobiliarioService,
+    FundoimobiliarioService,
     SegmentoanbimaService,
     TesourodiretoService,
     AtivoService,

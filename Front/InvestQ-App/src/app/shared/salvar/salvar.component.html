@@ -1,0 +1,17 @@
+<!-- ## Essa é a chamada no HTML
+<app-salvar
+    [botaoSalvar]="'Cliente'"
+    [formValido]="form.valid"
+    (clicouEm)="onClicouEm($event)">
+</app-salvar> -->
+
+<div class="card-footer">
+  <div class="d-flex">
+    <button class="btn btn-outline-secondary me-auto border" (click)="cancelar()">
+      Cancelar
+    </button>
+    <button class="btn btn-success" [disabled]="!formValido" (click)="salvar()">
+      Salvar {{ botaoSalvar }}
+    </button>
+  </div>
+</div>

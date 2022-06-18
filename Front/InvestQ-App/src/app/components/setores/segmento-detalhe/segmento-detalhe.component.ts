@@ -88,7 +88,15 @@ export class SegmentoDetalheComponent implements OnInit {
     this.form.reset();
   }
 
-  public salvarSegmento(): void {
+  public onClicouEm(evento) {
+    if (evento.botaoClicado === 'cancelar') {
+      this.resetForm();
+    } else {
+      this.salvarAlteracao();
+    }
+  }
+
+  public salvarAlteracao(): void {
     if (this.form.valid) {
       this.spinner.show();
 

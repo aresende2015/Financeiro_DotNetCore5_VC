@@ -98,6 +98,14 @@ export class CorretoraDetalheComponent implements OnInit {
     return {'is-invalid': campoForm.errors && campoForm.touched};
   }
 
+  public onClicouEm(evento) {
+    if (evento.botaoClicado === 'cancelar') {
+      this.resetForm();
+    } else {
+      this.salvarAlteracao();
+    }
+  }
+
   public salvarAlteracao(): void {
     this.spinner.show();
 

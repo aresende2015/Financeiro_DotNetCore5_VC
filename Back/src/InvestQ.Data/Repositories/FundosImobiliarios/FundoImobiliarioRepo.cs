@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Data.Context;
 using InvestQ.Data.Interfaces.FundosImobiliarios;
+using InvestQ.Data.Paginacao;
 using InvestQ.Domain.Entities.FundosImobiliarios;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,7 @@ namespace InvestQ.Data.Repositories.FundosImobiliarios
         {
             _context = context;
         }
-        public async Task<FundoImobiliario[]> GetAllFundosImobiliariosAsync()
+        public async Task<PageList<FundoImobiliario>> GetAllFundosImobiliariosAsync(PageParams pageParams)
         {
             IQueryable<FundoImobiliario> query = _context.FundosImobiliarios;
 
@@ -25,9 +26,10 @@ namespace InvestQ.Data.Repositories.FundosImobiliarios
                          .Include(fi => fi.AdministradorDeFundoImobiliario);
 
             query = query.AsNoTracking()
+                         .Where(fi => (fi.RazaoSocial.Contains(pageParams.Term)))
                          .OrderBy(fi => fi.Id);
 
-            return await query.ToArrayAsync();
+            return await PageList<FundoImobiliario>.CreateAsync(query, pageParams.PageNumber, pageParams.pageSize);
         }
 
         public async Task<FundoImobiliario> GetFundoImobiliarioByIdAsync(Guid id)

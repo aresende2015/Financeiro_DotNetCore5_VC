@@ -1,7 +1,9 @@
 using System;
 using System.Threading.Tasks;
+using InvestQ.API.Extensions;
 using InvestQ.Application.Dtos.FundosImobiliarios;
 using InvestQ.Application.Interfaces.FundosImobiliarios;
+using InvestQ.Data.Paginacao;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +22,18 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get() 
+        public async Task<IActionResult> Get([FromQuery]PageParams pageParams) 
         {
             try
             {
-                 var fundosImobiliarios = await _fundoImobiliarioService.GetAllFundosImobiliariosAsync();
+                 var fundosImobiliarios = await _fundoImobiliarioService.GetAllFundosImobiliariosAsync(pageParams);
 
                  if (fundosImobiliarios == null) return NoContent();
+
+                 Response.AddPagination(fundosImobiliarios.CurrentPage, 
+                                        fundosImobiliarios.PageSize, 
+                                        fundosImobiliarios.TotalCount, 
+                                        fundosImobiliarios.TotalPages);
 
                  return Ok(fundosImobiliarios);
             }

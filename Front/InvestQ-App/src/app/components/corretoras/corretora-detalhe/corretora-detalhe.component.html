@@ -25,16 +25,11 @@
             </div>
           </div>
         </div>
-        <div class="card-footer">
-          <div class="d-flex">
-            <button class="btn btn-outline-secondary me-auto border" (click)="resetForm()">
-              Cancelar Alteração
-            </button>
-            <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarAlteracao()">
-              Salvar Evento
-            </button>
-          </div>
-        </div>
+        <app-salvar
+           [botaoSalvar]="'Corretora'"
+           [formValido]="form.valid"
+             (clicouEm)="onClicouEm($event)">
+        </app-salvar>
       </form>
     </div>
   </div>

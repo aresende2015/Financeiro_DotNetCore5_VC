@@ -81,6 +81,14 @@ export class TiposdeinvestimentosDetalheComponent implements OnInit {
     this.form.reset();
   }
 
+  public onClicouEm(evento) {
+    if (evento.botaoClicado === 'cancelar') {
+      this.resetForm();
+    } else {
+      this.salvarAlteracao();
+    }
+  }
+
   public cssValidator(campoForm: FormControl | AbstractControl): any {
     return {'is-invalid': campoForm.errors && campoForm.touched};
   }

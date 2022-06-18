@@ -4,6 +4,7 @@ using AutoMapper;
 using InvestQ.Application.Dtos.FundosImobiliarios;
 using InvestQ.Application.Interfaces.FundosImobiliarios;
 using InvestQ.Data.Interfaces.FundosImobiliarios;
+using InvestQ.Data.Paginacao;
 using InvestQ.Domain.Entities.FundosImobiliarios;
 
 namespace InvestQ.Application.Services.FundosImobiliarios
@@ -80,15 +81,22 @@ namespace InvestQ.Application.Services.FundosImobiliarios
             return await _fundoImobiliarioRepo.SalvarMudancasAsync();
         }
 
-        public async Task<FundoImobiliarioDto[]> GetAllFundosImobiliariosAsync()
+        public async Task<PageList<FundoImobiliarioDto>> GetAllFundosImobiliariosAsync(PageParams pageParams)
         {
             try
             {
-                var fundosImobiliarios = await _fundoImobiliarioRepo.GetAllFundosImobiliariosAsync();
+                var fundosImobiliarios = await _fundoImobiliarioRepo.GetAllFundosImobiliariosAsync(pageParams);
 
                 if (fundosImobiliarios == null) return null;
 
-                return _mapper.Map<FundoImobiliarioDto[]>(fundosImobiliarios);
+                var RetornoDto = _mapper.Map<PageList<FundoImobiliarioDto>>(fundosImobiliarios);
+
+                RetornoDto.CurrentPage = fundosImobiliarios.CurrentPage;
+                RetornoDto.TotalPages = fundosImobiliarios.TotalPages;
+                RetornoDto.PageSize = fundosImobiliarios.PageSize;
+                RetornoDto.TotalCount = fundosImobiliarios.TotalCount;
+
+                return RetornoDto;
             }
             catch (Exception ex)
             {

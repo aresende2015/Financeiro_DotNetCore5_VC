@@ -33,6 +33,9 @@ import { AdministradoresdefundosimobiliariosDetalheComponent } from './component
 import { SegmentosanbimasComponent } from './components/segmentosanbimas/segmentosanbimas.component';
 import { SegmentosanbimasDetalheComponent } from './components/segmentosanbimas/segmentosanbimas-detalhe/segmentosanbimas-detalhe.component';
 import { SegmentosanbimasListaComponent } from './components/segmentosanbimas/segmentosanbimas-lista/segmentosanbimas-lista.component';
+import { FundosimobiliariosComponent } from './components/fundosimobiliarios/fundosimobiliarios.component';
+import { FundosimobiliariosDetalheComponent } from './components/fundosimobiliarios/fundosimobiliarios-detalhe/fundosimobiliarios-detalhe.component';
+import { FundosimobiliariosListaComponent } from './components/fundosimobiliarios/fundosimobiliarios-lista/fundosimobiliarios-lista.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -110,6 +113,15 @@ const routes: Routes = [
           { path: 'detalhe/:id', component: TesourodiretoDetalheComponent },
           { path: 'detalhe', component: TesourodiretoDetalheComponent },
           { path: 'lista', component: TesourosdiretosListaComponent }
+        ]
+      },
+      { path: 'fundosimobiliarios', redirectTo: 'fundosimobiliarios/lista' },
+      {
+        path: 'fundosimobiliarios', component: FundosimobiliariosComponent,
+        children: [
+          { path: 'detalhe/:id', component: FundosimobiliariosDetalheComponent },
+          { path: 'detalhe', component: FundosimobiliariosDetalheComponent },
+          { path: 'lista', component: FundosimobiliariosListaComponent }
         ]
       },
       { path: 'dashboard', component: DashboardComponent },

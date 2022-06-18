@@ -7,7 +7,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./titulo.component.scss']
 })
 export class TituloComponent implements OnInit {
+
   @Input() titulo: string = "";
+  @Input() link: string = "";
   @Input() iconClass = "fa fa-user";
   @Input() subTitulo = "Desde 2021";
   @Input() botaoListar = false;
@@ -19,7 +21,7 @@ export class TituloComponent implements OnInit {
 
   listar(): void {
     //alert(this.titulo.toLocaleLowerCase());
-    this.router.navigate([`/${this.titulo.toLocaleLowerCase()}/lista`]);
+    this.router.navigate([`/${this.link.toLocaleLowerCase()}/lista`]);
   }
 
 }

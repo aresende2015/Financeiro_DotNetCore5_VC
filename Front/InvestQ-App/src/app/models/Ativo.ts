@@ -4,10 +4,10 @@ import { TesouroDireto } from '@app/models/TesouroDireto';
 
 export class Ativo {
   id: Guid;
-  //tipoDeAtivo: TipoDeAtivo;
+  tipoDeAtivo: TipoDeAtivo;
   //acaoId?: Guid;
   //acao: Acao;
-  //fundoImobiliarioId?: Guid;
+  fundoImobiliarioId?: Guid;
   //fundoImobiliario: FundoImobiliario;
   tesouroDiretoId?: Guid;
   //tesouroDireto: TesouroDireto;

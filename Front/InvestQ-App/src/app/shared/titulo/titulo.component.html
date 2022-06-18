@@ -1,14 +1,14 @@
 <div class="d-flex p-2 my-3 text-white bg-secondary rounded shadow-sm">
   <div class="d-flex align-items-center me-auto">
-    <i class="{{iconClass}}"></i>
+    <i class="{{ iconClass }}"></i>
     <div class="lh-1 p-3">
-      <h2 class="mb-0">{{titulo}}</h2>
-      <small>{{subTitulo}}</small>
+      <h2 class="mb-0">{{ titulo }}</h2>
+      <small>{{ subTitulo }}</small>
     </div>
   </div>
   <div class="p-4" *ngIf="botaoListar">
     <button class="btn btn-outline-light" (click)="listar()">
-      Listar {{titulo}}
+      Listar {{ titulo }}
     </button>
   </div>
 </div>

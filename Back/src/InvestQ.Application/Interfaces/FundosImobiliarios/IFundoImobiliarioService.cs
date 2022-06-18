@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using InvestQ.Application.Dtos.FundosImobiliarios;
+using InvestQ.Data.Paginacao;
 
 namespace InvestQ.Application.Interfaces.FundosImobiliarios
 {
@@ -13,7 +14,7 @@ namespace InvestQ.Application.Interfaces.FundosImobiliarios
         Task<bool> InativarFundoImobiliario(FundoImobiliarioDto model);
         Task<bool> ReativarFundoImobiliario(FundoImobiliarioDto model);
 
-        Task<FundoImobiliarioDto[]> GetAllFundosImobiliariosAsync();
+        Task<PageList<FundoImobiliarioDto>> GetAllFundosImobiliariosAsync(PageParams pageParams);
         Task<FundoImobiliarioDto[]> GetFundosImobliariosBySegmentoAnbimaIdAsync(Guid segmentoAnbimaId);
         Task<FundoImobiliarioDto[]> GetFundosImobliariosByTipoDeInvestimentoIdAsync(Guid tipoDeInvestimentoId);
         Task<FundoImobiliarioDto[]> GetFundosImobliariosByAdministradorDeFundoImobiliarioIdAsync(Guid administradorDeFundoImobiliarioId);

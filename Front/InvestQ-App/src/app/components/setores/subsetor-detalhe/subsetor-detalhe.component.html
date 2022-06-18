@@ -84,16 +84,11 @@
       <b class="ml-1">Segmento</b>
     </button>
   </div>
-  <div class="card-footer">
-    <div class="d-flex">
-      <button class="btn btn-outline-secondary me-auto border" (click)="resetFormSegmento()">
-        Cancelar Alteração
-      </button>
-      <button [disabled]="!form.get('segmentos').valid" class="btn btn-success" (click)="salvarSegmentos()">
-        Salvar Segmentos
-      </button>
-    </div>
-  </div>
+  <app-salvar
+      [botaoSalvar]="'Segmento'"
+      [formValido]="form.get('segmentos').valid"
+      (clicouEm)="onClicouEm($event)">
+  </app-salvar>
 </div>
 <br>
 

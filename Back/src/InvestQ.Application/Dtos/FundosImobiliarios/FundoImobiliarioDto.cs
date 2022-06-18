@@ -18,8 +18,8 @@ namespace InvestQ.Application.Dtos.FundosImobiliarios
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Descricao { get; set; }
-        public DateTime DataDeInicio { get; set; }
-        public DateTime DataDeFim { get; set; }
+        public string DataDeInicio { get; set; }
+        public string DataDeFim { get; set; }
         public TipoDeGestao TipoDeGestao {get; set;}
         public Guid TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimentoDto TipoDeInvestimento { get; set; }

@@ -112,6 +112,14 @@ export class SubsetorDetalheComponent implements OnInit {
     return {'is-invalid': campoForm.errors && campoForm.touched};
   }
 
+  public onClicouEm(evento) {
+    if (evento.botaoClicado === 'cancelar') {
+      this.resetFormSegmento();
+    } else {
+      this.salvarSegmentos();
+    }
+  }
+
   public salvarSegmentos(): void {
 
     if (this.form.get('segmentos').valid) {

@@ -127,6 +127,14 @@ export class SetorDetalheComponent implements OnInit {
     this.form.reset();
   }
 
+  public onClicouEm(evento) {
+    if (evento.botaoClicado === 'cancelar') {
+        this.resetForm();
+    } else {
+        this.salvarSetor();
+    }
+  }
+
   public resetFormSubsetor(): void {
     this.form.get('subsetores').reset();
   }
