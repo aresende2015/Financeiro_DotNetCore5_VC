@@ -160,6 +160,18 @@ aresende - Teste@123
 
 -------------------------------------
 
+Fazer o build no Angular - dentro da pasta do projeto
+
+ng build --target=development --environment=development
+ng build --dev --e=dev
+ng build --dev
+ng build
+
+
+
+
+
+
 
 
 
