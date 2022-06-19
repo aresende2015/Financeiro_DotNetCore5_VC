@@ -26,6 +26,10 @@ export class ClienteListaComponent implements OnInit {
 
   termoBuscaChanged: Subject<string> = new Subject<string>();
 
+  public onFiltroAcionado(evento: any) {
+    this.filtrarClientes(evento.filtro);
+  }
+
   filtrarClientes(evt: any): void {
     if (this.termoBuscaChanged.observers.length === 0) {
       this.termoBuscaChanged.pipe(debounceTime(1000)).subscribe(
@@ -48,7 +52,7 @@ export class ClienteListaComponent implements OnInit {
         }
       )
     }
-    this.termoBuscaChanged.next(evt.value);
+    this.termoBuscaChanged.next(evt);
   }
 
   constructor(

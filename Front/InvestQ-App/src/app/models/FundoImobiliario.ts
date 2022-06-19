@@ -10,8 +10,8 @@ export class FundoImobiliario {
   cnpj: string;
   razaoSocial: string;
   descricao: string;
-  dataInicio: Date;
-  dataFim: Date;
+  dataDeInicio: Date;
+  dataDeFim: Date;
   tipoDeGestao: TipoDeGestao;
   tipoDeInvestimentoId: Guid;
   tipoDeInvestimento: TipoDeInvestimento;

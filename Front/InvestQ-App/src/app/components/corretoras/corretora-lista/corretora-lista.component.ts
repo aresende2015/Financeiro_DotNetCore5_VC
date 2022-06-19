@@ -32,6 +32,10 @@ export class CorretoraListaComponent implements OnInit {
     this.corretorasFiltradas = this.filtroLista ? this.filtrarCorretoras(this.filtroLista) : this.corretoras;
   }
 
+  public onFiltroAcionado(evento: any) {
+    this.filtroLista = evento.filtro;
+  }
+
   filtrarCorretoras(filtrarPor: string): Corretora[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.corretoras.filter(

@@ -33,6 +33,10 @@ export class AdministradoresdefundosimobiliariosListaComponent implements OnInit
                                                           : this.administradoresDeFundosDeInvestimentos;
   }
 
+  public onFiltroAcionado(evento: any) {
+    this.filtroLista = evento.filtro;
+  }
+
   filtrarAdministradoresDeFundosImobiliarios(filtrarPor: string): AdministradorDeFundoImobiliario[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.administradoresDeFundosDeInvestimentos.filter(

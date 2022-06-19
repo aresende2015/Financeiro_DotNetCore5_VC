@@ -73,6 +73,7 @@ import { FundosimobiliariosComponent } from './components/fundosimobiliarios/fun
 import { FundosimobiliariosListaComponent } from './components/fundosimobiliarios/fundosimobiliarios-lista/fundosimobiliarios-lista.component';
 import { FundosimobiliariosDetalheComponent } from './components/fundosimobiliarios/fundosimobiliarios-detalhe/fundosimobiliarios-detalhe.component';
 import { SalvarComponent } from './shared/salvar/salvar.component';
+import { FiltrarComponent } from './shared/filtrar/filtrar.component';
 
 
 defineLocale('pt-br', ptBrLocale);
@@ -114,6 +115,7 @@ defineLocale('pt-br', ptBrLocale);
     DateTimeFormatPipe,
     TituloComponent,
     SalvarComponent,
+    FiltrarComponent,
     UserComponent,
     HomeComponent,
     LoginComponent,

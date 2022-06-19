@@ -1,0 +1,27 @@
+
+<!-- ### Colocar no HTLM pai do componente
+<app-filtrar
+    [rotaLink]="'/clientes/detalhe'"
+    (filtroAcionado)="onFiltroAcionado($event)">
+</app-filtrar> -->
+<div class="d-flex">
+  <div class="flex-fill pe-3">
+    <div class="input-group mb-2">
+      <div class="input-group-prepend">
+        <div class="input-group-text">Filtro: </div>
+      </div>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Filtrar por cpf ou nome"
+        (input)="filtrar($event.target)"
+      >
+    </div>
+  </div>
+  <div>
+    <a class="d-flex btn btn-outline-primary" routerLink="{{ rotaLink }}">
+      <i class="fa fa-plus-circle my-1"></i>
+      <b class="ms-1 d-none d-sm-block">Novo</b>
+    </a>
+  </div>
+</div>

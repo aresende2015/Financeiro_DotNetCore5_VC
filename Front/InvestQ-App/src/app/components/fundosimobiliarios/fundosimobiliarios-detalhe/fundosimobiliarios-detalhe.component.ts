@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { AdministradorDeFundoImobiliario } from '@app/models/AdministradorDeFundoImobiliario';
 import { FundoImobiliario } from '@app/models/FundoImobiliario';
+import { SegmentoAnbima } from '@app/models/SegmentoAnbima';
+import { TipoDeInvestimento } from '@app/models/TipoDeInvestimento';
+import { AdministradordefundoimobiliarioService } from '@app/services/administradordefundoimobiliario.service';
 import { FundoimobiliarioService } from '@app/services/fundoimobiliario.service';
+import { SegmentoanbimaService } from '@app/services/segmentoanbima.service';
+import { TipodeinvestimentoService } from '@app/services/tipodeinvestimento.service';
 import { Guid } from 'guid-typescript';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -16,6 +22,10 @@ import { ToastrService } from 'ngx-toastr';
 export class FundosimobiliariosDetalheComponent implements OnInit {
 
   fundoImobiliario = {} as FundoImobiliario;
+  public tiposDeInvestimentos: TipoDeInvestimento[] = [];
+  public segmentosAnbimas: SegmentoAnbima[] = [];
+  public administradoresDeFundosImobiliarios: AdministradorDeFundoImobiliario[] = [];
+
   //cliente: Cliente;
   fundoImobiliarioId: Guid;
 
@@ -42,10 +52,21 @@ export class FundosimobiliariosDetalheComponent implements OnInit {
               private router: ActivatedRoute,
               private activatedRouter: ActivatedRoute,
               private fundoImobiliarioService: FundoimobiliarioService,
+              private tipodeinvestimentoService: TipodeinvestimentoService,
+              private segmentoAnbimaService: SegmentoanbimaService,
+              private administradorDeFundoImobiliarioService: AdministradordefundoimobiliarioService,
               private spinner: NgxSpinnerService,
               private toastr: ToastrService)
   {
     this.localeService.use('pt-br');
+  }
+
+  ngOnInit(): void {
+    this.validation();
+    this.carregarFundoImobiliario();
+    this.carregarTiposDeInvestimentos();
+    this.carregarSegmentosAnbimas();
+    this.carregarAdministradoresDeFundosImobiliarios();
   }
 
   public carregarFundoImobiliario(): void {
@@ -76,9 +97,52 @@ export class FundosimobiliariosDetalheComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.validation();
-    this.carregarFundoImobiliario();
+  public carregarTiposDeInvestimentos(): void {
+    const observer = {
+      next: (_tiposDeInvestimentos: TipoDeInvestimento[]) => {
+        this.tiposDeInvestimentos = _tiposDeInvestimentos;
+      },
+      error: (error: any) => {
+        this.spinner.hide();
+        console.error(error);
+        this.toastr.error('Erro ao carregar a tela...', 'Error"');
+      },
+      complete: () => {this.spinner.hide()}
+    }
+
+    this.tipodeinvestimentoService.getAllTiposDeInvestimentos().subscribe(observer);
+  }
+
+  public carregarSegmentosAnbimas(): void {
+    const observer = {
+      next: (_segmentosAnbimas: SegmentoAnbima[]) => {
+        this.segmentosAnbimas = _segmentosAnbimas;
+      },
+      error: (error: any) => {
+        this.spinner.hide();
+        console.error(error);
+        this.toastr.error('Erro ao carregar a tela...', 'Error"');
+      },
+      complete: () => {this.spinner.hide()}
+    }
+
+    this.segmentoAnbimaService.getAllSegmentosAnbimas().subscribe(observer);
+  }
+
+  public carregarAdministradoresDeFundosImobiliarios(): void {
+    const observer = {
+      next: (_administradoresDeFundosImobiliarios: AdministradorDeFundoImobiliario[]) => {
+        this.administradoresDeFundosImobiliarios = _administradoresDeFundosImobiliarios;
+      },
+      error: (error: any) => {
+        this.spinner.hide();
+        console.error(error);
+        this.toastr.error('Erro ao carregar a tela...', 'Error"');
+      },
+      complete: () => {this.spinner.hide()}
+    }
+
+    this.administradorDeFundoImobiliarioService.getAllAdministradoresDeFundosImobiliarios().subscribe(observer);
   }
 
   public validation(): void {
@@ -86,8 +150,11 @@ export class FundosimobiliariosDetalheComponent implements OnInit {
       cnpj: ['', [Validators.required, Validators.minLength(14), Validators.maxLength(14)]],
       razaoSocial: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       descricao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      dataInicio: ['', Validators.required],
-      dataFim: ['', Validators.required]
+      dataDeInicio: ['', Validators.required],
+      dataDeFim: ['', Validators.required],
+      tipoDeInvestimentoId: [null, [Validators.required]],
+      segmentoAnbimaId: [null, [Validators.required]],
+      administradorDeFundoImobiliarioId: [null, [Validators.required]]
     });
   }
 
@@ -123,12 +190,10 @@ export class FundosimobiliariosDetalheComponent implements OnInit {
 
       this.fundoImobiliarioService[this.estadoSalvar](this.fundoImobiliario).subscribe(
         () => {
-          //this.spinner.hide();
           this.toastr.success('Fundo Imobiliário salvo com sucesso!', 'Sucesso');
         },
         (error: any) => {
-          console.error(error);
-          //this.spinner.hide();
+          //console.error(error);
           this.toastr.error('Erro ao atualizar fundo imobiliário', 'Erro');
         },
         () => {

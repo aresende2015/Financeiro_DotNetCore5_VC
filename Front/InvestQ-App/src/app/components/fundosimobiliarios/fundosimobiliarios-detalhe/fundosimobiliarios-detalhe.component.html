@@ -66,14 +66,14 @@
           <label>Data Início</label>
           <input
             type="datetime" class="form-control"
-            [ngClass]="cssValidator(f.dataInicio)"
-            value="{{fundoImobiliario.dataInicio| DateFormatPipe }}"
+            [ngClass]="cssValidator(f.dataDeInicio)"
+            value="{{fundoImobiliario.dataDeInicio| DateFormatPipe }}"
             bsDatepicker
             [bsConfig]="bsConfig"
-            formControlName="dataInicio"
+            formControlName="dataDeInicio"
             placeholder=""
           >
-          <div *ngIf="f.dataInicio.errors?.required" class="invalid-feedback">
+          <div *ngIf="f.dataDeInicio.errors?.required" class="invalid-feedback">
             Data Início é obrigatório.
           </div>
         </div>
@@ -81,15 +81,44 @@
           <label>Data Fim</label>
           <input
             type="datetime" class="form-control"
-            [ngClass]="cssValidator(f.dataFim)"
-            value="{{fundoImobiliario.dataFim| DateFormatPipe }}"
+            [ngClass]="cssValidator(f.dataDeFim)"
+            value="{{fundoImobiliario.dataDeFim | DateFormatPipe }}"
             bsDatepicker
             [bsConfig]="bsConfig"
-            formControlName="dataFim"
+            formControlName="dataDeFim"
             placeholder=""
           >
-          <div *ngIf="f.dataFim.errors?.required" class="invalid-feedback">
+          <div *ngIf="f.dataDeFim.errors?.required" class="invalid-feedback">
             Data Fim é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.tipoDeInvestimentoId)">
+          <label class="control-label">Tipo de Investimento</label>
+          <select class="form-control" id="tipoDeInvestimentoId" formControlName="tipoDeInvestimentoId">
+            <option *ngFor="let tipoDeInvestimento of tiposDeInvestimentos" [value]="tipoDeInvestimento.id">{{ tipoDeInvestimento.descricao }}</option>
+          </select>
+          <div *ngIf="f.tipoDeInvestimentoId.errors?.required" class="invalid-feedback">
+            Tipo de investimento é obrigatório.
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.administradorDeFundoImobiliarioId)">
+          <label class="control-label">Administrador de FII</label>
+          <select class="form-control" id="administradorDeFundoImobiliarioId" formControlName="administradorDeFundoImobiliarioId">
+            <option *ngFor="let administradorDeFundoImobiliario of administradoresDeFundosImobiliarios" [value]="administradorDeFundoImobiliario.id">{{ administradorDeFundoImobiliario.razaoSocial }}</option>
+          </select>
+          <div *ngIf="f.administradorDeFundoImobiliarioId.errors?.required" class="invalid-feedback">
+            Administrador de FII é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.segmentoAnbimaId)">
+          <label class="control-label">Segmento Anbima</label>
+          <select class="form-control" id="segmentoAnbimaId" formControlName="segmentoAnbimaId">
+            <option *ngFor="let segmentoAnbima of segmentosAnbimas" [value]="segmentoAnbima.id">{{ segmentoAnbima.descricao }}</option>
+          </select>
+          <div *ngIf="f.segmentoAnbimaId.errors?.required" class="invalid-feedback">
+            Segmento Anbima é obrigatório.
           </div>
         </div>
       </div>
