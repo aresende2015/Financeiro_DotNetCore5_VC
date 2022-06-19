@@ -166,7 +166,9 @@ ng build --target=development --environment=development
 ng build --dev --e=dev
 ng build --dev
 ng build
-
+ng build --target=production --environment=prod
+ng build --prod --e=prod
+ng build --prod
 
 
 

@@ -494,8 +494,6 @@ yarn-error.log
 
 # Miscellaneous
 /.angular/cache
-.angular/cache/*
-/.angular/cache/*
 .sass-cache/
 /connect.lock
 /coverage
@@ -507,3 +505,4 @@ testem.log
 .DS_Store
 Thumbs.db
 Front/InvestQ-App/.angular/cache/*
+Front/InvestQ-App/dist/*
