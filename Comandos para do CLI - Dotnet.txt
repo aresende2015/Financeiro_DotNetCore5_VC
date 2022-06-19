@@ -170,6 +170,9 @@ ng build --target=production --environment=prod
 ng build --prod --e=prod
 ng build --prod
 
+-----------------------------
+Instalando o http-server para testar deploy
+npm install --global http-server
 
 
 

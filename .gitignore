@@ -504,5 +504,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
-Front/InvestQ-App/.angular/cache/*
+Front/InvestQ-App/.angular/*
 Front/InvestQ-App/dist/*
+
