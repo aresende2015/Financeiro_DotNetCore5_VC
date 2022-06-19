@@ -34,6 +34,10 @@ export class SegmentosanbimasListaComponent implements OnInit {
                                         : this.segmentosAnbimas;
   }
 
+  public onFiltroAcionado(evento: any) {
+    this.filtroLista = evento.filtro;
+  }
+
   filtrarSegmentosAnbimas(filtrarPor: string): SegmentoAnbima[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.segmentosAnbimas.filter(

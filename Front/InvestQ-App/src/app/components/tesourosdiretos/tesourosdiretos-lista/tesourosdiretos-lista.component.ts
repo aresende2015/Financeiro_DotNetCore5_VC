@@ -33,6 +33,10 @@ export class TesourosdiretosListaComponent implements OnInit {
                                     : this.tesourosDiretos;
   }
 
+  public onFiltroAcionado(evento: any) {
+    this.filtroLista = evento.filtro;
+  }
+
   filtrarTesourosDiretos(filtrarPor: string): TesouroDireto[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.tesourosDiretos.filter(

@@ -2,6 +2,7 @@
 <!-- ### Colocar no HTLM pai do componente
 <app-filtrar
     [rotaLink]="'/clientes/detalhe'"
+    [botaoNovo]="true"
     (filtroAcionado)="onFiltroAcionado($event)">
 </app-filtrar> -->
 <div class="d-flex">
@@ -18,7 +19,7 @@
       >
     </div>
   </div>
-  <div>
+  <div  *ngIf="botaoNovo">
     <a class="d-flex btn btn-outline-primary" routerLink="{{ rotaLink }}">
       <i class="fa fa-plus-circle my-1"></i>
       <b class="ms-1 d-none d-sm-block">Novo</b>

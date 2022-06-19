@@ -33,6 +33,10 @@ export class SetorListaComponent implements OnInit {
                               : this.setores;
   }
 
+  public onFiltroAcionado(evento: any) {
+    this.filtroLista = evento.filtro;
+  }
+
   filtrarSetores(filtrarPor: string): Setor[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.setores.filter(

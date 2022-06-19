@@ -12,6 +12,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class FiltrarComponent implements OnInit {
 
   @Input() rotaLink: string = '';
+  @Input() botaoNovo = true;
 
   @Output() filtroAcionado = new EventEmitter();
 

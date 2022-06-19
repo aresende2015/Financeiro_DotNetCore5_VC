@@ -42,6 +42,10 @@ export class SegmentosListaComponent implements OnInit {
                               : this.segmentos;
   }
 
+  public onFiltroAcionado(evento: any) {
+    this.filtroLista = evento.filtro;
+  }
+
   filtrarSegmentos(filtrarPor: string): Segmento[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.segmentos.filter(

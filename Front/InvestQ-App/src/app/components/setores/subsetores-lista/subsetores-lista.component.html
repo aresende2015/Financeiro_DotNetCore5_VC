@@ -1,25 +1,11 @@
 <div class="card rounded shadow-sm p-3">
-
   <legend class="d-flex justify-content-between capitalize">
     <p><b>Lista de Subsetores do Setor:</b> {{this.setorDescricao}}</p>
   </legend>
-
-  <div class="d-flex">
-    <div class="flex-fill pe-3">
-      <div class="input-group mb-2">
-        <div class="input-group-prepend">
-          <div class="input-group-text">Filtro: </div>
-        </div>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Filtrar por descrição"
-          [(ngModel)]="filtroLista"
-        >
-      </div>
-    </div>
-  </div>
-
+  <app-filtrar
+    [botaoNovo]="false"
+    (filtroAcionado)="onFiltroAcionado($event)">
+  </app-filtrar>
   <table class="table table-striped">
     <thead class="table-dark">
       <tr>

@@ -33,6 +33,10 @@ export class TiposdeinvestimentosListaComponent implements OnInit {
                                         : this.tiposDeInvestimentos;
   }
 
+  public onFiltroAcionado(evento: any) {
+    this.filtroLista = evento.filtro;
+  }
+
   filtrarTiposDeInvestimentos(filtrarPor: string): TipoDeInvestimento[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.tiposDeInvestimentos.filter(

@@ -37,6 +37,10 @@ export class SubsetoresListaComponent implements OnInit {
                               : this.subsetores;
   }
 
+  public onFiltroAcionado(evento: any) {
+    this.filtroLista = evento.filtro;
+  }
+
   filtrarSubsetores(filtrarPor: string): Subsetor[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.subsetores.filter(
