@@ -14,7 +14,7 @@ namespace InvestQ.Data.Mappings
                 .HasColumnType("varchar(14)")
                 .IsRequired();
 
-            builder.Property(fi => fi.RazaoSocial)
+            builder.Property(fi => fi.NomePregao)
                 .IsRequired()
                 .HasMaxLength(150);
 

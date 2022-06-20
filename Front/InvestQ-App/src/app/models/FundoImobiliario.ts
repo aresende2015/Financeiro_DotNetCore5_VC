@@ -8,7 +8,7 @@ import { TipoDeGestao } from "./Enum/TipoDeGestao.enum";
 export class FundoImobiliario {
   id: Guid;
   cnpj: string;
-  razaoSocial: string;
+  nomePregao: string;
   descricao: string;
   dataDeInicio: Date;
   dataDeFim: Date;

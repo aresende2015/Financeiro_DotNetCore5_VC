@@ -148,10 +148,10 @@ export class FundosimobiliariosDetalheComponent implements OnInit {
   public validation(): void {
     this.form = this.fb.group({
       cnpj: ['', [Validators.required, Validators.minLength(14), Validators.maxLength(14)]],
-      razaoSocial: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      nomePregao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       descricao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       dataDeInicio: ['', Validators.required],
-      dataDeFim: ['', Validators.required],
+      dataDeFim: [''],
       tipoDeInvestimentoId: [null, [Validators.required]],
       segmentoAnbimaId: [null, [Validators.required]],
       administradorDeFundoImobiliarioId: [null, [Validators.required]]

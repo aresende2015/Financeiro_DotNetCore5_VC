@@ -111,5 +111,15 @@ namespace InvestQ.Data.Repositories.Ativos
 
             return await query.FirstOrDefaultAsync();
         }
+
+        public async Task<Ativo> GetAtivoByFundoImobiliarioIdAsync(Guid fundoImobiliarioId)
+        {
+            IQueryable<Ativo> query = _context.Ativos;
+
+            query = query.AsNoTracking()
+                         .Where(a => a.FundoImobiliarioId == fundoImobiliarioId);
+
+            return await query.FirstOrDefaultAsync();
+        }
     }
 }

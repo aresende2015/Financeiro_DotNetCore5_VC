@@ -7,7 +7,7 @@
     <thead class="table-dark">
       <tr>
         <th>CNPJ</th>
-        <th>Razão Social</th>
+        <th>Nome do Pregão</th>
         <th>Descrição</th>
         <th></th>
       </tr>
@@ -15,7 +15,7 @@
     <tbody *ngIf="fundosImobiliarios && fundosImobiliarios.length">
       <tr *ngFor="let fundoImobiliario of fundosImobiliarios">
         <td>{{fundoImobiliario.cnpj}}</td>
-        <td>{{fundoImobiliario.razaoSocial}}</td>
+        <td>{{fundoImobiliario.nomePregao}}</td>
         <td>{{fundoImobiliario.descricao}}</td>
         <td>
           <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="detalheFundoImobiliario(fundoImobiliario.id)">

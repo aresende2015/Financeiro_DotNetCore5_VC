@@ -26,7 +26,7 @@ namespace InvestQ.Data.Repositories.FundosImobiliarios
                          .Include(fi => fi.AdministradorDeFundoImobiliario);
 
             query = query.AsNoTracking()
-                         .Where(fi => (fi.RazaoSocial.Contains(pageParams.Term)))
+                         .Where(fi => (fi.NomePregao.Contains(pageParams.Term)))
                          .OrderBy(fi => fi.Id);
 
             return await PageList<FundoImobiliario>.CreateAsync(query, pageParams.PageNumber, pageParams.pageSize);

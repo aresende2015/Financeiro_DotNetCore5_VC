@@ -14,7 +14,7 @@ namespace InvestQ.Application.Dtos.Ativos
         //public IEnumerable<ProventoDto> Proventos { get; set; }
         //public Guid? AcaoId {get; set;}
         //public AcaoDto Acao { get; set; }
-        //public Guid? FundoImobiliarioId {get; set;}
+        public Guid? FundoImobiliarioId {get; set;}
         //public FundoImobiliarioDto FundoImobiliario { get; set; }
         public Guid? TesouroDiretoId {get; set;}
         //public TesouroDiretoDto TesouroDireto { get; set; }

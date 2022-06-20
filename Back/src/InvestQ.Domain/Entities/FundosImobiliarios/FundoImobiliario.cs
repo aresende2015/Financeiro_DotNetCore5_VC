@@ -11,7 +11,7 @@ namespace InvestQ.Domain.Entities.FundosImobiliarios
         }
         public FundoImobiliario(Guid id, 
                                 string cnpj, 
-                                string razaoSocial, 
+                                string nomePregao, 
                                 string descricao,
                                 DateTime dataDeInicio,
                                 DateTime dataDeFim,
@@ -20,7 +20,7 @@ namespace InvestQ.Domain.Entities.FundosImobiliarios
         {
             Id = id;
             CNPJ = cnpj;
-            RazaoSocial = razaoSocial;
+            NomePregao = nomePregao;
             Descricao = descricao;
             DataDeInicio =dataDeInicio;
             DataDeFim = dataDeFim;
@@ -42,10 +42,10 @@ namespace InvestQ.Domain.Entities.FundosImobiliarios
                 throw new Exception($"O Fundo Imobiliário já estava ativo.");
         }
         public string CNPJ { get; set; }
-        public string RazaoSocial { get; set; }        
+        public string NomePregao { get; set; }        
         public string Descricao { get; set; }
         public DateTime DataDeInicio { get; set; }
-        public DateTime DataDeFim { get; set; }
+        public DateTime? DataDeFim { get; set; }
         public TipoDeGestao TipoDeGestao {get; set;}
         public Guid TipoDeInvestimentoId { get; set; }
         public TipoDeInvestimento TipoDeInvestimento { get; set; }

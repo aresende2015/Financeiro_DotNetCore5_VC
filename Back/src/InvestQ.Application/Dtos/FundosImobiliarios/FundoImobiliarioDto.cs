@@ -14,7 +14,7 @@ namespace InvestQ.Application.Dtos.FundosImobiliarios
         public string CNPJ { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public string RazaoSocial { get; set; }
+        public string NomePregao { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Descricao { get; set; }

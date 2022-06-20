@@ -1,10 +1,13 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using InvestQ.Application.Dtos.Ativos;
 using InvestQ.Application.Dtos.FundosImobiliarios;
 using InvestQ.Application.Interfaces.FundosImobiliarios;
+using InvestQ.Data.Interfaces.Ativos;
 using InvestQ.Data.Interfaces.FundosImobiliarios;
 using InvestQ.Data.Paginacao;
+using InvestQ.Domain.Entities.Ativos;
 using InvestQ.Domain.Entities.FundosImobiliarios;
 
 namespace InvestQ.Application.Services.FundosImobiliarios
@@ -12,12 +15,15 @@ namespace InvestQ.Application.Services.FundosImobiliarios
     public class FundoImobiliarioService : IFundoImobiliarioService
     {
         private readonly IFundoImobiliarioRepo _fundoImobiliarioRepo;
+        private readonly IAtivoRepo _ativoRepo;
         private readonly IMapper _mapper;
 
         public FundoImobiliarioService(IFundoImobiliarioRepo fundoImobiliarioRepo,
+                                       IAtivoRepo ativoRepo,
                                        IMapper mapper)
         {
             _fundoImobiliarioRepo = fundoImobiliarioRepo;
+            _ativoRepo = ativoRepo;
             _mapper = mapper;
         }
         public async Task<FundoImobiliarioDto> AdicionarFundoImobiliario(FundoImobiliarioDto model)
@@ -33,9 +39,21 @@ namespace InvestQ.Application.Services.FundosImobiliarios
 
                 if (await _fundoImobiliarioRepo.SalvarMudancasAsync())
                 {
-                    var retorno = await _fundoImobiliarioRepo.GetFundoImobiliarioByIdAsync(fundoImobiliario.Id);
+                    var ativoDto = new AtivoDto();
+                    var bytes = new Byte[16];
+                    ativoDto.Id = new Guid(bytes);
+                    ativoDto.FundoImobiliarioId = fundoImobiliario.Id;
 
-                    return _mapper.Map<FundoImobiliarioDto>(retorno);
+                    var ativo = _mapper.Map<Ativo>(ativoDto);
+                    
+                    _ativoRepo.Adicionar(ativo);
+
+                    if (await _ativoRepo.SalvarMudancasAsync())
+                    {
+                        var retorno = await _fundoImobiliarioRepo.GetFundoImobiliarioByIdAsync(fundoImobiliario.Id);
+
+                       return _mapper.Map<FundoImobiliarioDto>(retorno);
+                    } 
                 }
             }
 
@@ -75,6 +93,13 @@ namespace InvestQ.Application.Services.FundosImobiliarios
 
             if (fundoImobiliario == null)
                 throw new Exception("O Fundo Imobiliário que tentou deletar não existe.");
+
+            var ativo = await _ativoRepo.GetAtivoByFundoImobiliarioIdAsync(fundoImobiliarioId);
+
+            if (ativo == null)
+                throw new Exception("O Ativo que tentou deletar não existe.");
+
+            _ativoRepo.Deletar(ativo);
 
             _fundoImobiliarioRepo.Deletar(fundoImobiliario);
 
