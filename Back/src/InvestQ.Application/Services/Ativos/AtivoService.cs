@@ -99,6 +99,22 @@ namespace InvestQ.Application.Services.Ativos
             }
         }
 
+        public async Task<AtivoDto> GetAtivoByAcaoIdAsync(Guid acaoId)
+        {
+            try
+            {
+                var ativo = await _ativoRepo.GetAtivoByAcaoIdAsync(acaoId);
+
+                if (ativo == null) return null;
+
+                return _mapper.Map<AtivoDto>(ativo);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<AtivoDto> GetAtivoByFundoImobiliarioIdAsync(Guid fundoImobiliarioId)
         {
             try

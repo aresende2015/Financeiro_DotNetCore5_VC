@@ -1,0 +1,106 @@
+<div class="card rounded shadow-sm">
+  <form [formGroup]="form">
+    <!--<p>Form value: {{form.value | json}}</p>
+    <p>Form value: {{form.status | json}}</p>-->
+    <div class="p-3">
+      <div class="row">
+        <div class="form-group col-md-3">
+          <label>Descrição</label>
+          <input
+            type="text"
+            [ngClass]="cssValidator(f.descricao)"
+            class="form-control"
+            formControlName="descricao"
+            placeholder=""
+          >
+          <div *ngIf="f.descricao.errors?.required" class="invalid-feedback">
+            Descrição é obrigatório.
+          </div>
+          <div *ngIf="f.descricao.errors?.minlength" class="invalid-feedback">
+            Descrição deve possuir pelo menos 3 caracteres.
+          </div>
+          <div *ngIf="f.descricao.errors?.maxlength" class="invalid-feedback">
+            Descrição deve possuir no máximo 100 caracteres
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label>CNPJ</label>
+          <input
+            type="text" class="form-control"
+            [ngClass]="cssValidator(f.cnpj)"
+            formControlName="cnpj"
+            placeholder="Insira o CNPJ"
+          >
+          <div *ngIf="f.cnpj.errors?.required" class="invalid-feedback">
+            CNPJ é obrigatório.
+          </div>
+          <div *ngIf="f.cnpj.errors?.minlength" class="invalid-feedback">
+            CNPJ deve possuir 11 caracteres.
+          </div>
+          <div *ngIf="f.cnpj.errors?.maxlength" class="invalid-feedback">
+            CNPJ deve possuir 11 caracteres.
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label>Razão Social</label>
+          <input
+            type="text"
+            [ngClass]="cssValidator(f.razaoSocial)"
+            class="form-control"
+            formControlName="razaoSocial"
+            placeholder=""
+          >
+          <div *ngIf="f.razaoSocial.errors?.required" class="invalid-feedback">
+            Razão Social é obrigatória.
+          </div>
+          <div *ngIf="f.razaoSocial.errors?.minlength" class="invalid-feedback">
+            Razão Social deve possuir pelo menos 3 caracteres.
+          </div>
+          <div *ngIf="f.razaoSocial.errors?.maxlength" class="invalid-feedback">
+            Razão Social deve possuir no máximo 100 caracteres
+          </div>
+        </div>
+        <div class="form-group col-md-3" [ngClass]="cssValidator(f.tipoDeInvestimentoId)">
+          <label class="control-label">Tipo de Investimento</label>
+          <select class="form-control" id="tipoDeInvestimentoId" formControlName="tipoDeInvestimentoId">
+            <option *ngFor="let tipoDeInvestimento of tiposDeInvestimentos" [value]="tipoDeInvestimento.id">{{ tipoDeInvestimento.descricao }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.setorId)">
+          <label class="control-label">Setor</label>
+          <select class="form-control" id="setorId" formControlName="setorId"  (change)="setorSelecionado($event)">
+            <option *ngFor="let setor of setores" [value]="setor.id">{{ setor.descricao }}</option>
+          </select>
+          <div *ngIf="f.setorId.errors?.required" class="invalid-feedback">
+            Setor é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.subSetorId)">
+          <label class="control-label">SubSetor</label>
+          <select class="form-control" id="subSetorId" formControlName="subSetorId" (change)="subSetorSelecionado($event)">
+            <option *ngFor="let subSetor of subSetores" [value]="subSetor.id">{{ subSetor.descricao }}</option>
+          </select>
+          <div *ngIf="f.subSetorId.errors?.required" class="invalid-feedback">
+            SubSetor é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.segmentoId)">
+          <label class="control-label">Segmento</label>
+          <select class="form-control" id="segmentoId" formControlName="segmentoId">
+            <option *ngFor="let segmento of segmentos" [value]="segmento.id">{{ segmento.descricao }}</option>
+          </select>
+          <div *ngIf="f.segmentoId.errors?.required" class="invalid-feedback">
+            Segmento é obrigatório.
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-salvar
+        [botaoSalvar]="'Setor.'"
+        [formValido]="form.valid"
+        (clicouEm)="onClicouEm($event)">
+    </app-salvar>
+  </form>
+</div>

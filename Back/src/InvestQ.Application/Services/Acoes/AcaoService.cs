@@ -2,21 +2,36 @@ using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using InvestQ.Application.Dtos.Acoes;
+using InvestQ.Application.Dtos.Ativos;
 using InvestQ.Application.Interfaces.Acoes;
 using InvestQ.Data.Interfaces.Acoes;
+using InvestQ.Data.Interfaces.Ativos;
 using InvestQ.Domain.Entities.Acoes;
+using InvestQ.Domain.Entities.Ativos;
 
 namespace InvestQ.Application.Services.Acoes
 {
     public class AcaoService : IAcaoService
     {
         private readonly IAcaoRepo _acaoRepo;
+        private readonly IAtivoRepo _ativoRepo;
+        //private readonly ISegmentoRepo _segmentoRepo;
+        private readonly ISubsetorRepo _subSetorRepo;
+        //private readonly ISetorRepo _setorRepo;
         private readonly IMapper _mapper;
 
         public AcaoService(IAcaoRepo acaoRepo,
+                                     IAtivoRepo ativoRepo,
+                                     //ISegmentoRepo segmentoRepo,
+                                     ISubsetorRepo subSetorRepo,
+                                     //ISetorRepo setorRepo,
                                      IMapper mapper)
         {
             _acaoRepo = acaoRepo;
+            _ativoRepo = ativoRepo;
+            //_subSetorRepo = segmentoRepo;
+            _subSetorRepo = subSetorRepo;
+            //_setorRepo = setorRepo;
             _mapper = mapper;
         }
         public async Task<AcaoDto> AdicionarAcao(AcaoDto model)
@@ -32,9 +47,21 @@ namespace InvestQ.Application.Services.Acoes
 
                 if (await _acaoRepo.SalvarMudancasAsync())
                 {
-                    var retorno = await _acaoRepo.GetAcaoByIdAsync(acao.Id);
+                    var ativoDto = new AtivoDto();
+                    var bytes = new Byte[16];
+                    ativoDto.Id = new Guid(bytes);
+                    ativoDto.AcaoId = acao.Id;
 
-                    return _mapper.Map<AcaoDto>(retorno);
+                    var ativo = _mapper.Map<Ativo>(ativoDto);
+                    
+                    _ativoRepo.Adicionar(ativo);
+
+                    if (await _ativoRepo.SalvarMudancasAsync())
+                    {
+                        var retorno = await _acaoRepo.GetAcaoByIdAsync(acao.Id);
+
+                        return _mapper.Map<AcaoDto>(retorno);
+                    } 
                 }
             }
 
@@ -74,6 +101,13 @@ namespace InvestQ.Application.Services.Acoes
 
             if (acao == null)
                 throw new Exception("A Ação que tentou deletar não existe.");
+            
+            var ativo = await _ativoRepo.GetAtivoByAcaoIdAsync(acaoId);
+
+            if (ativo == null)
+                throw new Exception("O Ativo que tentou deletar não existe.");
+
+            _ativoRepo.Deletar(ativo);
 
             _acaoRepo.Deletar(acao);
 
@@ -102,9 +136,19 @@ namespace InvestQ.Application.Services.Acoes
             {
                 var acao = await _acaoRepo.GetAcaoByIdAsync(id);
 
-                if (acao == null) return null;
+                if (acao == null) return null;                              
+                //var segmento = _segmentoRepo.GetSegmentoByIdAsync(acao.SegmentoId);
+                
+                var subSetor = await _subSetorRepo.GetSubsetorByIdAsync(acao.Segmento.SubsetorId);
 
-                return _mapper.Map<AcaoDto>(acao);
+                //var setor = await _setorRepo.GetSetorByIdAsync(subSetor.SetorId, false);
+
+                var acaoDto = _mapper.Map<AcaoDto>(acao);
+
+                acaoDto.SubSetorId = subSetor.Id;
+                acaoDto.SetorId = subSetor.SetorId;
+
+                return acaoDto;
             }
             catch (Exception ex)
             {

@@ -45,5 +45,15 @@ namespace InvestQ.Data.Repositories.Acoes
 
             return await query.FirstOrDefaultAsync();
         }
+
+        public async Task<Segmento> GetSegmentoByIdAsync(Guid segmentoId)
+        {
+            IQueryable<Segmento> query = _context.Segmentos;
+
+            query = query.AsNoTracking()
+                        .Where(s => s.Id == segmentoId);
+
+            return await query.FirstOrDefaultAsync();
+        }
     }
 }

@@ -74,6 +74,10 @@ import { FundosimobiliariosListaComponent } from './components/fundosimobiliario
 import { FundosimobiliariosDetalheComponent } from './components/fundosimobiliarios/fundosimobiliarios-detalhe/fundosimobiliarios-detalhe.component';
 import { SalvarComponent } from './shared/salvar/salvar.component';
 import { FiltrarComponent } from './shared/filtrar/filtrar.component';
+import { AcoesComponent } from './components/acoes/acoes.component';
+import { AcoesListaComponent } from './components/acoes/acoes-lista/acoes-lista.component';
+import { AcoesDetalheComponent } from './components/acoes/acoes-detalhe/acoes-detalhe.component';
+import { AcaoService } from './services/acao.service';
 
 
 defineLocale('pt-br', ptBrLocale);
@@ -102,6 +106,9 @@ defineLocale('pt-br', ptBrLocale);
     TiposdeinvestimentosComponent,
     TiposdeinvestimentosListaComponent,
     TiposdeinvestimentosDetalheComponent,
+    AcoesComponent,
+    AcoesListaComponent,
+    AcoesDetalheComponent,
     FundosimobiliariosComponent,
     FundosimobiliariosListaComponent,
     FundosimobiliariosDetalheComponent,
@@ -149,6 +156,7 @@ defineLocale('pt-br', ptBrLocale);
     SetorService,
     SubsetorService,
     SegmentoService,
+    AcaoService,
     TipodeinvestimentoService,
     AdministradordefundoimobiliarioService,
     FundoimobiliarioService,

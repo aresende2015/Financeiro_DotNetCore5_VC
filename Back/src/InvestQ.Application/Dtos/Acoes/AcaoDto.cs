@@ -16,7 +16,9 @@ namespace InvestQ.Application.Dtos.Acoes
         public string CNPJ { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public string RazaoSocial { get; set; }        
+        public string RazaoSocial { get; set; }
+        public Guid SetorId {get; set;}
+        public Guid SubSetorId {get; set;}
         public Guid SegmentoId {get; set;}
         public SegmentoDto Segmento { get; set; }
         public Guid TipoDeInvestimentoId { get; set; }

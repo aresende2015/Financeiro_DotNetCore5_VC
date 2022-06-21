@@ -36,6 +36,9 @@ import { SegmentosanbimasListaComponent } from './components/segmentosanbimas/se
 import { FundosimobiliariosComponent } from './components/fundosimobiliarios/fundosimobiliarios.component';
 import { FundosimobiliariosDetalheComponent } from './components/fundosimobiliarios/fundosimobiliarios-detalhe/fundosimobiliarios-detalhe.component';
 import { FundosimobiliariosListaComponent } from './components/fundosimobiliarios/fundosimobiliarios-lista/fundosimobiliarios-lista.component';
+import { AcoesComponent } from './components/acoes/acoes.component';
+import { AcoesDetalheComponent } from './components/acoes/acoes-detalhe/acoes-detalhe.component';
+import { AcoesListaComponent } from './components/acoes/acoes-lista/acoes-lista.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -122,6 +125,15 @@ const routes: Routes = [
           { path: 'detalhe/:id', component: FundosimobiliariosDetalheComponent },
           { path: 'detalhe', component: FundosimobiliariosDetalheComponent },
           { path: 'lista', component: FundosimobiliariosListaComponent }
+        ]
+      },
+      { path: 'acoes', redirectTo: 'acoes/lista' },
+      {
+        path: 'acoes', component: AcoesComponent,
+        children: [
+          { path: 'detalhe/:id', component: AcoesDetalheComponent },
+          { path: 'detalhe', component: AcoesDetalheComponent },
+          { path: 'lista', component: AcoesListaComponent }
         ]
       },
       { path: 'dashboard', component: DashboardComponent },

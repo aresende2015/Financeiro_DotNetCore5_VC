@@ -18,6 +18,7 @@ namespace InvestQ.Application.Interfaces.Ativos
         Task<AtivoDto> GetAtivoByIdsAsync(Guid id, TipoDeAtivoDto tipoDeAtivoDto);
         Task<AtivoDto> GetAtivoByTesouroDiretoIdAsync(Guid tesouroDiretoId);
         Task<AtivoDto> GetAtivoByFundoImobiliarioIdAsync(Guid fundoImobiliarioId);
+        Task<AtivoDto> GetAtivoByAcaoIdAsync(Guid acaoId);
         Task<AtivoDto> GetAtivoByIdAsync(Guid id);
     }
 }

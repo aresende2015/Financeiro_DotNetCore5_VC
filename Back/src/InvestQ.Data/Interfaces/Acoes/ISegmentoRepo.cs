@@ -8,5 +8,6 @@ namespace InvestQ.Data.Interfaces.Acoes
     {
         Task<Segmento[]> GetSegmentosBySubsetorIdAsync(Guid subsetorId);  
         Task<Segmento> GetSegmentoByIdsAsync(Guid subsetorId, Guid segmentoId);
+        Task<Segmento> GetSegmentoByIdAsync(Guid segmentoId);
     }
 }
