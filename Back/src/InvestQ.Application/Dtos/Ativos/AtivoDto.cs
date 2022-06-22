@@ -10,7 +10,7 @@ namespace InvestQ.Application.Dtos.Ativos
     public class AtivoDto
     {
         public Guid Id { get; set; }
-        //public TipoDeAtivo TipoDeAtivo { get; set; }
+        public TipoDeAtivo TipoDeAtivo { get; set; }
         //public IEnumerable<ProventoDto> Proventos { get; set; }
         public Guid? AcaoId {get; set;}
         //public AcaoDto Acao { get; set; }

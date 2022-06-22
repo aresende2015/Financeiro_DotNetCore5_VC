@@ -9,6 +9,7 @@ using InvestQ.Data.Interfaces.FundosImobiliarios;
 using InvestQ.Data.Paginacao;
 using InvestQ.Domain.Entities.Ativos;
 using InvestQ.Domain.Entities.FundosImobiliarios;
+using InvestQ.Domain.Enum;
 
 namespace InvestQ.Application.Services.FundosImobiliarios
 {
@@ -43,6 +44,7 @@ namespace InvestQ.Application.Services.FundosImobiliarios
                     var bytes = new Byte[16];
                     ativoDto.Id = new Guid(bytes);
                     ativoDto.FundoImobiliarioId = fundoImobiliario.Id;
+                    ativoDto.TipoDeAtivo = TipoDeAtivo.FundoImobiliario;
 
                     var ativo = _mapper.Map<Ativo>(ativoDto);
                     

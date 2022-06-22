@@ -8,6 +8,7 @@ using InvestQ.Data.Interfaces.Acoes;
 using InvestQ.Data.Interfaces.Ativos;
 using InvestQ.Domain.Entities.Acoes;
 using InvestQ.Domain.Entities.Ativos;
+using InvestQ.Domain.Enum;
 
 namespace InvestQ.Application.Services.Acoes
 {
@@ -15,23 +16,17 @@ namespace InvestQ.Application.Services.Acoes
     {
         private readonly IAcaoRepo _acaoRepo;
         private readonly IAtivoRepo _ativoRepo;
-        //private readonly ISegmentoRepo _segmentoRepo;
         private readonly ISubsetorRepo _subSetorRepo;
-        //private readonly ISetorRepo _setorRepo;
         private readonly IMapper _mapper;
 
         public AcaoService(IAcaoRepo acaoRepo,
                                      IAtivoRepo ativoRepo,
-                                     //ISegmentoRepo segmentoRepo,
                                      ISubsetorRepo subSetorRepo,
-                                     //ISetorRepo setorRepo,
                                      IMapper mapper)
         {
             _acaoRepo = acaoRepo;
             _ativoRepo = ativoRepo;
-            //_subSetorRepo = segmentoRepo;
             _subSetorRepo = subSetorRepo;
-            //_setorRepo = setorRepo;
             _mapper = mapper;
         }
         public async Task<AcaoDto> AdicionarAcao(AcaoDto model)
@@ -51,6 +46,7 @@ namespace InvestQ.Application.Services.Acoes
                     var bytes = new Byte[16];
                     ativoDto.Id = new Guid(bytes);
                     ativoDto.AcaoId = acao.Id;
+                    ativoDto.TipoDeAtivo = TipoDeAtivo.Acao;
 
                     var ativo = _mapper.Map<Ativo>(ativoDto);
                     

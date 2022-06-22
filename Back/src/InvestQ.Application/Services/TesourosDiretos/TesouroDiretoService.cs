@@ -8,6 +8,7 @@ using InvestQ.Data.Interfaces.TesourosDiretos;
 using InvestQ.Domain.Entities.TesourosDiretos;
 using InvestQ.Data.Interfaces.Ativos;
 using InvestQ.Domain.Entities.Ativos;
+using InvestQ.Domain.Enum;
 
 namespace InvestQ.Application.Services.TesourosDiretos
 {
@@ -42,6 +43,7 @@ namespace InvestQ.Application.Services.TesourosDiretos
                     var bytes = new Byte[16];
                     ativoDto.Id = new Guid(bytes);
                     ativoDto.TesouroDiretoId = tesouroDireto.Id;
+                    ativoDto.TipoDeAtivo = TipoDeAtivo.TesouroDireto;
 
                     var ativo = _mapper.Map<Ativo>(ativoDto);
                     
