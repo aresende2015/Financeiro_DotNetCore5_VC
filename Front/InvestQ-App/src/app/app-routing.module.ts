@@ -39,6 +39,9 @@ import { FundosimobiliariosListaComponent } from './components/fundosimobiliario
 import { AcoesComponent } from './components/acoes/acoes.component';
 import { AcoesDetalheComponent } from './components/acoes/acoes-detalhe/acoes-detalhe.component';
 import { AcoesListaComponent } from './components/acoes/acoes-lista/acoes-lista.component';
+import { ProventosComponent } from './components/proventos/proventos.component';
+import { ProventosDetalheComponent } from './components/proventos/proventos-detalhe/proventos-detalhe.component';
+import { ProventosListaComponent } from './components/proventos/proventos-lista/proventos-lista.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -134,6 +137,15 @@ const routes: Routes = [
           { path: 'detalhe/:id', component: AcoesDetalheComponent },
           { path: 'detalhe', component: AcoesDetalheComponent },
           { path: 'lista', component: AcoesListaComponent }
+        ]
+      },
+      { path: 'proventos', redirectTo: 'proventos/lista' },
+      {
+        path: 'proventos', component: ProventosComponent,
+        children: [
+          { path: 'detalhe/:id', component: ProventosDetalheComponent },
+          { path: 'detalhe', component: ProventosDetalheComponent },
+          { path: 'lista', component: ProventosListaComponent }
         ]
       },
       { path: 'dashboard', component: DashboardComponent },

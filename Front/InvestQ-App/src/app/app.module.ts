@@ -78,6 +78,10 @@ import { AcoesComponent } from './components/acoes/acoes.component';
 import { AcoesListaComponent } from './components/acoes/acoes-lista/acoes-lista.component';
 import { AcoesDetalheComponent } from './components/acoes/acoes-detalhe/acoes-detalhe.component';
 import { AcaoService } from './services/acao.service';
+import { ProventosComponent } from './components/proventos/proventos.component';
+import { ProventosListaComponent } from './components/proventos/proventos-lista/proventos-lista.component';
+import { ProventosDetalheComponent } from './components/proventos/proventos-detalhe/proventos-detalhe.component';
+import { ProventoService } from './services/provento.service';
 
 
 defineLocale('pt-br', ptBrLocale);
@@ -106,6 +110,9 @@ defineLocale('pt-br', ptBrLocale);
     TiposdeinvestimentosComponent,
     TiposdeinvestimentosListaComponent,
     TiposdeinvestimentosDetalheComponent,
+    ProventosComponent,
+    ProventosListaComponent,
+    ProventosDetalheComponent,
     AcoesComponent,
     AcoesListaComponent,
     AcoesDetalheComponent,
@@ -159,6 +166,7 @@ defineLocale('pt-br', ptBrLocale);
     AcaoService,
     TipodeinvestimentoService,
     AdministradordefundoimobiliarioService,
+    ProventoService,
     FundoimobiliarioService,
     SegmentoanbimaService,
     TesourodiretoService,

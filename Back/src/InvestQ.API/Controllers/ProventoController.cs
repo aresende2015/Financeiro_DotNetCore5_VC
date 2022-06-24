@@ -20,6 +20,24 @@ namespace InvestQ.API.Controllers
             _proventoService = proventoService;
         }
 
+        [HttpGet()]
+        public async Task<IActionResult> Get() 
+        {
+            try
+            {
+                 var proventos = await _proventoService.GetAllProventosAsync();
+
+                 if (proventos == null) return NoContent();
+
+                 return Ok(proventos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                            $"Erro ao tentar recuperar todos os Proventos. Erro: {ex.Message}");
+            }
+        }
+
         [HttpGet("{ativoId}")]
         public async Task<IActionResult> Get(Guid ativoId) 
         {

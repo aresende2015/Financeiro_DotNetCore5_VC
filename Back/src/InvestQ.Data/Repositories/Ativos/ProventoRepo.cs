@@ -16,6 +16,19 @@ namespace InvestQ.Data.Repositories.Ativos
         {
             _context = context;
         }
+
+        public async Task<Provento[]> GetAllProventosAsync()
+        {
+            IQueryable<Provento> query = _context.Proventos;
+
+            query = query.Include(p => p.Ativo);
+
+            query = query.AsNoTracking()
+                         .OrderBy(p => p.Id);
+
+            return await query.ToArrayAsync();
+        }
+
         public async Task<Provento[]> GetAllProventosByAtivoIdAsync(Guid ativoId)
         {
             IQueryable<Provento> query = _context.Proventos;

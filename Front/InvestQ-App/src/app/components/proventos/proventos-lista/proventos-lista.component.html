@@ -1,0 +1,50 @@
+<div class="card rounded shadow-sm p-3">
+  <app-filtrar
+    [rotaLink]="'/proventos/detalhe'"
+    (filtroAcionado)="onFiltroAcionado($event)">
+  </app-filtrar>
+
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Data Com</th>
+        <th>Data Ex</th>
+        <th>Valor</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody *ngIf="proventos && proventos.length">
+      <tr *ngFor="let provento of proventosFiltrados" >
+        <td></td>
+        <td>{{provento.dataCom}}</td>
+        <td>{{provento.dataEx}}</td>
+        <td>{{provento.valor}}</td>
+        <td>
+          <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="editarProvento(provento.id)">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn btn-outline-danger btn-sm" tooltip="Excluir" (click)="openModal($event, template, provento.id)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!proventos.length">
+      <tr>
+        <td colspan="8" class="text-center">
+          <h4>Nenhum Provento encontrado!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que quer deletar o Provento de código {{this.proventoId}}?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>
+

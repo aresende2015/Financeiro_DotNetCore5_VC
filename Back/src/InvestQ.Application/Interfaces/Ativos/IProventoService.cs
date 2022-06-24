@@ -13,6 +13,7 @@ namespace InvestQ.Application.Interfaces.Ativos
         Task<bool> InativarProvento(ProventoDto model);
         Task<bool> ReativarProvento(ProventoDto model);
 
+        Task<ProventoDto[]> GetAllProventosAsync();
         Task<ProventoDto[]> GetAllProventosByAtivoIdAsync(Guid ativoId);
         Task<ProventoDto> GetProventoByIdAsync(Guid Id);
     }

@@ -6,6 +6,7 @@ namespace InvestQ.Data.Interfaces.Ativos
 {
     public interface IProventoRepo: IGeralRepo
     {
+        Task<Provento[]> GetAllProventosAsync();
         Task<Provento[]> GetAllProventosByAtivoIdAsync(Guid ativoId);  
         Task<Provento> GetProventoByIdAsync(Guid id);
     }

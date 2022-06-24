@@ -77,15 +77,31 @@ namespace InvestQ.Application.Services.Ativos
             return await _proventoRepo.SalvarMudancasAsync();
         }
 
+        public async Task<ProventoDto[]> GetAllProventosAsync()
+        {
+            try
+            {
+                var proventos = await _proventoRepo.GetAllProventosAsync();
+
+                if (proventos == null) return null;
+
+                return _mapper.Map<ProventoDto[]>(proventos);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<ProventoDto[]> GetAllProventosByAtivoIdAsync(Guid ativoId)
         {
             try
             {
-                var tiposDeAtivos = await _proventoRepo.GetAllProventosByAtivoIdAsync(ativoId);
+                var proventos = await _proventoRepo.GetAllProventosByAtivoIdAsync(ativoId);
 
-                if (tiposDeAtivos == null) return null;
+                if (proventos == null) return null;
 
-                return _mapper.Map<ProventoDto[]>(tiposDeAtivos);
+                return _mapper.Map<ProventoDto[]>(proventos);
             }
             catch (Exception ex)
             {
