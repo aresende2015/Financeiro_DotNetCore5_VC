@@ -4,8 +4,9 @@ import { TesouroDireto } from '@app/models/TesouroDireto';
 
 export class Ativo {
   id: Guid;
+  codigoDoAtivo: string;
   tipoDeAtivo: TipoDeAtivo;
-  //acaoId?: Guid;
+  acaoId?: Guid;
   //acao: Acao;
   fundoImobiliarioId?: Guid;
   //fundoImobiliario: FundoImobiliario;

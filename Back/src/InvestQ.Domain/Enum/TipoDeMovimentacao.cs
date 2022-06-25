@@ -11,8 +11,5 @@ namespace InvestQ.Domain.Enum
         JCP,
         Rendimentos,
         Bonificacao
-
-
-
     }
 }

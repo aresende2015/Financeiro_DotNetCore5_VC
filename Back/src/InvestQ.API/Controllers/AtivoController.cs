@@ -39,7 +39,7 @@ namespace InvestQ.API.Controllers
             }
         }
 
-        [HttpGet("{tipoDeAtivoDto}/tipodeativodto")]
+        [HttpGet("{tipoDeAtivoDto}")]
         public async Task<IActionResult> GetAllAtivosByTipoDeAtivo(TipoDeAtivoDto tipoDeAtivoDto)
         {
             try

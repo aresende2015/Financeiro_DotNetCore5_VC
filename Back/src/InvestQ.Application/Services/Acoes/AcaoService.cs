@@ -47,6 +47,7 @@ namespace InvestQ.Application.Services.Acoes
                     ativoDto.Id = new Guid(bytes);
                     ativoDto.AcaoId = acao.Id;
                     ativoDto.TipoDeAtivo = TipoDeAtivo.Acao;
+                    ativoDto.CodigoDoAtivo = acao.Descricao;
 
                     var ativo = _mapper.Map<Ativo>(ativoDto);
                     

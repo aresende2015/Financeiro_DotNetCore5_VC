@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Ativo } from '@app/models/Ativo';
 import { Provento } from '@app/models/Provento';
+import { AtivoService } from '@app/services/ativo.service';
 import { ProventoService } from '@app/services/provento.service';
 import { Guid } from 'guid-typescript';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { TipoDeAtivo } from '@app/models/Enum/TipoDeAtivo.enum';
 
 @Component({
   selector: 'app-proventos-detalhe',
@@ -16,11 +19,13 @@ export class ProventosDetalheComponent implements OnInit {
 
   public provento = {} as Provento;
   public proventos: Provento[] = [];
+  public ativos: Ativo[] = [];
 
   proventoId: Guid;
   form!: FormGroup;
 
-  jurosSemestraisOp: any[];
+  tipoDeMovimentacaoOp: any[];
+  tipoDeAtivoOp: any[];
 
   estadoSalvar = 'post';
 
@@ -45,33 +50,37 @@ export class ProventosDetalheComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private activatedRouter: ActivatedRoute,
               private proventoService: ProventoService,
-              //private tipodeinvestimentoService: TipodeinvestimentoService,
+              private ativoService: AtivoService,
               private spinner: NgxSpinnerService,
               private router: Router,
               private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.carregarProvento();
-    //this.carregarTiposDeInvestimentos();
     this.validation();
-    //this.jurosSemestraisOp = this.proventoService.getJurosSemestrais();
+    this.tipoDeMovimentacaoOp = this.proventoService.getTipoDeMovimentacao();
+    this.tipoDeAtivoOp = this.proventoService.getTipoDeAtivo();
   }
 
-  // public carregarProventos(): void {
-  //   const observer = {
-  //     next: (_proventos: Provento[]) => {
-  //       this.proventos = _proventos;
-  //     },
-  //     error: (error: any) => {
-  //       this.spinner.hide();
-  //       console.error(error);
-  //       this.toastr.error('Erro ao carregar a tela...', 'Error"');
-  //     },
-  //     complete: () => {this.spinner.hide()}
-  //   }
+  tipoDeAtivoSelecionado(evento) {
+    this.carregarAtivos(evento.target.value);
+  }
 
-  //   this.tipodeinvestimentoService.getAllTiposDeInvestimentos().subscribe(observer);
-  // }
+  public carregarAtivos(tipoDeAtivo: TipoDeAtivo): void {
+    const observer = {
+      next: (_ativos: Ativo[]) => {
+        this.ativos = _ativos;
+      },
+      error: (error: any) => {
+        this.spinner.hide();
+        console.error(error);
+        this.toastr.error('Erro ao carregar a tela...', 'Error"');
+      },
+      complete: () => {this.spinner.hide()}
+    }
+
+    this.ativoService.getAllAtivosByTipoDeAtivo(tipoDeAtivo).subscribe(observer);
+  }
 
   public carregarProvento(): void {
 
@@ -88,6 +97,8 @@ export class ProventosDetalheComponent implements OnInit {
         this.proventoService.getProventosById(this.proventoId).subscribe({
           next: (_provento: Provento) => {
             this.provento = {..._provento};
+            this.provento.tipoDeAtivo = this.provento.ativo.tipoDeAtivo;
+            this.carregarAtivos(this.provento.tipoDeAtivo);
             this.form.patchValue(this.provento);
           },
           error: (error: any) => {
@@ -101,14 +112,15 @@ export class ProventosDetalheComponent implements OnInit {
     }
   }
 
+
   public validation(): void {
     this.form = this.fb.group({
       dataCom: ['', Validators.required],
       dataEx: ['', Validators.required],
-      valor: ['', [Validators.required]]
-      //jurosSemestrais: [false, [Validators.required]],
-      //tipoDeInvestimentoId: [null, [Validators.required]],
-      //dataDeVencimento: ['', Validators.required]
+      valor: ['', [Validators.required]],
+      tipoDeMovimentacao: [false, [Validators.required]],
+      tipoDeAtivo: [false, [Validators.required]],
+      ativoId: [null, [Validators.required]]
     });
   }
 

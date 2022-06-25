@@ -1,5 +1,7 @@
 import { Guid } from "guid-typescript";
 import { Ativo } from "./Ativo";
+import { TipoDeMovimentacao } from "./Enum/TipoDeMovimentacao.enum";
+import { TipoDeAtivo } from '@app/models/Enum/TipoDeAtivo.enum';
 
 export class Provento {
   id: Guid;
@@ -8,5 +10,6 @@ export class Provento {
   valor: number;
   ativoId: Guid;
   ativo: Ativo;
-  //tipoDeMovimento: TipoDeMovimento;
+  tipoDeAtivo: TipoDeAtivo;
+  tipoDeMovimentacao: TipoDeMovimentacao;
 }

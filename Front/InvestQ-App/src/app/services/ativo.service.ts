@@ -15,6 +15,7 @@ export class AtivoService {
   constructor(private http: HttpClient) { }
 
   public getAllAtivosByTipoDeAtivo(tipoDeAtivo: TipoDeAtivo): Observable<Ativo[]> {
+    //alert(tipoDeAtivo.valueOf());
     return this
             .http
             .get<Ativo[]>(`${this.baseURL}/${tipoDeAtivo}`)

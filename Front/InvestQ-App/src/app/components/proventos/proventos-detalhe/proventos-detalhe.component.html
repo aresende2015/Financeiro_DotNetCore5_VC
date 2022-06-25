@@ -48,6 +48,35 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.tipoDeMovimentacao)">
+          <label class="control-label">Tipo de Movimentacao</label>
+          <select class="form-control" id="tipoDeMovimentacao" formControlName="tipoDeMovimentacao">
+            <option *ngFor="let item of tipoDeMovimentacaoOp" [value]="item.valor">{{ item.desc }}</option>
+          </select>
+          <div *ngIf="f.tipoDeMovimentacao.errors?.required" class="invalid-feedback">
+            Tipo de Movimentação é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.tipoDeAtivo)">
+          <label class="control-label">Tipo de Ativo</label>
+          <select class="form-control" id="tipoDeAtivo" formControlName="tipoDeAtivo" (change)="tipoDeAtivoSelecionado($event)">
+            <option *ngFor="let item of tipoDeAtivoOp" [value]="item.valor">{{ item.desc }}</option>
+          </select>
+          <div *ngIf="f.tipoDeAtivo.errors?.required" class="invalid-feedback">
+            Tipo de Movimentação é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.ativoId)">
+          <label class="control-label">Ativo</label>
+          <select class="form-control" id="ativoId" formControlName="ativoId">
+            <option *ngFor="let ativo of ativos" [value]="ativo.id">{{ ativo.codigoDoAtivo }}</option>
+          </select>
+          <div *ngIf="f.ativoId.errors?.required" class="invalid-feedback">
+            Ativo é obrigatório.
+          </div>
+        </div>
+      </div>
     </div>
     <app-salvar
         [botaoSalvar]="'Provento'"

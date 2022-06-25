@@ -41,6 +41,7 @@ namespace InvestQ.Domain.Entities.Ativos
         public TipoDeAtivo TipoDeAtivo { get; set; }
         public IEnumerable<Provento> Proventos { get; set; }
         public Guid? AcaoId {get; set;}
+        public string CodigoDoAtivo {get; set;}
         public Acao Acao { get; set; }
         public Guid? FundoImobiliarioId {get; set;}
         public FundoImobiliario FundoImobiliario { get; set; }

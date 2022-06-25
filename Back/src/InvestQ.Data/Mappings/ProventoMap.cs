@@ -11,7 +11,7 @@ namespace InvestQ.Data.Mappings
             builder.ToTable("Proventos");
 
             builder.Property(p => p.Valor)
-                   .HasColumnType("decimal(7,2)")
+                   .HasColumnType("decimal(20,8)")
                    .IsRequired();
             
         }

@@ -45,6 +45,7 @@ namespace InvestQ.Application.Services.FundosImobiliarios
                     ativoDto.Id = new Guid(bytes);
                     ativoDto.FundoImobiliarioId = fundoImobiliario.Id;
                     ativoDto.TipoDeAtivo = TipoDeAtivo.FundoImobiliario;
+                    ativoDto.CodigoDoAtivo = fundoImobiliario.Descricao;
 
                     var ativo = _mapper.Map<Ativo>(ativoDto);
                     

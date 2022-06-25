@@ -44,6 +44,7 @@ namespace InvestQ.Application.Services.TesourosDiretos
                     ativoDto.Id = new Guid(bytes);
                     ativoDto.TesouroDiretoId = tesouroDireto.Id;
                     ativoDto.TipoDeAtivo = TipoDeAtivo.TesouroDireto;
+                    ativoDto.CodigoDoAtivo =  tesouroDireto.Descricao;
 
                     var ativo = _mapper.Map<Ativo>(ativoDto);
                     

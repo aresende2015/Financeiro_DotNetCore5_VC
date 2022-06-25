@@ -38,7 +38,7 @@ namespace InvestQ.API.Controllers
             }
         }
 
-        [HttpGet("{ativoId}")]
+        [HttpGet("ativoid/{ativoId}")]
         public async Task<IActionResult> Get(Guid ativoId) 
         {
             try

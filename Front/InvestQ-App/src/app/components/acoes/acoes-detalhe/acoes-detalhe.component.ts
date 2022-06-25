@@ -69,12 +69,12 @@ export class AcoesDetalheComponent implements OnInit {
   }
 
   setorSelecionado(evento) {
-    alert("setor");
+    //alert("setor");
     this.carregarSubSetores(evento.target.value);
   }
 
   subSetorSelecionado(evento) {
-    alert("subsetor");
+    //alert("subsetor");
 
     this.carregarSegmentos(evento.target.value);
   }
