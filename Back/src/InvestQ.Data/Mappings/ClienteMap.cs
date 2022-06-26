@@ -25,6 +25,10 @@ namespace InvestQ.Data.Mappings
             builder.Property(c => c.Email)
                 .IsRequired()
                 .HasMaxLength(250);
+
+            builder.HasMany(c => c.Carteiras)
+                    .WithOne(cl => cl.Cliente)
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -29,9 +29,13 @@
             <i class="fa fa-edit"></i>
             Editar
           </button>
-          <button class="btn btn-outline-danger btn-sm" tooltip="Excluir"  (click)="openModal($event, template, cliente.id)">
+          <button class="btn btn-outline-danger btn-sm me-md-2" tooltip="Excluir"  (click)="openModal($event, template, cliente.id)">
             <i class="fa fa-trash"></i>
             Excluir
+          </button>
+          <button class="btn btn-outline-primary btn-sm" tooltip="Carteira"  (click)="detalheCliente(cliente.id)">
+            <i class="fa fa-id-badge"></i>
+            Carteira
           </button>
         </td>
       </tr>

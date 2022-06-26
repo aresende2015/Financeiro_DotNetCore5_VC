@@ -44,6 +44,7 @@ namespace InvestQ.Data.Context
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new ClienteMap());
+            builder.ApplyConfiguration(new CorretoraMap());
             builder.ApplyConfiguration(new CarteiraMap());
             builder.ApplyConfiguration(new SetorMap());
             builder.ApplyConfiguration(new SubsetorMap());

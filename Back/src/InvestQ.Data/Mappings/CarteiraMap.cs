@@ -8,17 +8,14 @@ namespace InvestQ.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<Carteira> builder)
         {
-            builder.HasKey(c => new {c.ClienteId, c.CorretoraId});
+            builder.Property(c => c.Descricao)
+                    .IsRequired()
+                    .HasMaxLength(100);
 
-            builder.HasOne(c => c.Cliente)
-                    .WithMany(cl => cl.Carteiras)
-                    .HasForeignKey(c => c.ClienteId)
-                    .IsRequired();
+            builder.Property(c => c.Saldo)
+                   .HasColumnType("decimal(20,2)")
+                   .IsRequired();
 
-            builder.HasOne(c => c.Corretora)
-                    .WithMany(co => co.Carteiras)
-                    .HasForeignKey(c => c.CorretoraId)
-                    .IsRequired();
         }
     }
 }

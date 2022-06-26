@@ -107,6 +107,7 @@ namespace InvestQ.API
 
             services.AddScoped<IClienteRepo, ClienteRepo>();
             services.AddScoped<ICorretoraRepo, CorretoraRepo>();
+            services.AddScoped<ICarteiraRepo, CarteiraRepo>();
             services.AddScoped<ISetorRepo, SetorRepo>();
             services.AddScoped<ISubsetorRepo, SubsetorRepo>();
             services.AddScoped<ISegmentoRepo, SegmentoRepo>();
@@ -124,6 +125,7 @@ namespace InvestQ.API
 
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<ICorretoraService, CorretoraService>();
+            services.AddScoped<ICarteiraService, CarteiraService>();
             services.AddScoped<ISetorService, SetorService>();
             services.AddScoped<ISubsetorService, SubsetorService>();
             services.AddScoped<ISegmentoService, SegmentoService>();
