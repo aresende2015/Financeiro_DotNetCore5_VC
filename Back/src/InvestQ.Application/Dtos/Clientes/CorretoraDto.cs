@@ -19,6 +19,6 @@ namespace InvestQ.Application.Dtos.Clientes
         //[Required(ErrorMessage = "O campo {0} é obrigatório")]
         //[RegularExpression(@".*\.(gif|jpe?g|bmp|png|jfif)$",  ErrorMessage = "Não é uma imagem válida. (gif, jpg, jpeg, jfif, bmp ou png")]
         public string Imagen { get; set; }
-        public IEnumerable<ClienteCorretoraDto> ClientesCorretoras { get; set; }
+        public IEnumerable<CarteiraDto> Carteiras { get; set; }
     }
 }

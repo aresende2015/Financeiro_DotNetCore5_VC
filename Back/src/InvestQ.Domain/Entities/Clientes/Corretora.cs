@@ -33,6 +33,6 @@ namespace InvestQ.Domain.Entities.Clientes
         }
         public string Descricao { get; set; }
         public string Imagen { get; set; }
-        public IEnumerable<ClienteCorretora> ClientesCorretoras { get; set; }
+        public IEnumerable<Carteira> Carteiras { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 import { Guid } from "guid-typescript";
-import { Corretora } from "./Corretora";
+import { Carteira } from "./Carteira";
 
 export interface Cliente {
   id: Guid;
@@ -10,5 +10,5 @@ export interface Cliente {
   email: string;
   idade: number;
   dataDeNascimento: Date;
-  clientesCorretoras: Corretora[];
+  carteria: Carteira[];
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace InvestQ.Application.Dtos.Clientes
 {
-    public class ClienteCorretoraDto
+    public class CarteiraDto
     {
         public Guid ClienteId { get; set; }
         public ClienteDto Cliente { get; set; }

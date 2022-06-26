@@ -4,6 +4,7 @@ import { map, Observable, ReplaySubject, take } from 'rxjs';
 import { environment } from '@environments/environment';
 import { User } from '@app/models/identity/User';
 import { UserUpdate } from '@app/models/identity/UserUpdate';
+import { TipoDeUsuario } from '@app/models/Enum/TipoDeUsuario.enum';
 
 @Injectable()
 export class UserService {
@@ -63,6 +64,14 @@ export class UserService {
         }
       })
     );
+  }
+
+  getTipoDeUsuario() {
+    return [
+      {valor: TipoDeUsuario.NaoInformada, desc: 'NaoInformada' },
+      {valor: TipoDeUsuario.Administrador, desc: 'Administrador' },
+      {valor: TipoDeUsuario.Usuario, desc: 'Usuario' }
+    ];
   }
 
 }

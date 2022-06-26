@@ -24,7 +24,7 @@ namespace InvestQ.Data.Repositories.Clientes
             IQueryable<Cliente> query = _context.Clientes;
 
             if (includeCorretora)
-                query = query.Include(c => c.ClientesCorretoras)
+                query = query.Include(c => c.Carteiras)
                              .ThenInclude(cc => cc.Corretora);
 
             query = query.AsNoTracking()
@@ -41,12 +41,12 @@ namespace InvestQ.Data.Repositories.Clientes
             IQueryable<Cliente> query = _context.Clientes;
 
             if (includeCorretora)
-                query = query.Include(c => c.ClientesCorretoras)
+                query = query.Include(c => c.Carteiras)
                              .ThenInclude(cc => cc.Corretora);
 
             query = query.AsNoTracking()
                          .OrderBy(c => c.Id)
-                         .Where(c => c.ClientesCorretoras.Any(cc =>cc.CorretoraId == corretoraId) && c.UserId == userId);
+                         .Where(c => c.Carteiras.Any(cc =>cc.CorretoraId == corretoraId) && c.UserId == userId);
 
             return await PageList<Cliente>.CreateAsync(query, pageParams.PageNumber, pageParams.pageSize);
         }
@@ -67,7 +67,7 @@ namespace InvestQ.Data.Repositories.Clientes
             IQueryable<Cliente> query = _context.Clientes;
 
             if (includeCorretora)
-                query = query.Include(c => c.ClientesCorretoras)
+                query = query.Include(c => c.Carteiras)
                              .ThenInclude(cc => cc.Corretora);
 
             query = query.AsNoTracking()

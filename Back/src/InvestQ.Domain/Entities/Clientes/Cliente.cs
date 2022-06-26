@@ -45,6 +45,6 @@ namespace InvestQ.Domain.Entities.Clientes
         public DateTime DataDeNascimento { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-        public IEnumerable<ClienteCorretora> ClientesCorretoras { get; set; }
+        public IEnumerable<Carteira> Carteiras { get; set; }
     }
 }

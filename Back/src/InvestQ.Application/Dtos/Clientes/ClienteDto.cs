@@ -30,6 +30,6 @@ namespace InvestQ.Application.Dtos.Clientes
         public string DataDeNascimento { get; set; }
         public int UserId { get; set; }
         public UserDto UserDto { get; set; }
-        public IEnumerable<ClienteCorretoraDto> ClientesCorretoras { get; set; }
+        public IEnumerable<CarteiraDto> Carteiras { get; set; }
     }
 }

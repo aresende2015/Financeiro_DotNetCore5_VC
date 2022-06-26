@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ValidatorField } from '@app/helpers/ValidatorField';
+import { TipoDeUsuario } from '@app/models/Enum/TipoDeUsuario.enum';
 import { User } from '@app/models/identity/User';
 import { UserService } from '@app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
@@ -40,6 +41,7 @@ export class RegistrationComponent implements OnInit {
       primeiroNome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       ultimoNome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email]],
+      funcao: [''],
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
       confirmarPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]]
@@ -48,6 +50,7 @@ export class RegistrationComponent implements OnInit {
 
   public register(): void {
     this.user = { ...this.form.value};
+    this.user.funcao = TipoDeUsuario.Usuario;
     this.userService.register(this.user).subscribe(
       () => this.router.navigateByUrl('/dashboard'),
       (error: any) => this.toaster.error(error.error)

@@ -111,16 +111,10 @@
               O telefone é obrigatório.
             </div>
           </div>
-          <div class="form-group col-sm">
+          <div class="form-group col-sm" [ngClass]="cssValidator(f.funcao)">
             <label>Função</label>
-            <select class="form-control"
-                    [ngClass]="cssValidator(f.funcao)"
-                    formControlName="funcao"
-                    placeholder=""
-            >
-              <option value="NaoInformado">Não Informado</option>
-              <option value="Administrador">Administrador</option>
-              <option value="Usuario">Usuário</option>
+            <select class="form-control" id="funcao" formControlName="funcao">
+              <option *ngFor="let item of tipoDeUsuarioOp" [value]="item.valor">{{ item.desc }}</option>
             </select>
             <div *ngIf="f.funcao.errors && f.funcao.touched" class="invalid-feedback">
               <div *ngIf="f.funcao.errors.required">A Função é obrigatória</div>

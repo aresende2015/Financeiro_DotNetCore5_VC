@@ -26,7 +26,7 @@ namespace InvestQ.Data.Context
 
         public DbSet<Corretora> Corretoras { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<ClienteCorretora> ClientesCorretoras { get; set; }
+        public DbSet<Carteira> Carteiras { get; set; }
         public DbSet<Setor> Setores { get; set; }
         public DbSet<Subsetor> Subsetores { get; set; }
         public DbSet<Segmento> Segmentos { get; set; }
@@ -44,7 +44,7 @@ namespace InvestQ.Data.Context
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new ClienteMap());
-            builder.ApplyConfiguration(new ClienteCorretoraMap());
+            builder.ApplyConfiguration(new CarteiraMap());
             builder.ApplyConfiguration(new SetorMap());
             builder.ApplyConfiguration(new SubsetorMap());
             builder.ApplyConfiguration(new SegmentoMap());

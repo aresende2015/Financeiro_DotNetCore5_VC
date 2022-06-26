@@ -1,6 +1,6 @@
 namespace InvestQ.Domain.Enum
 {
-    public enum Funcao
+    public enum TipoDeUsuario
     {
         NaoInformado,
         Administrador,

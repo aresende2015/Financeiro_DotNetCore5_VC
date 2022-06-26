@@ -14,7 +14,7 @@ namespace InvestQ.Domain.Identity
         //public string NomeCompleto { get() {}  }
         public string Descricao { get; set; }
         public string ImagemURL { get; set; }
-        public Funcao Funcao { get; set; }
+        public TipoDeUsuario Funcao { get; set; }
         public IEnumerable<UserRole> UserRoles { get; set; }
     }
 }

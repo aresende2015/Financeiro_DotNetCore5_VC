@@ -16,6 +16,8 @@ export class PerfilComponent implements OnInit {
 
   userUpdate = {} as UserUpdate;
 
+  tipoDeUsuarioOp: any[];
+
   form!: FormGroup;
 
   get f(): any {
@@ -33,6 +35,7 @@ export class PerfilComponent implements OnInit {
   ngOnInit(): void {
     this.validation();
     this.carregarUsuario();
+    this.tipoDeUsuarioOp = this.userService.getTipoDeUsuario();
   }
 
   public validation(): void {
@@ -46,7 +49,7 @@ export class PerfilComponent implements OnInit {
       ultimoNome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required]],
-      funcao: ['NaoInformado', Validators.required],
+      funcao: [{value:'', disabled: true}, Validators.required],
       password: ['', [Validators.nullValidator, Validators.minLength(8), Validators.maxLength(20)]],
       confirmarPassword: ['', [Validators.nullValidator]]
     }, formOptions);
