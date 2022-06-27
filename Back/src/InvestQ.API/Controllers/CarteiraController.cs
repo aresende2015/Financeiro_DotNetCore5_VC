@@ -43,6 +43,24 @@ namespace InvestQ.API.Controllers
             }
         }
 
+        [HttpGet("cliente/{clienteId}")]
+        public async Task<IActionResult> Get(Guid clienteId) 
+        {
+            try
+            {
+                 var carteira = await _carteiraService.GetAllCarteirasByClienteIdAsync(clienteId, true, true);
+
+                 if (carteira == null) return NoContent();
+
+                 return Ok(carteira);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                            $"Erro ao tentar recuperar todos os Carteira. Erro: {ex.Message}");
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCorretoraById(Guid id)
         {

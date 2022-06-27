@@ -130,4 +130,8 @@ export class ClienteListaComponent implements OnInit {
     this.carregarClientes();
   }
 
+  public listarCarteiras(id: Guid): void {
+    this.router.navigate([`clientes/listarcarteiras/${id}`])
+  }
+
 }

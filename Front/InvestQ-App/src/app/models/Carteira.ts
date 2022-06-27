@@ -4,7 +4,7 @@ import { Guid } from 'guid-typescript';
 
 export interface Carteira {
   id: Guid;
-  Descricao: string;
+  descricao: string;
   saldo: number;
   dataDeAtualizadoDoSaldo: Date;
   clienteId: Guid;

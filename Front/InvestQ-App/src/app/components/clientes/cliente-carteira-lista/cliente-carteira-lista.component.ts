@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Carteira } from '@app/models/Carteira';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { CarteiraService } from '@app/services/carteira.service';
+import { Guid } from 'guid-typescript';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cliente-carteira-lista',
@@ -12,11 +17,13 @@ export class ClienteCarteiraListaComponent implements OnInit {
   modalRef?: BsModalRef;
 
   public carteiras: Carteira[] = [];
-  public subsetoresFiltrados: Subsetor[] = [];
-  public subsetorId = Guid.createEmpty();
+  public carteirasFiltrados: Carteira[] = [];
+  public carteiraId = Guid.createEmpty();
 
-  setorId: Guid;
-  setorDescricao: string;
+  clienteId: Guid;
+  corretoraId: Guid;
+
+  clienteNomeCompleto: string;
 
   private _filtroLista: string = '';
 
@@ -26,24 +33,24 @@ export class ClienteCarteiraListaComponent implements OnInit {
 
   public set filtroLista(value: string) {
     this._filtroLista = value;
-    this.subsetoresFiltrados = this.filtroLista
-                              ? this.filtrarSubsetores(this.filtroLista)
-                              : this.subsetores;
+    this.carteirasFiltrados = this.filtroLista
+                              ? this.filtrarCarteiras(this.filtroLista)
+                              : this.carteiras;
   }
 
   public onFiltroAcionado(evento: any) {
     this.filtroLista = evento.filtro;
   }
 
-  filtrarSubsetores(filtrarPor: string): Subsetor[] {
+  filtrarCarteiras(filtrarPor: string): Carteira[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
-    return this.subsetores.filter(
-      (subsetor: {descricao: string}) =>
-          subsetor.descricao.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+    return this.carteiras.filter(
+      (carteira: {descricao: string}) =>
+        carteira.descricao.toLocaleLowerCase().indexOf(filtrarPor) !== -1
     )
   }
 
-  constructor(private subsetorService: SubsetorService,
+  constructor(private carteiraService: CarteiraService,
               private spinner: NgxSpinnerService,
               private modalService: BsModalService,
               private toastr: ToastrService,
@@ -53,25 +60,25 @@ export class ClienteCarteiraListaComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
 
-    this.carregarSubsetores();
+    this.carregarCarteiras();
   }
 
-  public carregarSubsetores(): void {
+  public carregarCarteiras(): void {
 
     if (this.activatedRouter.snapshot.paramMap.get('id') === null)
-      this.setorId = Guid.createEmpty();
+      this.clienteId = Guid.createEmpty();
     else {
 
-      this.setorId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
+      this.clienteId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
       //this.setorId = +this.activatedRouter.snapshot.paramMap.get('id')!;
 
       const observer = {
-        next: (_subsetores: Subsetor[]) => {
-          this.subsetores = _subsetores;
-          this.subsetoresFiltrados = this.subsetores;
+        next: (_carteiras: Carteira[]) => {
+          this.carteiras = _carteiras;
+          this.carteirasFiltrados = this.carteiras;
 
-          if (this.subsetores !== null && this.subsetores.length > 0) {
-            this.setorDescricao = this.subsetores.find(s => s.setorId == this.setorId).setor.descricao;
+          if (this.carteiras !== null && this.carteiras.length > 0) {
+            this.clienteNomeCompleto = this.carteiras.find(c => c.clienteId == this.clienteId).cliente.nomeCompleto;
           }
 
         },
@@ -81,14 +88,14 @@ export class ClienteCarteiraListaComponent implements OnInit {
         complete: () => {}
       }
 
-      this.subsetorService.getSubsetoresBySetorId(this.setorId).subscribe(observer).add(() => {this.spinner.hide()});
+      this.carteiraService.getCarteirasByClienteId(this.clienteId).subscribe(observer).add(() => {this.spinner.hide()});
 
     }
   }
 
-  openModal(event: any, template: TemplateRef<any>, subsetorId: Guid): void {
+  openModal(event: any, template: TemplateRef<any>, carteiraId: Guid): void {
     event.stopPropagation();
-    this.subsetorId = subsetorId;
+    this.carteiraId = carteiraId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
@@ -96,17 +103,17 @@ export class ClienteCarteiraListaComponent implements OnInit {
     this.modalRef?.hide();
     this.spinner.show();
 
-    this.subsetorService.deleteSubsetor(this.setorId, this.subsetorId).subscribe(
+    this.carteiraService.deleteCarteira(this.carteiraId).subscribe(
       (result: any) => {
         if (result.message === 'Deletado') {
           this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
           //this.spinner.hide();
-          this.carregarSubsetores();
+          this.carregarCarteiras();
         }
       },
       (error: any) => {
         console.error(error);
-        this.toastr.error(`Erro ao tentar deletar o subsetor ${this.subsetorId}`, 'Erro');
+        this.toastr.error(`Erro ao tentar deletar a carteira ${this.carteiraId}`, 'Erro');
         //this.spinner.hide();
       },
       //() => {this.spinner.hide();}
@@ -119,12 +126,8 @@ export class ClienteCarteiraListaComponent implements OnInit {
     this.modalRef?.hide();
   }
 
-  public editarSubsetor(id: Guid): void {
-    this.router.navigate([`setores/subsetordetalhe/${id}`])
-  }
-
-  public listarSegmentos(id: Guid): void {
-    this.router.navigate([`setores/listarsegmentos/${id}`])
+  public editarCarteira(id: Guid): void {
+    this.router.navigate([`carteiras/carteiradetalhe/${id}`])
   }
 
 }

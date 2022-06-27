@@ -42,6 +42,8 @@ import { AcoesListaComponent } from './components/acoes/acoes-lista/acoes-lista.
 import { ProventosComponent } from './components/proventos/proventos.component';
 import { ProventosDetalheComponent } from './components/proventos/proventos-detalhe/proventos-detalhe.component';
 import { ProventosListaComponent } from './components/proventos/proventos-lista/proventos-lista.component';
+import { ClienteCarteiraDetalheComponent } from './components/clientes/cliente-carteira-detalhe/cliente-carteira-detalhe.component';
+import { ClienteCarteiraListaComponent } from './components/clientes/cliente-carteira-lista/cliente-carteira-lista.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -68,6 +70,8 @@ const routes: Routes = [
         path: 'clientes', component: ClientesComponent,
         children: [
           { path: 'detalhe/:id', component: ClienteDetalheComponent },
+          { path: 'carteiradetalhe/:id', component: ClienteCarteiraDetalheComponent },
+          { path: 'listarcarteiras/:id', component: ClienteCarteiraListaComponent },
           { path: 'detalhe', component: ClienteDetalheComponent },
           { path: 'lista', component: ClienteListaComponent }
         ]

@@ -82,6 +82,9 @@ import { ProventosComponent } from './components/proventos/proventos.component';
 import { ProventosListaComponent } from './components/proventos/proventos-lista/proventos-lista.component';
 import { ProventosDetalheComponent } from './components/proventos/proventos-detalhe/proventos-detalhe.component';
 import { ProventoService } from './services/provento.service';
+import { CarteiraService } from './services/carteira.service';
+import { ClienteCarteiraListaComponent } from './components/clientes/cliente-carteira-lista/cliente-carteira-lista.component';
+import { ClienteCarteiraDetalheComponent } from './components/clientes/cliente-carteira-detalhe/cliente-carteira-detalhe.component';
 
 
 defineLocale('pt-br', ptBrLocale);
@@ -97,6 +100,8 @@ defineLocale('pt-br', ptBrLocale);
     ClientesComponent,
     ClienteDetalheComponent,
     ClienteListaComponent,
+    ClienteCarteiraListaComponent,
+    ClienteCarteiraDetalheComponent,
     CorretorasComponent,
     CorretoraDetalheComponent,
     SetoresComponent,
@@ -160,6 +165,7 @@ defineLocale('pt-br', ptBrLocale);
   providers: [
     CorretoraService,
     ClienteService,
+    CarteiraService,
     SetorService,
     SubsetorService,
     SegmentoService,
