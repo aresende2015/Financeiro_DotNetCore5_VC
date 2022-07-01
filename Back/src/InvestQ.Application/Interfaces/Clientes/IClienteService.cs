@@ -14,6 +14,7 @@ namespace InvestQ.Application.Interfaces.Clientes
         Task<bool> InativarCliente(int userId, ClienteDto model);
         Task<bool> ReativarCliente(int userId, ClienteDto model);
 
+        Task<ClienteDto[]> GetAllClientesUserAsync(int userId, bool includeCarteira);
         Task<PageList<ClienteDto>> GetAllClientesAsync(int userId, PageParams pageParams, bool includeCorretora);
         Task<ClienteDto> GetClienteByIdAsync(int userId, Guid clienteId, bool includeCorretora);
         Task<PageList<ClienteDto>> GetAllClientesByCorretoraAsync(int userId, PageParams pageParams, Guid corretoraId, bool includeCorretora);

@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,11 +14,15 @@ import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
+import { NgxCurrencyModule } from 'ngx-currency';
 
 import { AppRoutingModule } from './app-routing.module';
 
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
+import { CnpjFormatPipe } from './helpers/CnpjFormat.pipe';
+
+import ptBr from '@angular/common/locales/pt'
+import { registerLocaleData } from '@angular/common';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
@@ -86,8 +90,8 @@ import { CarteiraService } from './services/carteira.service';
 import { ClienteCarteiraListaComponent } from './components/clientes/cliente-carteira-lista/cliente-carteira-lista.component';
 import { ClienteCarteiraDetalheComponent } from './components/clientes/cliente-carteira-detalhe/cliente-carteira-detalhe.component';
 
-
 defineLocale('pt-br', ptBrLocale);
+registerLocaleData(ptBr);
 @NgModule({
   declarations: [
     AppComponent,
@@ -132,6 +136,7 @@ defineLocale('pt-br', ptBrLocale);
     DashboardComponent,
     NavComponent,
     DateTimeFormatPipe,
+    CnpjFormatPipe,
     TituloComponent,
     SalvarComponent,
     FiltrarComponent,
@@ -143,6 +148,7 @@ defineLocale('pt-br', ptBrLocale);
   imports: [
     BrowserModule,
     FormsModule,
+    NgxCurrencyModule,
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
@@ -178,7 +184,9 @@ defineLocale('pt-br', ptBrLocale);
     TesourodiretoService,
     AtivoService,
     UserService,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'pt' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
   ],
   bootstrap: [AppComponent]
 })

@@ -40,12 +40,11 @@ export class ClienteService {
       );
   }
 
-  // sem paginação
-  // public getAllClientes(): Observable<Cliente[]> {
-  //   return this.http
-  //     .get<Cliente[]>(this.baseURL )
-  //     .pipe(take(1));
-  // }
+  public getAllClientesUser(usuarioLogado: string): Observable<Cliente[]> {
+    return this.http
+      .get<Cliente[]>(`${this.baseURL}/usuariologado/${usuarioLogado}`)
+      .pipe(take(1));
+  }
 
   public getClienteById(id: Guid): Observable<Cliente> {
     return this.http

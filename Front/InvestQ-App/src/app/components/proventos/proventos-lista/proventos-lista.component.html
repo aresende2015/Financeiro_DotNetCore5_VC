@@ -19,7 +19,7 @@
         <td></td>
         <td>{{provento.dataCom}}</td>
         <td>{{provento.dataEx}}</td>
-        <td>{{provento.valor}}</td>
+        <td>{{provento.valor | currency:'BRL':'symbol':'1.2-8'}}</td>
         <td>
           <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="editarProvento(provento.id)">
             <i class="fas fa-edit"></i>

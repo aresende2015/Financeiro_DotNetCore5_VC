@@ -46,6 +46,24 @@ namespace InvestQ.API.Controllers
             }
         }
 
+        [HttpGet("usuariologado/{usuariologado}")]
+        public async Task<IActionResult> Get(string usuarioLogado) 
+        {
+            try
+            {
+                 var clientes = await _clienteService.GetAllClientesUserAsync(User.GetUserId(), true);
+
+                 if (clientes == null) return NoContent();
+
+                 return Ok(clientes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                            $"Erro ao tentar recuperar todos os cliente do usuário logado. Erro: {ex.Message}");
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

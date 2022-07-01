@@ -145,6 +145,22 @@ namespace InvestQ.Application.Services.Clientes
             }
         }
 
+        public async Task<ClienteDto[]> GetAllClientesUserAsync(int userId, bool includeCarteira)
+        {
+            try
+            {
+                var clientes = await _clienteRepo.GetAllClientesUserAsync(userId, includeCarteira);
+
+                if (clientes == null) return null;
+
+                return _mapper.Map<ClienteDto[]>(clientes)     ;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<ClienteDto> GetClienteByIdAsync(int userId, Guid clienteId, bool includeCorretora = false)
         {
             try

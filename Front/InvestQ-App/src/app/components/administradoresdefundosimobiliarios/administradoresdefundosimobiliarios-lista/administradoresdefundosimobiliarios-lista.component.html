@@ -6,7 +6,6 @@
   <table class="table table-striped">
     <thead class="table-dark">
       <tr>
-        <th>#</th>
         <th>CNPJ</th>
         <th>Razão Social</th>
         <th></th>
@@ -14,8 +13,7 @@
     </thead>
     <tbody *ngIf="administradoresDeFundosDeInvestimentos && administradoresDeFundosDeInvestimentos.length">
       <tr *ngFor="let administradorDeFundoImobiliario of administradoresDeFundosDeInvestimentosFiltrados" >
-        <td>{{administradorDeFundoImobiliario.id}}</td>
-        <td>{{administradorDeFundoImobiliario.cnpj}}</td>
+        <td>{{administradorDeFundoImobiliario.cnpj | CnpjFormat}}</td>
         <td>{{administradorDeFundoImobiliario.razaoSocial | uppercase}}</td>
         <td>
           <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="editarAdministradorDeFundoImobiliario(administradorDeFundoImobiliario.id)">

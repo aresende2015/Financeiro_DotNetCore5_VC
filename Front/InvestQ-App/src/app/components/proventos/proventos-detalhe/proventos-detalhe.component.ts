@@ -9,6 +9,7 @@ import { Guid } from 'guid-typescript';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { TipoDeAtivo } from '@app/models/Enum/TipoDeAtivo.enum';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-proventos-detalhe',
@@ -49,11 +50,15 @@ export class ProventosDetalheComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private activatedRouter: ActivatedRoute,
+              private localeService: BsLocaleService,
               private proventoService: ProventoService,
               private ativoService: AtivoService,
               private spinner: NgxSpinnerService,
               private router: Router,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService)
+  {
+    this.localeService.use('pt-br');
+  }
 
   ngOnInit(): void {
     this.carregarProvento();

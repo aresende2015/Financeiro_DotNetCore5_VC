@@ -119,7 +119,6 @@ export class SetorListaComponent implements OnInit {
   }
 
   public listarSubsetores(id: Guid): void {
-    alert('alex');
     this.router.navigate([`setores/listarsubsetores/${id}`])
   }
 

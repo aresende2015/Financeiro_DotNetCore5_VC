@@ -1,7 +1,9 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Carteira } from '@app/models/Carteira';
+import { Cliente } from '@app/models/Cliente';
 import { CarteiraService } from '@app/services/carteira.service';
+import { ClienteService } from '@app/services/cliente.service';
 import { Guid } from 'guid-typescript';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -23,7 +25,7 @@ export class ClienteCarteiraListaComponent implements OnInit {
   clienteId: Guid;
   corretoraId: Guid;
 
-  clienteNomeCompleto: string;
+  clienteNome: string;
 
   private _filtroLista: string = '';
 
@@ -51,6 +53,7 @@ export class ClienteCarteiraListaComponent implements OnInit {
   }
 
   constructor(private carteiraService: CarteiraService,
+              private clienteService: ClienteService,
               private spinner: NgxSpinnerService,
               private modalService: BsModalService,
               private toastr: ToastrService,
@@ -61,6 +64,22 @@ export class ClienteCarteiraListaComponent implements OnInit {
     this.spinner.show();
 
     this.carregarCarteiras();
+    this.bucarNomeDoCliente();
+
+  }
+
+  public bucarNomeDoCliente(): void {
+    this.clienteService.getClienteById(this.clienteId).subscribe({
+      next: (cliente: Cliente) => {
+        this.clienteNome = cliente.nomeCompleto;
+      },
+      error: (error: any) => {
+        this.spinner.hide();
+        this.toastr.error('Erro ao tentar carregar o nome do cliente.', 'Erro!');
+        console.error(error)
+      },
+      complete: () => {this.spinner.hide()}
+    });
   }
 
   public carregarCarteiras(): void {
@@ -76,11 +95,6 @@ export class ClienteCarteiraListaComponent implements OnInit {
         next: (_carteiras: Carteira[]) => {
           this.carteiras = _carteiras;
           this.carteirasFiltrados = this.carteiras;
-
-          if (this.carteiras !== null && this.carteiras.length > 0) {
-            this.clienteNomeCompleto = this.carteiras.find(c => c.clienteId == this.clienteId).cliente.nomeCompleto;
-          }
-
         },
         error: (error: any) => {
           this.toastr.error('Erro ao carregar a tela...', 'Error"');
@@ -127,7 +141,9 @@ export class ClienteCarteiraListaComponent implements OnInit {
   }
 
   public editarCarteira(id: Guid): void {
-    this.router.navigate([`carteiras/carteiradetalhe/${id}`])
+    //alert(this.clienteId);
+    //alert(id);
+    this.router.navigate([`clientes/carteiradetalhe/${this.clienteId}/${id}`])  ;
   }
 
 }

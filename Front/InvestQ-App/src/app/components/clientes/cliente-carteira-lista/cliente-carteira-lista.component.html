@@ -1,3 +1,53 @@
-<p>
-  cliente-carteira-lista works!
-</p>
+<div class="card rounded shadow-sm p-3">
+  <legend class="d-flex justify-content-between capitalize">
+    <p><b>Lista de Carteiras do Cliente:</b> {{this.clienteNome}}</p>
+  </legend>
+  <app-filtrar
+    [botaoNovo]="true"
+    [rotaLink]="'/clientes/carteiradetalhe/' + [this.clienteId]"
+    (filtroAcionado)="onFiltroAcionado($event)">
+  </app-filtrar>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <!-- <th>#</th> -->
+        <th>Descrição</th>
+        <th>Saldo</th>
+        <th>Atualizado em</th>
+        <th>Corretora</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody *ngIf="carteiras && carteiras.length">
+      <tr *ngFor="let carteira of carteirasFiltrados" >
+        <!-- <td>{{carteira.id}}</td> -->
+        <td>{{carteira.descricao | uppercase}}</td>
+        <td>{{carteira.saldo | currency }}</td>
+        <td>{{carteira.dataDeAtualizadoDoSaldo}}</td>
+        <td>{{carteira.corretora.descricao}}</td>
+        <td>
+          <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="editarCarteira(carteira.id)">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn btn-outline-danger btn-sm" tooltip="Excluir" (click)="openModal($event, template, carteira.id)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!carteiras.length">
+      <tr>
+        <td colspan="8" class="text-center">
+          <h4>Nenhuma carteira encontrada!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que quer deletar a Carteria de código {{this.carteiraId}}?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>

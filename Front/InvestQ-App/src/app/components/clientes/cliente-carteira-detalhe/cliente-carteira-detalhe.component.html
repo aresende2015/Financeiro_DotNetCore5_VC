@@ -1,3 +1,82 @@
-<p>
-  cliente-carteira-detalhe works!
-</p>
+<div class="card rounded shadow-sm p-3">
+  <form [formGroup]="form">
+    <legend class="d-flex justify-content-between capitalize">
+      <p><b>Cadastro da Carteira do Cliente:</b> {{ this.clienteNome }}</p>
+    </legend>
+    <!--<p>Form value: {{form.value | json}}</p>
+    <p>Form value: {{form.status | json}}</p>-->
+    <div class="p-3">
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label>Descrição</label>
+          <input
+            type="text"
+            [ngClass]="cssValidator(f.descricao)"
+            class="form-control"
+            formControlName="descricao"
+            placeholder=""
+          >
+          <div *ngIf="f.descricao.errors?.required" class="invalid-feedback">
+            Descrição é obrigatório.
+          </div>
+          <div *ngIf="f.descricao.errors?.minlength" class="invalid-feedback">
+            Descrição deve possuir pelo menos 3 caracteres.
+          </div>
+          <div *ngIf="f.descricao.errors?.maxlength" class="invalid-feedback">
+            Descrição deve possuir no máximo 100 caracteres
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.clienteId)">
+          <label class="control-label">Cliente</label>
+          <select class="form-control" id="clienteId" formControlName="clienteId">
+            <option *ngFor="let cliente of clientes" [value]="cliente.id">{{ cliente.nome }} {{ cliente.sobreNome }}</option>
+          </select>
+          <div *ngIf="f.clienteId.errors?.required" class="invalid-feedback">
+            Cliente é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.corretoraId)">
+          <label class="control-label">Corretora</label>
+          <select class="form-control" id="corretoraId" formControlName="corretoraId">
+            <option *ngFor="let corretora of corretoras" [value]="corretora.id">{{ corretora.descricao }}</option>
+          </select>
+          <div *ngIf="f.corretoraId.errors?.required" class="invalid-feedback">
+            Corretora é obrigatório.
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label>Saldo</label>
+          <input
+            type="text"
+            currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+            [ngClass]="cssValidator(f.saldo)"
+            class="form-control"
+            formControlName="saldo"
+            placeholder="R$ 0,00"
+          >
+        </div>
+        <div class="form-group col-md-4">
+          <label>Saldo Atualizado em</label>
+          <input
+            type="datetime" class="form-control"
+            [ngClass]="cssValidator(f.dataDeAtualizadoDoSaldo)"
+            value="{{carteira.dataDeAtualizadoDoSaldo | DateFormatPipe }}"
+            bsDatepicker
+            [bsConfig]="bsConfig"
+            formControlName="dataDeAtualizadoDoSaldo"
+            placeholder=""
+          >
+        </div>
+      </div>
+    </div>
+    <app-salvar
+        [botaoSalvar]="'Carteira'"
+        [formValido]="form.valid"
+        (clicouEm)="onClicouEm($event)">
+    </app-salvar>
+  </form>
+</div>
+

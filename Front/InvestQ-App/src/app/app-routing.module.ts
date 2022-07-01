@@ -70,7 +70,9 @@ const routes: Routes = [
         path: 'clientes', component: ClientesComponent,
         children: [
           { path: 'detalhe/:id', component: ClienteDetalheComponent },
-          { path: 'carteiradetalhe/:id', component: ClienteCarteiraDetalheComponent },
+          { path: 'carteiradetalhe/:clienteid/:id', component: ClienteCarteiraDetalheComponent },
+          { path: 'carteiradetalhe/:clienteid', component: ClienteCarteiraDetalheComponent },
+          { path: 'carteiradetalhe', component: ClienteCarteiraDetalheComponent },
           { path: 'listarcarteiras/:id', component: ClienteCarteiraListaComponent },
           { path: 'detalhe', component: ClienteDetalheComponent },
           { path: 'lista', component: ClienteListaComponent }

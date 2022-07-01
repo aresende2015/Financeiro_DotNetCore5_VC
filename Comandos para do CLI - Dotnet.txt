@@ -117,6 +117,9 @@ npm install ngx-spinner --save
 - Instalar o Bootswatch
 npm install bootswatch
 
+- Instalar currency
+npm i ngx-currency
+
 - Criar componentes no Angular via CLI (usuários)
 - Irá criar um componente dentro da pasta components e referenciar no modulo app
 ng g c components/user --module app

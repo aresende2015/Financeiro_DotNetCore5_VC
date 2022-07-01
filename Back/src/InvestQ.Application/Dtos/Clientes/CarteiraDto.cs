@@ -13,7 +13,7 @@ namespace InvestQ.Application.Dtos.Clientes
         [StringLength(50, MinimumLength = 3, ErrorMessage = "O campo de {0} deve ter no mínimo 3 e no máximo 50 caracteres.")]
         public string Descricao { get; set; }
         public decimal Saldo { get; set; }
-        public string dataDeAtualizadoDoSaldo { get; set; }
+        public string DataDeAtualizadoDoSaldo { get; set; }
         public Guid ClienteId { get; set; }
         public ClienteDto Cliente { get; set; }
         public Guid CorretoraId { get; set; }

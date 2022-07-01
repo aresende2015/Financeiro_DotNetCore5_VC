@@ -23,6 +23,8 @@ export class AdministradoresdefundosimobiliariosDetalheComponent implements OnIn
 
   estadoSalvar = 'post';
 
+
+
   get f(): any {
     return this.form.controls;
   }

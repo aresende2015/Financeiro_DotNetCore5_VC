@@ -19,11 +19,11 @@ namespace InvestQ.Data.Repositories.Clientes
             //_context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        public async Task<PageList<Cliente>> GetAllClientesAsync(int userId, PageParams pageParams, bool includeCorretora)
+        public async Task<PageList<Cliente>> GetAllClientesAsync(int userId, PageParams pageParams, bool includeCarteira)
         {
             IQueryable<Cliente> query = _context.Clientes;
 
-            if (includeCorretora)
+            if (includeCarteira)
                 query = query.Include(c => c.Carteiras)
                              .ThenInclude(cc => cc.Corretora);
 
@@ -49,6 +49,20 @@ namespace InvestQ.Data.Repositories.Clientes
                          .Where(c => c.Carteiras.Any(cc =>cc.CorretoraId == corretoraId) && c.UserId == userId);
 
             return await PageList<Cliente>.CreateAsync(query, pageParams.PageNumber, pageParams.pageSize);
+        }
+
+        public async Task<Cliente[]> GetAllClientesUserAsync(int userId, bool includeCarteira)
+        {
+            IQueryable<Cliente> query = _context.Clientes;
+
+            if (includeCarteira)
+                query = query.Include(c => c.Carteiras);
+
+            query = query.AsNoTracking()
+                         .Where(c => (c.UserId == userId))
+                         .OrderBy(c => c.Nome);
+
+            return await query.ToArrayAsync();
         }
 
         public async Task<Cliente> GetClienteByCpfAsync(int userId, string cpf, bool includeCorretora)
