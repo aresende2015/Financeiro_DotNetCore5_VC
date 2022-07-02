@@ -6,6 +6,7 @@ import { Guid } from 'guid-typescript';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { TipoDeAtivo } from '@app/models/Enum/TipoDeAtivo.enum';
 
 @Component({
   selector: 'app-proventos-lista',
@@ -67,6 +68,7 @@ export class ProventosListaComponent implements OnInit {
     const observer = {
       next: (_proventos: Provento[]) => {
         this.proventos = _proventos;
+        //alert(this.proventos[1].ativo.codigoDoAtivo);
         this.proventosFiltrados = this.proventos;
       },
       error: (error: any) => {

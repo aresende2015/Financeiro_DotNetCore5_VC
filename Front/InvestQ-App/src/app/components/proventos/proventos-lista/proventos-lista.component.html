@@ -8,6 +8,7 @@
     <thead class="table-dark">
       <tr>
         <th>#</th>
+        <th>Tipo de Ativo</th>
         <th>Data Com</th>
         <th>Data Ex</th>
         <th>Valor</th>
@@ -17,9 +18,10 @@
     <tbody *ngIf="proventos && proventos.length">
       <tr *ngFor="let provento of proventosFiltrados" >
         <td></td>
-        <td>{{provento.dataCom}}</td>
-        <td>{{provento.dataEx}}</td>
-        <td>{{provento.valor | currency:'BRL':'symbol':'1.2-8'}}</td>
+        <td>{{ provento.ativo.codigoDoAtivo }}</td>
+        <td>{{ provento.dataCom | DateFormatPipe }}</td>
+        <td>{{ provento.dataEx | DateFormatPipe }}</td>
+        <td>{{ provento.valor | currency:'BRL':'symbol':'1.2-8'}}</td>
         <td>
           <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="editarProvento(provento.id)">
             <i class="fas fa-edit"></i>

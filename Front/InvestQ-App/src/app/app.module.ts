@@ -20,6 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { CnpjFormatPipe } from './helpers/CnpjFormat.pipe';
+import { CpfFormatPipe } from './helpers/CpfFormat.pipe';
 
 import ptBr from '@angular/common/locales/pt'
 import { registerLocaleData } from '@angular/common';
@@ -89,6 +90,7 @@ import { ProventoService } from './services/provento.service';
 import { CarteiraService } from './services/carteira.service';
 import { ClienteCarteiraListaComponent } from './components/clientes/cliente-carteira-lista/cliente-carteira-lista.component';
 import { ClienteCarteiraDetalheComponent } from './components/clientes/cliente-carteira-detalhe/cliente-carteira-detalhe.component';
+import { FormDebugComponent } from './shared/form-debug/form-debug.component';
 
 defineLocale('pt-br', ptBrLocale);
 registerLocaleData(ptBr);
@@ -134,9 +136,11 @@ registerLocaleData(ptBr);
     ContatosComponent,
     PerfilComponent,
     DashboardComponent,
+    FormDebugComponent,
     NavComponent,
     DateTimeFormatPipe,
     CnpjFormatPipe,
+    CpfFormatPipe,
     TituloComponent,
     SalvarComponent,
     FiltrarComponent,
@@ -146,7 +150,7 @@ registerLocaleData(ptBr);
     RegistrationComponent
    ],
   imports: [
-    BrowserModule,
+  BrowserModule,
     FormsModule,
     NgxCurrencyModule,
     ReactiveFormsModule,
@@ -185,7 +189,7 @@ registerLocaleData(ptBr);
     AtivoService,
     UserService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: LOCALE_ID, useValue: 'pt' },
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
   ],
   bootstrap: [AppComponent]
