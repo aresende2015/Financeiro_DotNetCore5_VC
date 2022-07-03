@@ -18,22 +18,15 @@ import { NgxCurrencyModule } from 'ngx-currency';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
-import { CnpjFormatPipe } from './helpers/CnpjFormat.pipe';
-import { CpfFormatPipe } from './helpers/CpfFormat.pipe';
-
 import ptBr from '@angular/common/locales/pt'
 import { registerLocaleData } from '@angular/common';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 import { AppComponent } from './app.component';
-import { ClientesComponent } from './components/clientes/clientes.component';
 import { PerfilComponent } from './components/user/perfil/perfil.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ClienteDetalheComponent } from './components/clientes/cliente-detalhe/cliente-detalhe.component';
-import { ClienteListaComponent } from './components/clientes/cliente-lista/cliente-lista.component';
 import { UserComponent } from './components/user/user.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/user/login/login.component';
@@ -81,10 +74,10 @@ import { ProventosListaComponent } from './components/ativos/proventos/proventos
 import { ProventosDetalheComponent } from './components/ativos/proventos/proventos-detalhe/proventos-detalhe.component';
 import { ProventoService } from './services/provento.service';
 import { CarteiraService } from './services/carteira.service';
-import { ClienteCarteiraListaComponent } from './components/clientes/cliente-carteira-lista/cliente-carteira-lista.component';
-import { ClienteCarteiraDetalheComponent } from './components/clientes/cliente-carteira-detalhe/cliente-carteira-detalhe.component';
 import { SharedModule } from './shared/shared.module';
 import { CorretorasModule } from './components/corretoras/corretoras.module';
+import { ClientesModule } from './components/clientes/clientes.module';
+import { HelpersModule } from './helpers/helpers.module';
 
 defineLocale('pt-br', ptBrLocale);
 registerLocaleData(ptBr);
@@ -97,11 +90,6 @@ registerLocaleData(ptBr);
     SegmentosanbimasComponent,
     SegmentosanbimasListaComponent,
     SegmentosanbimasDetalheComponent,
-    ClientesComponent,
-    ClienteDetalheComponent,
-    ClienteListaComponent,
-    ClienteCarteiraListaComponent,
-    ClienteCarteiraDetalheComponent,
     SetoresComponent,
     SetorDetalheComponent,
     SetorListaComponent,
@@ -127,9 +115,6 @@ registerLocaleData(ptBr);
     ContatosComponent,
     PerfilComponent,
     DashboardComponent,
-    DateTimeFormatPipe,
-    CnpjFormatPipe,
-    CpfFormatPipe,
     UserComponent,
     HomeComponent,
     LoginComponent,
@@ -140,8 +125,10 @@ registerLocaleData(ptBr);
     FormsModule,
     NgxCurrencyModule,
     ReactiveFormsModule,
+    HelpersModule,
     SharedModule,
     CorretorasModule,
+    ClientesModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
