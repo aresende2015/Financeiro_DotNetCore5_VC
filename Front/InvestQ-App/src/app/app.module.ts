@@ -29,14 +29,11 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 import { AppComponent } from './app.component';
 import { ClientesComponent } from './components/clientes/clientes.component';
-import { CorretorasComponent } from './components/corretoras/corretoras.component';
 import { PerfilComponent } from './components/user/perfil/perfil.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ClienteDetalheComponent } from './components/clientes/cliente-detalhe/cliente-detalhe.component';
 import { ClienteListaComponent } from './components/clientes/cliente-lista/cliente-lista.component';
-import { CorretoraDetalheComponent } from './components/corretoras/corretora-detalhe/corretora-detalhe.component';
-import { CorretoraListaComponent } from './components/corretoras/corretora-lista/corretora-lista.component';
 import { UserComponent } from './components/user/user.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/user/login/login.component';
@@ -87,6 +84,7 @@ import { CarteiraService } from './services/carteira.service';
 import { ClienteCarteiraListaComponent } from './components/clientes/cliente-carteira-lista/cliente-carteira-lista.component';
 import { ClienteCarteiraDetalheComponent } from './components/clientes/cliente-carteira-detalhe/cliente-carteira-detalhe.component';
 import { SharedModule } from './shared/shared.module';
+import { CorretorasModule } from './components/corretoras/corretoras.module';
 
 defineLocale('pt-br', ptBrLocale);
 registerLocaleData(ptBr);
@@ -104,8 +102,6 @@ registerLocaleData(ptBr);
     ClienteListaComponent,
     ClienteCarteiraListaComponent,
     ClienteCarteiraDetalheComponent,
-    CorretorasComponent,
-    CorretoraDetalheComponent,
     SetoresComponent,
     SetorDetalheComponent,
     SetorListaComponent,
@@ -113,7 +109,6 @@ registerLocaleData(ptBr);
     SubsetorDetalheComponent,
     SegmentosListaComponent,
     SegmentoDetalheComponent,
-    CorretoraListaComponent,
     TiposdeinvestimentosComponent,
     TiposdeinvestimentosListaComponent,
     TiposdeinvestimentosDetalheComponent,
@@ -146,6 +141,7 @@ registerLocaleData(ptBr);
     NgxCurrencyModule,
     ReactiveFormsModule,
     SharedModule,
+    CorretorasModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
