@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import ptBr from '@angular/common/locales/pt'
+import { registerLocaleData } from '@angular/common';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -12,25 +14,20 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
+
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxCurrencyModule } from 'ngx-currency';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import ptBr from '@angular/common/locales/pt'
-import { registerLocaleData } from '@angular/common';
-
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 import { AppComponent } from './app.component';
-import { PerfilComponent } from './components/user/perfil/perfil.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { UserComponent } from './components/user/user.component';
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/user/login/login.component';
-import { RegistrationComponent } from './components/user/registration/registration.component';
+
 import { CorretoraService } from './services/corretora.service';
 import { ClienteService } from './services/cliente.service';
 import { SetorService } from './services/setor.service';
@@ -46,36 +43,28 @@ import { FundoimobiliarioService } from './services/fundoimobiliario.service';
 import { AcaoService } from './services/acao.service';
 import { ProventoService } from './services/provento.service';
 import { CarteiraService } from './services/carteira.service';
+
 import { SharedModule } from './shared/shared.module';
 import { CorretorasModule } from './components/corretoras/corretoras.module';
 import { ClientesModule } from './components/clientes/clientes.module';
 import { HelpersModule } from './helpers/helpers.module';
 import { AtivosModule } from './components/ativos/ativos.module';
+import { UserModule } from './components/user/user.module';
 
 defineLocale('pt-br', ptBrLocale);
 registerLocaleData(ptBr);
 @NgModule({
   declarations: [
     AppComponent,
-    ContatosComponent,
-    PerfilComponent,
-    DashboardComponent,
-    UserComponent,
     HomeComponent,
-    LoginComponent,
-    RegistrationComponent
+    DashboardComponent,
+    ContatosComponent,
    ],
   imports: [
     BrowserModule,
     FormsModule,
     NgxCurrencyModule,
     ReactiveFormsModule,
-    HelpersModule,
-    SharedModule,
-    CorretorasModule,
-    ClientesModule,
-    AtivosModule,
-    AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
@@ -90,8 +79,14 @@ registerLocaleData(ptBr);
       progressBar: true
     }),
     NgxSpinnerModule,
-    BsDatepickerModule.forRoot()
-
+    BsDatepickerModule.forRoot(),
+    HelpersModule,
+    SharedModule,
+    CorretorasModule,
+    ClientesModule,
+    AtivosModule,
+    UserModule,
+    AppRoutingModule,
   ],
   providers: [
     CorretoraService,
