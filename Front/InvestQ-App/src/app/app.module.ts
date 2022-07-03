@@ -31,21 +31,6 @@ import { UserComponent } from './components/user/user.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
-import { SetorDetalheComponent } from './components/ativos/acoes/setores/setor-detalhe/setor-detalhe.component';
-import { SetoresComponent } from './components/ativos/acoes/setores/setores.component';
-import { SetorListaComponent } from './components/ativos/acoes/setores/setor-lista/setor-lista.component';
-import { SubsetoresListaComponent } from './components/ativos/acoes/setores/subsetores-lista/subsetores-lista.component';
-import { SubsetorDetalheComponent } from './components/ativos/acoes/setores/subsetor-detalhe/subsetor-detalhe.component';
-import { SegmentosListaComponent } from './components/ativos/acoes/setores/segmentos-lista/segmentos-lista.component';
-import { SegmentoDetalheComponent } from './components/ativos/acoes/setores/segmento-detalhe/segmento-detalhe.component';
-import { TiposdeinvestimentosComponent } from './components/ativos/tiposdeinvestimentos/tiposdeinvestimentos.component';
-import { TiposdeinvestimentosListaComponent } from './components/ativos/tiposdeinvestimentos/tiposdeinvestimentos-lista/tiposdeinvestimentos-lista.component';
-import { TiposdeinvestimentosDetalheComponent } from './components/ativos/tiposdeinvestimentos/tiposdeinvestimentos-detalhe/tiposdeinvestimentos-detalhe.component';
-import { TesourosdiretosComponent } from './components/ativos/tesourosdiretos/tesourosdiretos.component';
-import { TesourosdiretosListaComponent } from './components/ativos/tesourosdiretos/tesourosdiretos-lista/tesourosdiretos-lista.component';
-import { TesourodiretoDetalheComponent } from './components/ativos/tesourosdiretos/tesourodireto-detalhe/tesourodireto-detalhe.component';
-import { AdministradoresdefundosimobiliariosComponent } from './components/ativos/fundosimobiliarios/administradoresdefundosimobiliarios/administradoresdefundosimobiliarios.component';
-import { AdministradoresdefundosimobiliariosListaComponent } from './components/ativos/fundosimobiliarios/administradoresdefundosimobiliarios/administradoresdefundosimobiliarios-lista/administradoresdefundosimobiliarios-lista.component';
 import { CorretoraService } from './services/corretora.service';
 import { ClienteService } from './services/cliente.service';
 import { SetorService } from './services/setor.service';
@@ -56,62 +41,22 @@ import { TipodeinvestimentoService } from './services/tipodeinvestimento.service
 import { TesourodiretoService } from './services/tesourodireto.service';
 import { AtivoService } from './services/ativo.service';
 import { AdministradordefundoimobiliarioService } from './services/administradordefundoimobiliario.service';
-import { AdministradoresdefundosimobiliariosDetalheComponent } from './components/ativos/fundosimobiliarios/administradoresdefundosimobiliarios/administradoresdefundosimobiliarios-detalhe/administradoresdefundosimobiliarios-detalhe.component';
-import { SegmentosanbimasComponent } from './components/ativos/fundosimobiliarios/segmentosanbimas/segmentosanbimas.component';
-import { SegmentosanbimasListaComponent } from './components/ativos/fundosimobiliarios/segmentosanbimas/segmentosanbimas-lista/segmentosanbimas-lista.component';
-import { SegmentosanbimasDetalheComponent } from './components/ativos/fundosimobiliarios/segmentosanbimas/segmentosanbimas-detalhe/segmentosanbimas-detalhe.component';
 import { SegmentoanbimaService } from './services/segmentoanbima.service';
 import { FundoimobiliarioService } from './services/fundoimobiliario.service';
-import { FundosimobiliariosComponent } from './components/ativos/fundosimobiliarios/fundosimobiliarios.component';
-import { FundosimobiliariosListaComponent } from './components/ativos/fundosimobiliarios/fundosimobiliarios-lista/fundosimobiliarios-lista.component';
-import { FundosimobiliariosDetalheComponent } from './components/ativos/fundosimobiliarios/fundosimobiliarios-detalhe/fundosimobiliarios-detalhe.component';
-import { AcoesComponent } from './components/ativos/acoes/acoes.component';
-import { AcoesListaComponent } from './components/ativos/acoes/acoes-lista/acoes-lista.component';
-import { AcoesDetalheComponent } from './components/ativos/acoes/acoes-detalhe/acoes-detalhe.component';
 import { AcaoService } from './services/acao.service';
-import { ProventosComponent } from './components/ativos/proventos/proventos.component';
-import { ProventosListaComponent } from './components/ativos/proventos/proventos-lista/proventos-lista.component';
-import { ProventosDetalheComponent } from './components/ativos/proventos/proventos-detalhe/proventos-detalhe.component';
 import { ProventoService } from './services/provento.service';
 import { CarteiraService } from './services/carteira.service';
 import { SharedModule } from './shared/shared.module';
 import { CorretorasModule } from './components/corretoras/corretoras.module';
 import { ClientesModule } from './components/clientes/clientes.module';
 import { HelpersModule } from './helpers/helpers.module';
+import { AtivosModule } from './components/ativos/ativos.module';
 
 defineLocale('pt-br', ptBrLocale);
 registerLocaleData(ptBr);
 @NgModule({
   declarations: [
     AppComponent,
-    AdministradoresdefundosimobiliariosComponent,
-    AdministradoresdefundosimobiliariosListaComponent,
-    AdministradoresdefundosimobiliariosDetalheComponent,
-    SegmentosanbimasComponent,
-    SegmentosanbimasListaComponent,
-    SegmentosanbimasDetalheComponent,
-    SetoresComponent,
-    SetorDetalheComponent,
-    SetorListaComponent,
-    SubsetoresListaComponent,
-    SubsetorDetalheComponent,
-    SegmentosListaComponent,
-    SegmentoDetalheComponent,
-    TiposdeinvestimentosComponent,
-    TiposdeinvestimentosListaComponent,
-    TiposdeinvestimentosDetalheComponent,
-    ProventosComponent,
-    ProventosListaComponent,
-    ProventosDetalheComponent,
-    AcoesComponent,
-    AcoesListaComponent,
-    AcoesDetalheComponent,
-    FundosimobiliariosComponent,
-    FundosimobiliariosListaComponent,
-    FundosimobiliariosDetalheComponent,
-    TesourosdiretosComponent,
-    TesourosdiretosListaComponent,
-    TesourodiretoDetalheComponent,
     ContatosComponent,
     PerfilComponent,
     DashboardComponent,
@@ -129,6 +74,7 @@ registerLocaleData(ptBr);
     SharedModule,
     CorretorasModule,
     ClientesModule,
+    AtivosModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
