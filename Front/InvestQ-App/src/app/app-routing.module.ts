@@ -24,9 +24,9 @@ import { AdministradoresdefundosimobiliariosListaComponent } from './components/
 import { TiposdeinvestimentosComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos.component';
 import { TiposdeinvestimentosListaComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos-lista/tiposdeinvestimentos-lista.component';
 import { TiposdeinvestimentosDetalheComponent } from './components/tiposdeinvestimentos/tiposdeinvestimentos-detalhe/tiposdeinvestimentos-detalhe.component';
-import { TesourosdiretosComponent } from './components/tesourosdiretos/tesourosdiretos.component';
-import { TesourosdiretosListaComponent } from './components/tesourosdiretos/tesourosdiretos-lista/tesourosdiretos-lista.component';
-import { TesourodiretoDetalheComponent } from './components/tesourosdiretos/tesourodireto-detalhe/tesourodireto-detalhe.component';
+import { TesourosdiretosComponent } from './components/ativos/tesourosdiretos/tesourosdiretos.component';
+import { TesourosdiretosListaComponent } from './components/ativos/tesourosdiretos/tesourosdiretos-lista/tesourosdiretos-lista.component';
+import { TesourodiretoDetalheComponent } from './components/ativos/tesourosdiretos/tesourodireto-detalhe/tesourodireto-detalhe.component';
 import { AuthGuard } from './guard/auth.guard';
 import { HomeComponent } from './components/home/home.component';
 import { AdministradoresdefundosimobiliariosDetalheComponent } from './components/administradoresdefundosimobiliarios/administradoresdefundosimobiliarios-detalhe/administradoresdefundosimobiliarios-detalhe.component';
@@ -39,9 +39,9 @@ import { FundosimobiliariosListaComponent } from './components/ativos/fundosimob
 import { AcoesComponent } from './components/ativos/acoes/acoes.component';
 import { AcoesDetalheComponent } from './components/ativos/acoes/acoes-detalhe/acoes-detalhe.component';
 import { AcoesListaComponent } from './components/ativos/acoes/acoes-lista/acoes-lista.component';
-import { ProventosComponent } from './components/proventos/proventos.component';
-import { ProventosDetalheComponent } from './components/proventos/proventos-detalhe/proventos-detalhe.component';
-import { ProventosListaComponent } from './components/proventos/proventos-lista/proventos-lista.component';
+import { ProventosComponent } from './components/ativos/proventos/proventos.component';
+import { ProventosDetalheComponent } from './components/ativos/proventos/proventos-detalhe/proventos-detalhe.component';
+import { ProventosListaComponent } from './components/ativos/proventos/proventos-lista/proventos-lista.component';
 import { ClienteCarteiraDetalheComponent } from './components/clientes/cliente-carteira-detalhe/cliente-carteira-detalhe.component';
 import { ClienteCarteiraListaComponent } from './components/clientes/cliente-carteira-lista/cliente-carteira-lista.component';
 
