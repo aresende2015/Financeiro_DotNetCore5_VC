@@ -28,8 +28,6 @@ import { registerLocaleData } from '@angular/common';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 import { AppComponent } from './app.component';
-import { NavComponent } from './shared/nav/nav.component';
-import { TituloComponent } from './shared/titulo/titulo.component';
 import { ClientesComponent } from './components/clientes/clientes.component';
 import { CorretorasComponent } from './components/corretoras/corretoras.component';
 import { PerfilComponent } from './components/user/perfil/perfil.component';
@@ -77,8 +75,6 @@ import { FundoimobiliarioService } from './services/fundoimobiliario.service';
 import { FundosimobiliariosComponent } from './components/ativos/fundosimobiliarios/fundosimobiliarios.component';
 import { FundosimobiliariosListaComponent } from './components/ativos/fundosimobiliarios/fundosimobiliarios-lista/fundosimobiliarios-lista.component';
 import { FundosimobiliariosDetalheComponent } from './components/ativos/fundosimobiliarios/fundosimobiliarios-detalhe/fundosimobiliarios-detalhe.component';
-import { SalvarComponent } from './shared/salvar/salvar.component';
-import { FiltrarComponent } from './shared/filtrar/filtrar.component';
 import { AcoesComponent } from './components/ativos/acoes/acoes.component';
 import { AcoesListaComponent } from './components/ativos/acoes/acoes-lista/acoes-lista.component';
 import { AcoesDetalheComponent } from './components/ativos/acoes/acoes-detalhe/acoes-detalhe.component';
@@ -90,7 +86,7 @@ import { ProventoService } from './services/provento.service';
 import { CarteiraService } from './services/carteira.service';
 import { ClienteCarteiraListaComponent } from './components/clientes/cliente-carteira-lista/cliente-carteira-lista.component';
 import { ClienteCarteiraDetalheComponent } from './components/clientes/cliente-carteira-detalhe/cliente-carteira-detalhe.component';
-import { FormDebugComponent } from './shared/form-debug/form-debug.component';
+import { SharedModule } from './shared/shared.module';
 
 defineLocale('pt-br', ptBrLocale);
 registerLocaleData(ptBr);
@@ -136,24 +132,20 @@ registerLocaleData(ptBr);
     ContatosComponent,
     PerfilComponent,
     DashboardComponent,
-    FormDebugComponent,
-    NavComponent,
     DateTimeFormatPipe,
     CnpjFormatPipe,
     CpfFormatPipe,
-    TituloComponent,
-    SalvarComponent,
-    FiltrarComponent,
     UserComponent,
     HomeComponent,
     LoginComponent,
     RegistrationComponent
    ],
   imports: [
-  BrowserModule,
+    BrowserModule,
     FormsModule,
     NgxCurrencyModule,
     ReactiveFormsModule,
+    SharedModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
