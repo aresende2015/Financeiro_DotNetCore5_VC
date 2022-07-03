@@ -7,7 +7,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { debounceTime, Subject } from 'rxjs';
-import { FundoImobiliario } from './../../../models/FundoImobiliario';
+import { FundoImobiliario } from '@app/models/FundoImobiliario';
 
 @Component({
   selector: 'app-fundosimobiliarios-lista',
