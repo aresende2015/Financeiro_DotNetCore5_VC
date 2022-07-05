@@ -44,6 +44,10 @@ import { ProventosDetalheComponent } from './components/ativos/proventos/provent
 import { ProventosListaComponent } from './components/ativos/proventos/proventos-lista/proventos-lista.component';
 import { ClienteCarteiraDetalheComponent } from './components/clientes/cliente-carteira-detalhe/cliente-carteira-detalhe.component';
 import { ClienteCarteiraListaComponent } from './components/clientes/cliente-carteira-lista/cliente-carteira-lista.component';
+import { LancamentosComponent } from './components/clientes/lancamentos/lancamentos.component';
+import { LancamentoDetalheComponent } from './components/clientes/lancamentos/lancamento-detalhe/lancamento-detalhe.component';
+import { LancamentosListaComponent } from './components/clientes/lancamentos/lancamentos-lista/lancamentos-lista.component';
+import { LancamentoFiltroListaComponent } from './components/clientes/lancamentos/lancamento-filtro-lista/lancamento-filtro-lista.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -63,6 +67,16 @@ const routes: Routes = [
           { path: 'detalhe/:id', component: CorretoraDetalheComponent },
           { path: 'detalhe', component: CorretoraDetalheComponent },
           { path: 'lista', component: CorretoraListaComponent }
+        ]
+      },
+      { path: 'lancamentos', redirectTo: 'lancamentos/lista' },
+      {
+        path: 'lancamentos', component: LancamentosComponent,
+        children: [
+          { path: 'filtro/lista', component: LancamentoFiltroListaComponent },
+          { path: 'detalhe/:id', component: LancamentoDetalheComponent },
+          { path: 'detalhe', component: LancamentoDetalheComponent },
+          { path: 'lista/:id', component: LancamentosListaComponent }
         ]
       },
       { path: 'clientes', redirectTo: 'clientes/lista' },

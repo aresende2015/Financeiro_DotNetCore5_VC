@@ -1,0 +1,18 @@
+<div class="card rounded shadow-sm p-2">
+  <!-- <form [formGroup]="form"> -->
+    <div class="p-2">
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label class="control-label"><h5>Carteira</h5></label>
+          <select class="form-control" id="carteiraId" (change)="selecionarCarteira($event)">
+            <option selected>Selecione uma carteira</option>
+            <option *ngFor="let carteira of this.carteiras"
+                    [value]="carteira.id">
+              {{ carteira.descricao }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  <!-- </form> -->
+</div>

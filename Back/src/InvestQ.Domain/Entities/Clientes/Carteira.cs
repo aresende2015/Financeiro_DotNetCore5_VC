@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace InvestQ.Domain.Entities.Clientes
 {
@@ -32,5 +33,6 @@ namespace InvestQ.Domain.Entities.Clientes
         public Cliente Cliente { get; set; }
         public Guid CorretoraId { get; set; }
         public Corretora Corretora { get; set; }
+        public IEnumerable<Lancamento> Lancamentos { get; set; }
     }
 }

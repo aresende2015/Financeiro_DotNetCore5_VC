@@ -16,6 +16,10 @@ namespace InvestQ.Data.Mappings
                    .HasColumnType("decimal(20,2)")
                    .IsRequired();
 
+            builder.HasMany(c => c.Lancamentos)
+                    .WithOne(l => l.Carteira)
+                    .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

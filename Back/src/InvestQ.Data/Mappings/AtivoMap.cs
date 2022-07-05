@@ -14,6 +14,10 @@ namespace InvestQ.Data.Mappings
             builder.HasOne(a => a.Acao).WithOne(a => a.Ativo).IsRequired(false);
             builder.HasOne(a => a.FundoImobiliario).WithOne(a => a.Ativo).IsRequired(false);
             builder.HasOne(a => a.TesouroDireto).WithOne(a => a.Ativo).IsRequired(false);
+
+            builder.HasMany(a => a.Lancamentos)
+                    .WithOne(l => l.Ativo)
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

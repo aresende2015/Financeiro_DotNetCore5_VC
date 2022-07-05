@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using InvestQ.Data.Context;
+using InvestQ.Data.Interfaces.Clientes;
+using InvestQ.Domain.Entities.Clientes;
+using Microsoft.EntityFrameworkCore;
+
+namespace InvestQ.Data.Repositories.Clientes
+{
+    public class LancamentoRepo : GeralRepo, ILancamentoRepo
+    {
+        private readonly InvestQContext _context;
+
+        public LancamentoRepo(InvestQContext context) : base(context)
+        {
+            _context = context;
+        }
+        public async Task<Lancamento[]> GetAllLancamentosByCarteiraIdAsync(Guid carteiraId)
+        {
+            IQueryable<Lancamento> query = _context.Lancamentos;
+
+            query = query.Include(l => l.Ativo);
+            
+            query = query.Include(l => l.Carteira);
+
+            query = query.AsNoTracking()
+                         .OrderBy(l => l.DataDaOperacao)
+                         .Where(l => l.CarteiraId == carteiraId);
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<Lancamento[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId)
+        {
+            IQueryable<Lancamento> query = _context.Lancamentos;
+
+            query = query.Include(l => l.Ativo);
+            
+            query = query.Include(l => l.Carteira);
+            
+            query = query.AsNoTracking()
+                        .Where(l => l.CarteiraId == carteiraId
+                                && l.AtivoId == ativoId);
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<Lancamento> GetLancamentoByIdAsync(Guid id)
+        {
+            IQueryable<Lancamento> query = _context.Lancamentos;
+
+            query = query.Include(l => l.Ativo);
+            
+            query = query.Include(l => l.Carteira);
+
+            query = query.AsNoTracking()
+                         .OrderBy(l => l.DataDaOperacao)
+                         .Where(l => l.Id == id);
+
+            return await query.FirstOrDefaultAsync();
+        }
+    }
+}

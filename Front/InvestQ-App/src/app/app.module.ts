@@ -50,6 +50,8 @@ import { ClientesModule } from './components/clientes/clientes.module';
 import { HelpersModule } from './helpers/helpers.module';
 import { AtivosModule } from './components/ativos/ativos.module';
 import { UserModule } from './components/user/user.module';
+import { AuthGuard } from './guard/auth.guard';
+import { LancamentoService } from './services/lancamento.service';
 
 defineLocale('pt-br', ptBrLocale);
 registerLocaleData(ptBr);
@@ -91,6 +93,7 @@ registerLocaleData(ptBr);
   providers: [
     CorretoraService,
     ClienteService,
+    LancamentoService,
     CarteiraService,
     SetorService,
     SubsetorService,
@@ -104,6 +107,7 @@ registerLocaleData(ptBr);
     TesourodiretoService,
     AtivoService,
     UserService,
+    AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },

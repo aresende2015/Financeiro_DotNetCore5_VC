@@ -17,6 +17,10 @@ import { ClienteCarteiraDetalheComponent } from './cliente-carteira-detalhe/clie
 import { HelpersModule } from '@app/helpers/helpers.module';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { LancamentosComponent } from './lancamentos/lancamentos.component';
+import { LancamentosListaComponent } from './lancamentos/lancamentos-lista/lancamentos-lista.component';
+import { LancamentoDetalheComponent } from './lancamentos/lancamento-detalhe/lancamento-detalhe.component';
+import { LancamentoFiltroListaComponent } from './lancamentos/lancamento-filtro-lista/lancamento-filtro-lista.component';
 
 @NgModule({
   imports: [
@@ -46,6 +50,10 @@ import { NgxCurrencyModule } from 'ngx-currency';
     ClienteListaComponent,
     ClienteCarteiraListaComponent,
     ClienteCarteiraDetalheComponent,
+    LancamentosComponent,
+    LancamentosListaComponent,
+    LancamentoDetalheComponent,
+    LancamentoFiltroListaComponent
   ]
 })
 export class ClientesModule { }

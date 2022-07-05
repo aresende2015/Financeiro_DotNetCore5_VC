@@ -4,6 +4,7 @@ using InvestQ.Domain.Entities.Acoes;
 using InvestQ.Domain.Enum;
 using InvestQ.Domain.Entities.FundosImobiliarios;
 using InvestQ.Domain.Entities.TesourosDiretos;
+using InvestQ.Domain.Entities.Clientes;
 
 namespace InvestQ.Domain.Entities.Ativos
 {
@@ -47,5 +48,6 @@ namespace InvestQ.Domain.Entities.Ativos
         public FundoImobiliario FundoImobiliario { get; set; }
         public Guid? TesouroDiretoId {get; set;}
         public TesouroDireto TesouroDireto { get; set; }
+        public IEnumerable<Lancamento> Lancamentos { get; set; }
     }
 }
