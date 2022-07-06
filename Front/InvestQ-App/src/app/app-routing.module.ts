@@ -69,7 +69,8 @@ const routes: Routes = [
           { path: 'lista', component: CorretoraListaComponent }
         ]
       },
-      { path: 'lancamentos', redirectTo: 'lancamentos/lista' },
+      { path: 'lancamentos', redirectTo: 'lancamentos/filtro/lista' },
+      { path: 'lancamentos/lista', redirectTo: 'lancamentos/filtro/lista' },
       {
         path: 'lancamentos', component: LancamentosComponent,
         children: [

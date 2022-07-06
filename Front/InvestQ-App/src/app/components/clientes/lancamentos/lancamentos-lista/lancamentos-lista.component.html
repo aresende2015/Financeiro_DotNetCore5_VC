@@ -1,3 +1,51 @@
-<p>
-  lancamentos-lista works!
-</p>
+<div class="card rounded shadow-sm p-3">
+  <legend class="d-flex justify-content-between capitalize">
+    <p><b>Carteira:</b> {{ this.carteiraDescricao }}</p>
+  </legend>
+  <app-filtrar
+    [rotaLink]="'/lancamentos/detalhe'"
+    (filtroAcionado)="onFiltroAcionado($event)">
+  </app-filtrar>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Código</th>
+        <th>Qtd</th>
+        <th>Data</th>
+        <th>Preço</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody *ngIf="lancamentos && lancamentos.length">
+      <tr *ngFor="let lancamento of lancamentosFiltrados" >
+        <td>{{ lancamento.ativo.codigoDoAtivo }}</td>
+        <td>{{ lancamento.quantidade }}</td>
+        <td>{{ lancamento.dataDaOperacao | DateFormatPipe }}</td>
+        <td>{{ lancamento.valorDaOperacao | currency:'BRL':'symbol':'1.2-2'}}</td>
+        <td>
+          <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="editarLancamento(lancamento.id)">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn btn-outline-danger btn-sm" tooltip="Excluir" (click)="openModal($event, template, lancamento.id)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!lancamentos.length">
+      <tr>
+        <td colspan="8" class="text-center">
+          <h4>Nenhum Lancamento encontrado!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que quer deletar o Provento de código {{this.lancamentoId}}?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>
+

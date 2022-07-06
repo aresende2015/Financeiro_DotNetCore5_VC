@@ -6,6 +6,8 @@ import { Guid } from 'guid-typescript';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { CarteiraService } from '@app/services/carteira.service';
+import { Carteira } from '@app/models/Carteira';
 
 @Component({
   selector: 'app-lancamentos-lista',
@@ -18,8 +20,9 @@ export class LancamentosListaComponent implements OnInit {
 
   public lancamentos: Lancamento[] = [];
   public lancamentosFiltrados: Lancamento[] = [];
-  public lancamentosId = Guid.createEmpty();
+  public lancamentoId = Guid.createEmpty();
   public carteiraId =  Guid.createEmpty();
+  public carteiraDescricao: string = '';
 
   private _filtroLista: string = '';
 
@@ -48,6 +51,7 @@ export class LancamentosListaComponent implements OnInit {
 
   constructor(
     private lancamentoService: LancamentoService,
+    private carteiraService: CarteiraService,
     private modalService: BsModalService,
     private activatedRouter: ActivatedRoute,
     private toastr: ToastrService,
@@ -64,15 +68,30 @@ export class LancamentosListaComponent implements OnInit {
     }, 3000);
   }
 
+  public bucarNomeDaCarteira(carteiraId: Guid): void {
+    this.carteiraService.getCarteiraById(carteiraId).subscribe({
+      next: (carteira: Carteira) => {
+        this.carteiraDescricao = carteira.descricao;
+      },
+      error: (error: any) => {
+        this.spinner.hide();
+        this.toastr.error('Erro ao tentar carregar o nome da carteira.', 'Erro!');
+        console.error(error)
+      },
+      complete: () => {this.spinner.hide()}
+    });
+  }
+
   public carregarLancamentos(): void {
     this.spinner.show();
 
     this.carteiraId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
-    //alert(this.carteiraId);
+
+    this.bucarNomeDaCarteira(this.carteiraId);
+
     const observer = {
       next: (_lancamentos: Lancamento[]) => {
         this.lancamentos = _lancamentos;
-        //alert(this.proventos[1].ativo.codigoDoAtivo);
         this.lancamentosFiltrados = this.lancamentos;
       },
       error: (error: any) => {
@@ -87,7 +106,7 @@ export class LancamentosListaComponent implements OnInit {
 
   public openModal(event: any, template: TemplateRef<any>, lancamentosId: Guid): void {
     event.stopPropagation();
-    this.lancamentosId = lancamentosId;
+    this.lancamentoId = lancamentosId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
@@ -95,7 +114,7 @@ export class LancamentosListaComponent implements OnInit {
     this.modalRef?.hide();
     this.spinner.show();
 
-    this.lancamentoService.deleteLancamento(this.lancamentosId).subscribe(
+    this.lancamentoService.deleteLancamento(this.lancamentoId).subscribe(
       (result: any) => {
         if (result.message === 'Deletado') {
           this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
@@ -105,7 +124,7 @@ export class LancamentosListaComponent implements OnInit {
       },
       (error: any) => {
         console.error(error);
-        this.toastr.error(`Erro ao tentar deletar o lancamento ${this.lancamentosId}`, 'Erro');
+        this.toastr.error(`Erro ao tentar deletar o lancamento ${this.lancamentoId}`, 'Erro');
         //this.spinner.hide();
       },
       //() => {this.spinner.hide();}
@@ -116,7 +135,7 @@ export class LancamentosListaComponent implements OnInit {
     this.modalRef?.hide();
   }
 
-  public editarProvento(id: Guid): void {
+  public editarLancamento(id: Guid): void {
     this.router.navigate([`lancamentos/detalhe/${id}`])
   }
 

@@ -1,3 +1,93 @@
-<p>
-  lancamento-detalhe works!
-</p>
+<div class="card rounded shadow-sm">
+  <form [formGroup]="form">
+    <!--<p>Form value: {{form.value | json}}</p>
+    <p>Form value: {{form.status | json}}</p>-->
+    <div class="p-3">
+      <div class="row">
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.tipoDeMovimentacao)">
+          <label class="control-label">Tipo de Movimentacao</label>
+          <select class="form-control" id="tipoDeMovimentacao" formControlName="tipoDeMovimentacao">
+            <option *ngFor="let item of tipoDeMovimentacaoOp" [value]="item.valor">{{ item.desc }}</option>
+          </select>
+          <div *ngIf="f.tipoDeMovimentacao.errors?.required" class="invalid-feedback">
+            Tipo de Movimentação é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.tipoDeAtivo)">
+          <label class="control-label">Tipo de Ativo</label>
+          <select class="form-control" id="tipoDeAtivo" formControlName="tipoDeAtivo" (change)="tipoDeAtivoSelecionado($event)">
+            <option *ngFor="let item of tipoDeAtivoOp" [value]="item.valor">{{ item.desc }}</option>
+          </select>
+          <div *ngIf="f.tipoDeAtivo.errors?.required" class="invalid-feedback">
+            Tipo de Ativo é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="cssValidator(f.ativoId)">
+          <label class="control-label">Ativo</label>
+          <select class="form-control" id="ativoId" formControlName="ativoId">
+            <option *ngFor="let ativo of ativos" [value]="ativo.id">{{ ativo.codigoDoAtivo }}</option>
+          </select>
+          <div *ngIf="f.ativoId.errors?.required" class="invalid-feedback">
+            Ativo é obrigatório.
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label>Data da operação</label>
+          <input
+            type="datetime" class="form-control"
+            [ngClass]="cssValidator(f.dataDaOperacao)"
+            value="{{lancamento.dataDaOperacao | DateFormatPipe }}"
+            bsDatepicker
+            [bsConfig]="bsConfig"
+            formControlName="dataDaOperacao"
+            placeholder=""
+          >
+          <div *ngIf="f.dataDaOperacao.errors?.required" class="invalid-feedback">
+            Data da operação é obrigatória.
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Quantidade</label>
+          <input
+            type="text"
+            currencyMask
+            [options]="{ prefix: '', thousands: '.', decimal: ',', align: 'left', precision: 0 }"
+            [ngClass]="cssValidator(f.quantidade)"
+            class="form-control"
+            formControlName="quantidade"
+            placeholder=""
+          >
+          <div *ngIf="f.quantidade.errors?.required" class="invalid-feedback">
+            Quantidade é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Valor</label>
+          <input
+            type="text"
+            currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left', precision: 8 }"
+            [ngClass]="cssValidator(f.valorDaOperacao)"
+            class="form-control"
+            formControlName="valorDaOperacao"
+            placeholder=""
+          >
+          <div *ngIf="f.valorDaOperacao.errors?.required" class="invalid-feedback">
+            Valor da operação é obrigatório.
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <app-salvar
+        [botaoSalvar]="'Provento'"
+        [formValido]="form.valid"
+        (clicouEm)="onClicouEm($event)">
+    </app-salvar>
+    <!-- <app-form-debug [form]="form"></app-form-debug> -->
+  </form>
+</div>
+
