@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ativo } from '@app/models/Ativo';
+import { Carteira } from '@app/models/Carteira';
 import { TipoDeAtivo } from '@app/models/Enum/TipoDeAtivo.enum';
 import { Lancamento } from '@app/models/Lancamento';
 import { AtivoService } from '@app/services/ativo.service';
+import { CarteiraService } from '@app/services/carteira.service';
 import { LancamentoService } from '@app/services/lancamento.service';
 import { Guid } from 'guid-typescript';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
@@ -21,7 +23,8 @@ export class LancamentoDetalheComponent implements OnInit {
   public lancamento = {} as Lancamento;
   public lancamentos: Lancamento[] = [];
   public ativos: Ativo[] = [];
-
+  public carteiraDescricao: string = '';
+  public carteiraId: Guid;
 
   lancamentoId: Guid;
   form!: FormGroup;
@@ -54,6 +57,7 @@ export class LancamentoDetalheComponent implements OnInit {
               private localeService: BsLocaleService,
               private lancamentoService: LancamentoService,
               private ativoService: AtivoService,
+              private carteiraService: CarteiraService,
               private spinner: NgxSpinnerService,
               private router: Router,
               private toastr: ToastrService)
@@ -88,10 +92,27 @@ export class LancamentoDetalheComponent implements OnInit {
     this.ativoService.getAllAtivosByTipoDeAtivo(tipoDeAtivo).subscribe(observer);
   }
 
+  public bucarNomeDaCarteira(carteiraId: Guid): void {
+    this.carteiraService.getCarteiraById(carteiraId).subscribe({
+      next: (carteira: Carteira) => {
+        this.carteiraDescricao = carteira.descricao;
+      },
+      error: (error: any) => {
+        this.spinner.hide();
+        this.toastr.error('Erro ao tentar carregar o nome da carteira.', 'Erro!');
+        console.error(error)
+      },
+      complete: () => {this.spinner.hide()}
+    });
+  }
+
   public carregarLancamento(): void {
 
-    if (this.activatedRouter.snapshot.paramMap.get('id') === null)
+    if (this.activatedRouter.snapshot.paramMap.get('id') === null) {
       this.lancamentoId = Guid.createEmpty();
+      this.carteiraId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('carteiraid').toString());
+      this.bucarNomeDaCarteira(this.carteiraId);
+    }
     else {
       this.lancamentoId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
 
@@ -123,11 +144,11 @@ export class LancamentoDetalheComponent implements OnInit {
       valorDaOperacao: ['', [Validators.required]],
       dataDaOperacao: ['', [Validators.required]],
       quantidade: ['', [Validators.required]],
-      tipoDeMovimentacao: [false, [Validators.required]],
-      tipoDeOperacao: [false, [Validators.required]],
+      tipoDeMovimentacao: [0, [Validators.required]],
+      tipoDeOperacao: [0, [Validators.required]],
       ativoId: [null, [Validators.required]],
-      tipoDeAtivo: [false, [Validators.required]],
-      carteiraId: [null, [Validators.required]]
+      tipoDeAtivo: [null, [Validators.required]],
+      carteiraId: [this.carteiraId.toString(), [Validators.required]]
     });
   }
 

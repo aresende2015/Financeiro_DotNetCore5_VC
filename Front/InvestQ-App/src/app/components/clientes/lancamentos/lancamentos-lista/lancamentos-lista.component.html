@@ -3,7 +3,7 @@
     <p><b>Carteira:</b> {{ this.carteiraDescricao }}</p>
   </legend>
   <app-filtrar
-    [rotaLink]="'/lancamentos/detalhe'"
+    [rotaLink]="'/lancamentos/detalhe/' + [this.carteiraId]"
     (filtroAcionado)="onFiltroAcionado($event)">
   </app-filtrar>
   <table class="table table-striped">

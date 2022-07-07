@@ -136,7 +136,7 @@ export class LancamentosListaComponent implements OnInit {
   }
 
   public editarLancamento(id: Guid): void {
-    this.router.navigate([`lancamentos/detalhe/${id}`])
+    this.router.navigate([`lancamentos/detalhe/${this.carteiraId}/${id}`])  ;
   }
 
 }

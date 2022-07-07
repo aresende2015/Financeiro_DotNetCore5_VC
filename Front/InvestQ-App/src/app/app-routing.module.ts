@@ -75,7 +75,8 @@ const routes: Routes = [
         path: 'lancamentos', component: LancamentosComponent,
         children: [
           { path: 'filtro/lista', component: LancamentoFiltroListaComponent },
-          { path: 'detalhe/:id', component: LancamentoDetalheComponent },
+          { path: 'detalhe/:carteiraid/:id', component: LancamentoDetalheComponent },
+          { path: 'detalhe/:carteiraid', component: LancamentoDetalheComponent },
           { path: 'detalhe', component: LancamentoDetalheComponent },
           { path: 'lista/:id', component: LancamentosListaComponent }
         ]

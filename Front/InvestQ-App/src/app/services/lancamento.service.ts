@@ -34,6 +34,8 @@ export class LancamentoService {
   }
 
   public post(lancamento: Lancamento): Observable<Lancamento> {
+    alert("alex")
+    console.log(lancamento);
     return this.http
       .post<Lancamento>(this.baseURL, lancamento)
       .pipe(take(1));
