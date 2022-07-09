@@ -66,8 +66,9 @@ export class LancamentoDetalheComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.carregarLancamento();
     this.validation();
+    this.carregarLancamento();
+
     this.tipoDeMovimentacaoOp = this.lancamentoService.getTipoDeMovimentacao();
     this.tipoDeAtivoOp = this.lancamentoService.getTipoDeAtivo();
   }
@@ -112,8 +113,10 @@ export class LancamentoDetalheComponent implements OnInit {
       this.lancamentoId = Guid.createEmpty();
       this.carteiraId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('carteiraid').toString());
       this.bucarNomeDaCarteira(this.carteiraId);
+      this.form.controls['carteiraId'].setValue(this.carteiraId.toString());
     }
     else {
+
       this.lancamentoId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
 
       if (this.lancamentoId !== null && !this.lancamentoId.isEmpty()) {
@@ -148,7 +151,7 @@ export class LancamentoDetalheComponent implements OnInit {
       tipoDeOperacao: [0, [Validators.required]],
       ativoId: [null, [Validators.required]],
       tipoDeAtivo: [null, [Validators.required]],
-      carteiraId: [this.carteiraId.toString(), [Validators.required]]
+      carteiraId: [null, [Validators.required]]
     });
   }
 

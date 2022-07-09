@@ -38,7 +38,7 @@
       </div>
       <div class="row">
         <div class="form-group col-md-4">
-          <label>Data da operação</label>
+          <label>Data da operação {{lancamento.dataDaOperacao | DateFormatPipe }}</label>
           <input
             type="datetime" class="form-control"
             [ngClass]="cssValidator(f.dataDaOperacao)"

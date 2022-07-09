@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CarteiraService } from '@app/services/carteira.service';
 import { Carteira } from '@app/models/Carteira';
+import { TipoDeMovimentacao } from '@app/models/Enum/TipoDeMovimentacao.enum';
 
 @Component({
   selector: 'app-lancamentos-lista',
@@ -23,6 +24,7 @@ export class LancamentosListaComponent implements OnInit {
   public lancamentoId = Guid.createEmpty();
   public carteiraId =  Guid.createEmpty();
   public carteiraDescricao: string = '';
+  public tipoDeMovimentacao: TipoDeMovimentacao = TipoDeMovimentacao.NaoInformada;
 
   private _filtroLista: string = '';
 
@@ -80,6 +82,10 @@ export class LancamentosListaComponent implements OnInit {
       },
       complete: () => {this.spinner.hide()}
     });
+  }
+
+  public getTipoDeMovimentacao(_tipoDeMovimentacao): string {
+    return TipoDeMovimentacao[_tipoDeMovimentacao];
   }
 
   public carregarLancamentos(): void {

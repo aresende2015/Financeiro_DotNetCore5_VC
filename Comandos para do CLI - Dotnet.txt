@@ -75,6 +75,10 @@ dotnet ef migrations add inicial -p InvestQ.Data -s InvestQ.API
 dotnet ef database update -s InvestQ.API
 dotnet ef database drop.
 
+-- Instalar o Dapper -- rodar dentro do projeto destino
+dotnet add package Dapper
+
+
 =======================================================
 Comandos do Angular
 - Esse comando altera a politica de execução do powershell para o angular

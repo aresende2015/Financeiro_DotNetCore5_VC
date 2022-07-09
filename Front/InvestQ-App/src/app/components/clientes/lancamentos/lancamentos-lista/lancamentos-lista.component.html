@@ -10,6 +10,7 @@
     <thead class="table-dark">
       <tr>
         <th>Código</th>
+        <th>Operação</th>
         <th>Qtd</th>
         <th>Data</th>
         <th>Preço</th>
@@ -19,6 +20,7 @@
     <tbody *ngIf="lancamentos && lancamentos.length">
       <tr *ngFor="let lancamento of lancamentosFiltrados" >
         <td>{{ lancamento.ativo.codigoDoAtivo }}</td>
+        <td>{{ getTipoDeMovimentacao(lancamento.tipoDeMovimentacao) }}</td>
         <td>{{ lancamento.quantidade }}</td>
         <td>{{ lancamento.dataDaOperacao | DateFormatPipe }}</td>
         <td>{{ lancamento.valorDaOperacao | currency:'BRL':'symbol':'1.2-2'}}</td>
