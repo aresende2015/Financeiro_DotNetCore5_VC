@@ -1,0 +1,35 @@
+<div class="card rounded shadow-sm p-3">
+  <legend class="d-flex justify-content-between capitalize">
+    <p><b>Carteira:</b> {{ this.carteiraDescricao }}</p>
+  </legend>
+  <app-filtrar
+    [botaoNovo]="false"
+    (filtroAcionado)="onFiltroAcionado($event)">
+  </app-filtrar>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Código</th>
+        <th>Qtd</th>
+        <th>Preço Médio</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody *ngIf="portifolios && portifolios.length">
+      <tr *ngFor="let portifolio of portifoliosFiltrados" >
+        <td>{{ portifolio.ativo.codigoDoAtivo }}</td>
+        <td>{{ portifolio.quantidade }}</td>
+        <td>{{ portifolio.precoMedio | currency:'BRL':'symbol':'1.2-2'}}</td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!portifolios.length">
+      <tr>
+        <td colspan="8" class="text-center">
+          <h4>Nenhum Ativo encontrado!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

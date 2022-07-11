@@ -52,6 +52,7 @@ import { AtivosModule } from './components/ativos/ativos.module';
 import { UserModule } from './components/user/user.module';
 import { AuthGuard } from './guard/auth.guard';
 import { LancamentoService } from './services/lancamento.service';
+import { PortifolioService } from './services/portifolio.service';
 
 defineLocale('pt-br', ptBrLocale);
 registerLocaleData(ptBr);
@@ -94,6 +95,7 @@ registerLocaleData(ptBr);
     CorretoraService,
     ClienteService,
     LancamentoService,
+    PortifolioService,
     CarteiraService,
     SetorService,
     SubsetorService,

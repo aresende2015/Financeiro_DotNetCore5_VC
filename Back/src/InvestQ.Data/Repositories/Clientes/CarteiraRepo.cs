@@ -84,5 +84,13 @@ namespace InvestQ.Data.Repositories.Clientes
 
             return await query.FirstOrDefaultAsync();
         }
+
+        public bool GetPossuiCarteiraByClienteId(Guid clienteId)
+        {
+            bool retorno = _context.Carteiras
+                                    .Where(c => c.ClienteId == clienteId)
+                                    .Count() > 0;
+            return retorno;
+        }
     }
 }

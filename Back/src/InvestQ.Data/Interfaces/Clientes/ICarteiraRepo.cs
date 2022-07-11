@@ -13,5 +13,6 @@ namespace InvestQ.Data.Interfaces.Clientes
         Task<Carteira[]> GetAllCarteirasByClienteId(Guid clienteId, bool includeCliente, bool includeCorretora);      
         Task<Carteira[]> GetAllCarteirasByCorretoraId(Guid corretoraId, bool includeCliente, bool includeCorretora);      
         Task<Carteira> GetCarteiraByIdAsync(Guid id, bool includeCliente, bool includeCorretora);
+        bool GetPossuiCarteiraByClienteId(Guid clienteId);
     }
 }

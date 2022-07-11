@@ -37,6 +37,8 @@ namespace InvestQ.Application.Profiles
 
             CreateMap<Lancamento, LancamentoDto>().ReverseMap();
 
+            CreateMap<Portifolio, PortifolioDto>().ReverseMap();
+
             CreateMap<Carteira, CarteiraDto>().ReverseMap();
 
             CreateMap<Corretora, CorretoraDto>().ReverseMap();

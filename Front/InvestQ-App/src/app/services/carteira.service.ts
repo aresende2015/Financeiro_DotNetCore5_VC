@@ -30,12 +30,14 @@ export class CarteiraService {
   }
 
   public post(carteira: Carteira): Observable<Carteira> {
+    console.log(carteira);
     return this.http
       .post<Carteira>(this.baseURL, carteira)
       .pipe(take(1));
   }
 
   public put(carteira: Carteira): Observable<Carteira> {
+    console.log(carteira);
     return this.http
       .put<Carteira>(`${this.baseURL}/${carteira.id}`, carteira)
       .pipe(take(1));

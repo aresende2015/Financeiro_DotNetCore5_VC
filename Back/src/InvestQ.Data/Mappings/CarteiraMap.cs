@@ -8,6 +8,8 @@ namespace InvestQ.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<Carteira> builder)
         {
+            builder.ToTable("Carteiras");
+
             builder.Property(c => c.Descricao)
                     .IsRequired()
                     .HasMaxLength(100);

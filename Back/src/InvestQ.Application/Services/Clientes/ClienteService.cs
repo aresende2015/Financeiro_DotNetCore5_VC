@@ -12,12 +12,15 @@ namespace InvestQ.Application.Services.Clientes
     public class ClienteService : IClienteService
     {
         private readonly IClienteRepo _clienteRepo;
+        private readonly ICarteiraRepo _carteiraRepo;
         private readonly IMapper _mapper;
 
         public ClienteService(IClienteRepo clienteRepo,
+                              ICarteiraRepo carteiraRepo,
                               IMapper mapper)
         {
             _clienteRepo = clienteRepo;
+            _carteiraRepo = carteiraRepo;
             _mapper = mapper;
         }
         public async Task<ClienteDto> AdicionarCliente(int userId, ClienteDto model)
@@ -93,6 +96,9 @@ namespace InvestQ.Application.Services.Clientes
 
             if (cliente == null)
                 throw new Exception("O Cliente que tentou deletar não existe.");
+
+            if (_carteiraRepo.GetPossuiCarteiraByClienteId(clienteId))
+                throw new Exception("O Cliente que tentou deletar possui carteiras.");
 
             _clienteRepo.Deletar(cliente);
 

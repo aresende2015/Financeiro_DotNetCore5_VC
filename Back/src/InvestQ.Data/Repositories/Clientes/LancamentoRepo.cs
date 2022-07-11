@@ -47,6 +47,17 @@ namespace InvestQ.Data.Repositories.Clientes
             return await query.ToArrayAsync();
         }
 
+        public DateTime GetDataLancamentoByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId)
+        {
+            DateTime maiorDataDeOperacao = _context.Lancamentos
+                                                   .Where(l => l.CarteiraId == carteiraId
+                                                             && l.AtivoId == ativoId)
+                                                    .Max(l => l.DataDaOperacao);
+            
+           
+            return maiorDataDeOperacao;
+        }
+
         public async Task<Lancamento> GetLancamentoByIdAsync(Guid id)
         {
             IQueryable<Lancamento> query = _context.Lancamentos;
@@ -60,6 +71,14 @@ namespace InvestQ.Data.Repositories.Clientes
                          .Where(l => l.Id == id);
 
             return await query.FirstOrDefaultAsync();
+        }
+
+        public bool GetPossuiLancamentoByCarteiraId(Guid carteiraId)
+        {
+            bool retorno = _context.Lancamentos
+                                    .Where(l => l.CarteiraId == carteiraId)
+                                    .Count() > 0;
+            return retorno;
         }
     }
 }

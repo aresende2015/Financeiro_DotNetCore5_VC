@@ -16,6 +16,7 @@ namespace InvestQ.Application.Dtos.Clientes
         public int Quantidade { get; set; }
         public TipoDeMovimentacao TipoDeMovimentacao { get; set; }
         public TipoDeOperacao TipoDeOperacao { get; set; }
+        public TipoDeAtivo TipoDeAtivo { get; set; }
         public Guid AtivoId { get; set; }
         public Ativo Ativo { get; set; }
         public Guid CarteiraId { get; set; }

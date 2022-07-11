@@ -48,6 +48,9 @@ import { LancamentosComponent } from './components/clientes/lancamentos/lancamen
 import { LancamentoDetalheComponent } from './components/clientes/lancamentos/lancamento-detalhe/lancamento-detalhe.component';
 import { LancamentosListaComponent } from './components/clientes/lancamentos/lancamentos-lista/lancamentos-lista.component';
 import { LancamentoFiltroListaComponent } from './components/clientes/lancamentos/lancamento-filtro-lista/lancamento-filtro-lista.component';
+import { PortifoliosComponent } from './components/clientes/portifolios/portifolios.component';
+import { PortifolioFiltroListaComponent } from './components/clientes/portifolios/portifolio-filtro-lista/portifolio-filtro-lista.component';
+import { PortifoliosListaComponent } from './components/clientes/portifolios/portifolios-lista/portifolios-lista.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -79,6 +82,18 @@ const routes: Routes = [
           { path: 'detalhe/:carteiraid', component: LancamentoDetalheComponent },
           { path: 'detalhe', component: LancamentoDetalheComponent },
           { path: 'lista/:id', component: LancamentosListaComponent }
+        ]
+      },
+      { path: 'portifolios', redirectTo: 'portifolios/filtro/lista' },
+      { path: 'portifolios/lista', redirectTo: 'portifolios/filtro/lista' },
+      {
+        path: 'portifolios', component: PortifoliosComponent,
+        children: [
+          { path: 'filtro/lista', component: PortifolioFiltroListaComponent },
+          //{ path: 'detalhe/:carteiraid/:id', component: LancamentoDetalheComponent },
+          //{ path: 'detalhe/:carteiraid', component: LancamentoDetalheComponent },
+          //{ path: 'detalhe', component: LancamentoDetalheComponent },
+          { path: 'lista/:id', component: PortifoliosListaComponent }
         ]
       },
       { path: 'clientes', redirectTo: 'clientes/lista' },

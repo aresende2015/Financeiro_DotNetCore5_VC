@@ -13,12 +13,15 @@ namespace InvestQ.Application.Services.Clientes
     public class CarteiraService : ICarteiraService
     {
         private readonly ICarteiraRepo _carteiraRepo;
+        private readonly ILancamentoRepo _lancamentoRepo;
         private readonly IMapper _mapper;
 
         public CarteiraService(ICarteiraRepo carteiraRepo,
+                               ILancamentoRepo lancamentoRepo,
                                IMapper mapper)
         {
             _carteiraRepo = carteiraRepo;
+            _lancamentoRepo = lancamentoRepo;
             _mapper = mapper;
         }
         public async Task<CarteiraDto> AdicionarCarteira(CarteiraDto model)
@@ -74,6 +77,9 @@ namespace InvestQ.Application.Services.Clientes
             if (carteira == null)
                 throw new Exception("A Carteira que tentou deletar não existe.");
 
+            if (_lancamentoRepo.GetPossuiLancamentoByCarteiraId(carteiraId))
+                throw new Exception("A Carteira que tentou deletar possui lançamentos.");
+                
             _carteiraRepo.Deletar(carteira);
 
             return await _carteiraRepo.SalvarMudancasAsync();

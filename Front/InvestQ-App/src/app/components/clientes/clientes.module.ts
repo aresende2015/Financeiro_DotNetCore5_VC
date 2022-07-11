@@ -21,6 +21,9 @@ import { LancamentosComponent } from './lancamentos/lancamentos.component';
 import { LancamentosListaComponent } from './lancamentos/lancamentos-lista/lancamentos-lista.component';
 import { LancamentoDetalheComponent } from './lancamentos/lancamento-detalhe/lancamento-detalhe.component';
 import { LancamentoFiltroListaComponent } from './lancamentos/lancamento-filtro-lista/lancamento-filtro-lista.component';
+import { PortifoliosComponent } from './portifolios/portifolios.component';
+import { PortifolioFiltroListaComponent } from './portifolios/portifolio-filtro-lista/portifolio-filtro-lista.component';
+import { PortifoliosListaComponent } from './portifolios/portifolios-lista/portifolios-lista.component';
 
 @NgModule({
   imports: [
@@ -53,7 +56,10 @@ import { LancamentoFiltroListaComponent } from './lancamentos/lancamento-filtro-
     LancamentosComponent,
     LancamentosListaComponent,
     LancamentoDetalheComponent,
-    LancamentoFiltroListaComponent
+    LancamentoFiltroListaComponent,
+    PortifoliosComponent,
+    PortifolioFiltroListaComponent,
+    PortifoliosListaComponent
   ]
 })
 export class ClientesModule { }

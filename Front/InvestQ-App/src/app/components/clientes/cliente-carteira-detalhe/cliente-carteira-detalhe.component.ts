@@ -7,6 +7,7 @@ import { Corretora } from '@app/models/Corretora';
 import { CarteiraService } from '@app/services/carteira.service';
 import { ClienteService } from '@app/services/cliente.service';
 import { CorretoraService } from '@app/services/corretora.service';
+import { LancamentoService } from '@app/services/lancamento.service';
 import { Guid } from 'guid-typescript';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -49,6 +50,7 @@ export class ClienteCarteiraDetalheComponent implements OnInit {
               private activatedRouter: ActivatedRoute,
               private localeService: BsLocaleService,
               private carteiraService: CarteiraService,
+              private lancamentoService: LancamentoService,
               private corretoraService: CorretoraService,
               private clienteService: ClienteService,
               private spinner: NgxSpinnerService,
@@ -145,13 +147,14 @@ export class ClienteCarteiraDetalheComponent implements OnInit {
     this.carregarCarteira();
     this.carregarCorretoras();
     this.carregarClientesUser();
+    this.carteiraPossuiLancamento();
     this.validation();
   }
 
   public validation(): void {
     this.form = this.fb.group({
       descricao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      saldo: [''],
+      saldo: [0, [Validators.required]],
       dataDeAtualizadoDoSaldo: [''],
       clienteId: [null, [Validators.required]],
       corretoraId: [null, [Validators.required]]
@@ -172,6 +175,30 @@ export class ClienteCarteiraDetalheComponent implements OnInit {
     } else {
       this.salvarAlteracao();
     }
+  }
+
+  public carteiraPossuiLancamento(): void {
+    this.lancamentoService.getPossuiLancamentoByCarteiraId(this.carteiraId, true).subscribe({
+      next: (possuiLancamento: boolean) => {
+        if (possuiLancamento) {
+          this.form.controls['clienteId'].disable();
+          this.form.controls['corretoraId'].disable();
+          this.form.controls['saldo'].disable();
+          this.form.controls['dataDeAtualizadoDoSaldo'].disable();
+        }
+        else {
+          this.form.controls['clienteId'].enable();
+          this.form.controls['corretoraId'].enable();
+          this.form.controls['saldo'].enable();
+          this.form.controls['dataDeAtualizadoDoSaldo'].enable();
+
+        }
+      },
+      error: (error: any) => {
+        this.toastr.error('Erro ao verificar lancamentos da carteira.', 'Erro!');
+        console.error(error)
+      }
+    });
   }
 
   public salvarAlteracao(): void {

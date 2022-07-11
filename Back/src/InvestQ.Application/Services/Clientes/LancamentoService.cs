@@ -7,27 +7,42 @@ using InvestQ.Application.Dtos.Clientes;
 using InvestQ.Application.Interfaces.Clientes;
 using InvestQ.Data.Interfaces.Clientes;
 using InvestQ.Domain.Entities.Clientes;
+using InvestQ.Domain.Enum;
 
 namespace InvestQ.Application.Services.Clientes
 {
     public class LancamentoService : ILancamentoService
     {
         private readonly ILancamentoRepo _lancamentoRepo;
+        private readonly IPortifolioRepo _portifolioRepo;
         private readonly IMapper _mapper;
 
         public LancamentoService(ILancamentoRepo lancamentoRepo,
+                                 IPortifolioRepo portifolioRepo,
                                  IMapper mapper)
         {
             _lancamentoRepo = lancamentoRepo;
+            _portifolioRepo = portifolioRepo;
             _mapper = mapper;
         }
         public async Task<LancamentoDto> AdicionarLancamento(LancamentoDto model)
         {
+            var _tipoDeAtivo = model.TipoDeAtivo;
+
             var lancamento = _mapper.Map<Lancamento>(model);
 
             if( await _lancamentoRepo.GetLancamentoByIdAsync(lancamento.Id) == null)
             {
                 _lancamentoRepo.Adicionar(lancamento);
+
+                if (_tipoDeAtivo == TipoDeAtivo.Acao)
+                {
+                    if ( lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra || 
+                         lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Venda)
+                    {
+                        await AdicionarPortifolioAcao(lancamento);
+                    }
+                }
 
                 if (await _lancamentoRepo.SalvarMudancasAsync())
                 {
@@ -124,6 +139,58 @@ namespace InvestQ.Application.Services.Clientes
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        public bool GetPossuiLancamentosByCarteiraId(Guid carteiraId)
+        {
+            return _lancamentoRepo.GetPossuiLancamentoByCarteiraId(carteiraId);
+        }
+
+        private async Task AdicionarPortifolioAcao(Lancamento lancamento)
+        {   
+            var portifolio = await _portifolioRepo.GetPortifolioByCarteiraIdAtivoIdAsync(lancamento.CarteiraId, lancamento.AtivoId);
+
+            if (portifolio == null) {
+                if (lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra) {
+                    portifolio = new Portifolio();
+                    portifolio.AtivoId = lancamento.AtivoId;
+                    portifolio.CarteiraId = lancamento.CarteiraId;
+                    portifolio.Quantidade = lancamento.Quantidade;
+                    portifolio.PrecoMedio = lancamento.ValorDaOperacao;
+
+                    _portifolioRepo.Adicionar(portifolio);
+                } else {
+                    throw new Exception("Não pode ocorrer uma venda sem ter o ativo.");
+                }
+            }
+            else {
+                var _maiorDataDeOperacao = _lancamentoRepo.GetDataLancamentoByCarteiraIdAtivoIdAsync
+                                                    (lancamento.CarteiraId, lancamento.AtivoId);
+
+                if (lancamento.DataDaOperacao.Date == _maiorDataDeOperacao.Date)
+                {
+                    if (lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra)
+                    {
+                        var _quantidadeTotal = portifolio.Quantidade + lancamento.Quantidade;
+                        var _precoMedio = ( (portifolio.Quantidade * portifolio.PrecoMedio) + 
+                                            (lancamento.Quantidade * lancamento.ValorDaOperacao)) / 
+                                            _quantidadeTotal;
+                        
+                        portifolio.Quantidade = _quantidadeTotal;
+                        portifolio.PrecoMedio = _precoMedio;
+
+                    } else {
+                        if (portifolio.Quantidade >= lancamento.Quantidade){
+                            var _quantidadeTotal = portifolio.Quantidade - lancamento.Quantidade;
+                            
+                            portifolio.Quantidade = _quantidadeTotal;
+                        } else {
+                            throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
+                        }
+                    }                    
+                    _portifolioRepo.Atualizar(portifolio);
+                }
             }
         }
     }

@@ -44,6 +44,14 @@ namespace InvestQ.API.Controllers
             }
         }
 
+        [HttpGet("possuilancamento/{carteiraId}/{possuiLancamento}")]
+        public bool Get(Guid carteiraId, bool possuiLancamento) 
+        {
+            possuiLancamento = _lacamentoService.GetPossuiLancamentosByCarteiraId(carteiraId);
+            
+            return possuiLancamento;
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetLancamentoById(Guid id)
         {

@@ -94,7 +94,7 @@ namespace InvestQ.API.Controllers
             }
             catch (Exception ex)
             {                
-                return StatusCode(StatusCodes.Status500InternalServerError, 
+                return StatusCode(StatusCodes.Status417ExpectationFailed, 
                     $"Erro ao tentar adicionar um Cliente. Erro: {ex.Message}");
             }
         }
@@ -137,7 +137,7 @@ namespace InvestQ.API.Controllers
             }
             catch (Exception ex)
             {                
-                return StatusCode(StatusCodes.Status500InternalServerError, 
+                return StatusCode(StatusCodes.Status417ExpectationFailed, 
                     $"Erro ao tentar deletar o Cliente com id: ${id}. Erro: {ex.Message}");
             }
         }

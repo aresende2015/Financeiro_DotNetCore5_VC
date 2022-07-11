@@ -33,9 +33,13 @@ export class LancamentoService {
         .pipe(take(1));
   }
 
+  public getPossuiLancamentoByCarteiraId(carteiraId: Guid, possuiLancamento: boolean): Observable<any> {
+    return this.http
+              .get(`${this.baseURL}/${'possuilancamento'}/${carteiraId}/${possuiLancamento}`)
+              .pipe(take(1));
+  }
+
   public post(lancamento: Lancamento): Observable<Lancamento> {
-    alert("alex")
-    console.log(lancamento);
     return this.http
       .post<Lancamento>(this.baseURL, lancamento)
       .pipe(take(1));
