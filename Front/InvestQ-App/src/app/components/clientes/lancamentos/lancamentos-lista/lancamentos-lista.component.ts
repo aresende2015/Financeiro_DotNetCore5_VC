@@ -125,12 +125,12 @@ export class LancamentosListaComponent implements OnInit {
         if (result.message === 'Deletado') {
           this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
           //this.spinner.hide();
-          //this.carregarLancamentos(Guid.createEmpty());
+          this.carregarLancamentos();
         }
       },
       (error: any) => {
         console.error(error);
-        this.toastr.error(`Erro ao tentar deletar o lancamento ${this.lancamentoId}`, 'Erro');
+        this.toastr.error(`Erro ao tentar deletar o lancamento ${this.lancamentoId}. ${error.error}`, 'Erro');
         //this.spinner.hide();
       },
       //() => {this.spinner.hide();}

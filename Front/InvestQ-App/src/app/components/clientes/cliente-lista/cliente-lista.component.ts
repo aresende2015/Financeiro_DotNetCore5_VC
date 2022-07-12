@@ -110,7 +110,7 @@ export class ClienteListaComponent implements OnInit {
       },
       (error: any) => {
         console.error(error);
-        this.toastr.error(`Erro ao tentar deletar o cliente ${this.clienteId}`, 'Erro');
+        this.toastr.error(`${error.error}`, 'Erro');
         //this.spinner.hide();
       },
       //() => {this.spinner.hide();}

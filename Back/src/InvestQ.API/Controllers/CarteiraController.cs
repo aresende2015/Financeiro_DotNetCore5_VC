@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InvestQ.API.Extensions;
 using InvestQ.Application.Dtos.Clientes;
 using InvestQ.Application.Interfaces.Clientes;
 using Microsoft.AspNetCore.Authorization;
@@ -30,7 +31,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                 var carteiras = await _carteiraService.GetAllCarteirasAsync(true, true);
+                 var carteiras = await _carteiraService.GetAllCarteirasAsync(User.GetUserId(), true, true);
 
                  if (carteiras == null) return NoContent();
 

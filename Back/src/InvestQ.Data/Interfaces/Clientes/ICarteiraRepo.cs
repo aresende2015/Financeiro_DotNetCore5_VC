@@ -9,7 +9,7 @@ namespace InvestQ.Data.Interfaces.Clientes
 {
     public interface ICarteiraRepo : IGeralRepo
     {
-        Task<Carteira[]> GetAllCarteirasAsync(bool includeCliente, bool includeCorretora);  
+        Task<Carteira[]> GetAllCarteirasAsync(int userId, bool includeCliente, bool includeCorretora);  
         Task<Carteira[]> GetAllCarteirasByClienteId(Guid clienteId, bool includeCliente, bool includeCorretora);      
         Task<Carteira[]> GetAllCarteirasByCorretoraId(Guid corretoraId, bool includeCliente, bool includeCorretora);      
         Task<Carteira> GetCarteiraByIdAsync(Guid id, bool includeCliente, bool includeCorretora);

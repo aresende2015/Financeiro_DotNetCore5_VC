@@ -85,11 +85,11 @@ namespace InvestQ.Application.Services.Clientes
             return await _carteiraRepo.SalvarMudancasAsync();
         }
 
-        public async Task<CarteiraDto[]> GetAllCarteirasAsync(bool includeCliente, bool includeCorretora)
+        public async Task<CarteiraDto[]> GetAllCarteirasAsync(int userId, bool includeCliente, bool includeCorretora)
         {
             try
             {
-                var carteiras = await _carteiraRepo.GetAllCarteirasAsync(includeCliente, includeCorretora);
+                var carteiras = await _carteiraRepo.GetAllCarteirasAsync(userId, includeCliente, includeCorretora);
 
                 if (carteiras == null) return null;
 

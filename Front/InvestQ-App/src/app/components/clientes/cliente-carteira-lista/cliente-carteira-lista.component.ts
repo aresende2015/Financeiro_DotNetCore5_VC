@@ -127,13 +127,11 @@ export class ClienteCarteiraListaComponent implements OnInit {
       },
       (error: any) => {
         console.error(error);
-        this.toastr.error(`Erro ao tentar deletar a carteira ${this.carteiraId}`, 'Erro');
+        this.toastr.error(`${error.error}`, 'Erro');
         //this.spinner.hide();
       },
       //() => {this.spinner.hide();}
     ).add(() => {this.spinner.hide();})
-
-    this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
   }
 
   decline(): void {

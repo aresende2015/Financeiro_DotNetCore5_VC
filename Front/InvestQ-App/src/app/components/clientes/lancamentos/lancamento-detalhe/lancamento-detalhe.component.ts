@@ -184,7 +184,7 @@ export class LancamentoDetalheComponent implements OnInit {
         (_lancamento: Lancamento) => {
 
           this.toastr.success('Lançamento salvo com sucesso!', 'Sucesso');
-          this.router.navigate([`lancamentos/detalhe/${_lancamento.id}`]);
+          this.router.navigate([`lancamentos/lista/${_lancamento.carteiraId}`]);
         },
         (error: any) => {
           console.error(error);

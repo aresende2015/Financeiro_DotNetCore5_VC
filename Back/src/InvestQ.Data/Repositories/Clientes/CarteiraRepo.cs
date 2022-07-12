@@ -18,7 +18,7 @@ namespace InvestQ.Data.Repositories.Clientes
             _context = context;
         }
 
-        public async Task<Carteira[]> GetAllCarteirasAsync(bool includeCliente, bool includeCorretora)
+        public async Task<Carteira[]> GetAllCarteirasAsync(int userId, bool includeCliente, bool includeCorretora)
         {
             IQueryable<Carteira> query = _context.Carteiras;
 
@@ -29,6 +29,7 @@ namespace InvestQ.Data.Repositories.Clientes
                 query = query.Include(c => c.Corretora);
 
             query = query.AsNoTracking()
+                         .Where(c => c.Cliente.UserId == userId)
                          .OrderBy(c => c.Descricao);
 
             return await query.ToArrayAsync();

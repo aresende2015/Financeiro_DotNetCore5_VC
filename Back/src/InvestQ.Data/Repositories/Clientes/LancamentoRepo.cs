@@ -26,7 +26,7 @@ namespace InvestQ.Data.Repositories.Clientes
             query = query.Include(l => l.Carteira);
 
             query = query.AsNoTracking()
-                         .OrderBy(l => l.DataDaOperacao)
+                         .OrderByDescending(l => l.DataDaOperacao)
                          .Where(l => l.CarteiraId == carteiraId);
 
             return await query.ToArrayAsync();
