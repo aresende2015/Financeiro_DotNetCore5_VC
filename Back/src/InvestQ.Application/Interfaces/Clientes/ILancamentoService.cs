@@ -13,7 +13,7 @@ namespace InvestQ.Application.Interfaces.Clientes
         Task<bool> DeletarLancamento(Guid lancamentoId);
         
         Task<LancamentoDto[]> GetAllLancamentosByCarteiraIdAsync(Guid carteiraId);
-        Task<LancamentoDto[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId);
+        Task<LancamentoDto[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId, bool includeCarteira, bool includeAtivo);
         Task<LancamentoDto> GetLancamentoByIdAsync(Guid id);
         bool GetPossuiLancamentosByCarteiraId(Guid carteiraId);
         

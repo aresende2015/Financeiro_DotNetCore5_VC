@@ -75,7 +75,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                var lancamento = await _lacamentoService.GetAllLancamentosByCarteiraIdAtivoIdAsync(carteiraId, ativoId);
+                var lancamento = await _lacamentoService.GetAllLancamentosByCarteiraIdAtivoIdAsync(carteiraId, ativoId, true, true);
 
                 if (lancamento == null) return NoContent();
 

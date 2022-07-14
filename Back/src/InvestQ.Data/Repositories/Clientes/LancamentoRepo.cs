@@ -32,13 +32,14 @@ namespace InvestQ.Data.Repositories.Clientes
             return await query.ToArrayAsync();
         }
 
-        public async Task<Lancamento[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId)
+        public async Task<Lancamento[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId, bool includeCarteira, bool includeAtivo)
         {
             IQueryable<Lancamento> query = _context.Lancamentos;
+            if (includeCarteira)
+                query = query.Include(l => l.Carteira);
 
-            query = query.Include(l => l.Ativo);
-            
-            query = query.Include(l => l.Carteira);
+            if (includeAtivo)
+                query = query.Include(l => l.Ativo);
             
             query = query.AsNoTracking()
                         .OrderBy(l => l.DataDaOperacao).ThenBy(l => l.TipoDeMovimentacao)

@@ -110,11 +110,11 @@ namespace InvestQ.Application.Services.Clientes
             }
         }
 
-        public async Task<LancamentoDto[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId)
+        public async Task<LancamentoDto[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId, bool includeCarteira, bool includeAtivo)
         {
             try
             {
-                var lancamentos = await _lancamentoRepo.GetAllLancamentosByCarteiraIdAtivoIdAsync(carteiraId, ativoId);
+                var lancamentos = await _lancamentoRepo.GetAllLancamentosByCarteiraIdAtivoIdAsync(carteiraId, ativoId, includeCarteira, includeAtivo);
 
                 if (lancamentos == null) return null;
 
@@ -203,7 +203,7 @@ namespace InvestQ.Application.Services.Clientes
         }
 
         private async Task RecalcularPortifolioAcao(Portifolio portifolio, Lancamento lancamentoAtual) {
-            var lancamentos = await _lancamentoRepo.GetAllLancamentosByCarteiraIdAtivoIdAsync(portifolio.CarteiraId, portifolio.AtivoId);
+            var lancamentos = await _lancamentoRepo.GetAllLancamentosByCarteiraIdAtivoIdAsync(portifolio.CarteiraId, portifolio.AtivoId, false, false);
 
             portifolio.PrecoMedio = 0;
             portifolio.Quantidade = 0;
@@ -259,6 +259,8 @@ namespace InvestQ.Application.Services.Clientes
                         throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
                     }
                 } 
+                _lancamento.Contabilizado = true;
+                _lancamentoRepo.Atualizar(_lancamento);
             }
         }
     }

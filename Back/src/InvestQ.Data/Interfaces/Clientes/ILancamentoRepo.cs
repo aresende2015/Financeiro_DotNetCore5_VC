@@ -9,7 +9,7 @@ namespace InvestQ.Data.Interfaces.Clientes
     public interface ILancamentoRepo : IGeralRepo
     {
         Task<Lancamento[]> GetAllLancamentosByCarteiraIdAsync(Guid carteiraId);  
-        Task<Lancamento[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId);  
+        Task<Lancamento[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId, bool includeCarteira, bool includeAtivo);  
         Task<Lancamento> GetLancamentoByIdAsync(Guid id);
         DateTime GetDataLancamentoByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId);
         bool GetPossuiLancamentoByCarteiraId(Guid carteiraId);
