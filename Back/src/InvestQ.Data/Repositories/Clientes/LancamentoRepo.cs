@@ -41,6 +41,7 @@ namespace InvestQ.Data.Repositories.Clientes
             query = query.Include(l => l.Carteira);
             
             query = query.AsNoTracking()
+                        .OrderBy(l => l.DataDaOperacao).ThenBy(l => l.TipoDeMovimentacao)
                         .Where(l => l.CarteiraId == carteiraId
                                 && l.AtivoId == ativoId);
 

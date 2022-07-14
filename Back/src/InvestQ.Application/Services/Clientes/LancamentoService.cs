@@ -160,6 +160,8 @@ namespace InvestQ.Application.Services.Clientes
                     portifolio.PrecoMedio = lancamento.ValorDaOperacao;
 
                     _portifolioRepo.Adicionar(portifolio);
+                    lancamento.Contabilizado = true;
+                    //_lancamentoRepo.Atualizar(lancamento);
                 } else {
                     throw new Exception("Não pode ocorrer uma venda sem ter o ativo.");
                 }
@@ -168,7 +170,7 @@ namespace InvestQ.Application.Services.Clientes
                 var _maiorDataDeOperacao = _lancamentoRepo.GetDataLancamentoByCarteiraIdAtivoIdAsync
                                                     (lancamento.CarteiraId, lancamento.AtivoId);
 
-                if (lancamento.DataDaOperacao.Date == _maiorDataDeOperacao.Date)
+                if (lancamento.DataDaOperacao.Date >= _maiorDataDeOperacao.Date)
                 {
                     if (lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra)
                     {
@@ -184,13 +186,79 @@ namespace InvestQ.Application.Services.Clientes
                         if (portifolio.Quantidade >= lancamento.Quantidade){
                             var _quantidadeTotal = portifolio.Quantidade - lancamento.Quantidade;
                             
+                            if (_quantidadeTotal == 0)
+                                portifolio.PrecoMedio = 0;
                             portifolio.Quantidade = _quantidadeTotal;
                         } else {
                             throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
                         }
                     }                    
                     _portifolioRepo.Atualizar(portifolio);
+                    lancamento.Contabilizado = true;
+                } else {
+                    await RecalcularPortifolioAcao(portifolio, lancamento);
+                    _portifolioRepo.Atualizar(portifolio);
                 }
+            }
+        }
+
+        private async Task RecalcularPortifolioAcao(Portifolio portifolio, Lancamento lancamentoAtual) {
+            var lancamentos = await _lancamentoRepo.GetAllLancamentosByCarteiraIdAtivoIdAsync(portifolio.CarteiraId, portifolio.AtivoId);
+
+            portifolio.PrecoMedio = 0;
+            portifolio.Quantidade = 0;
+
+            foreach (Lancamento _lancamento in lancamentos)
+            {
+                if ((lancamentoAtual.DataDaOperacao.Date < _lancamento.DataDaOperacao.Date) && 
+                     !lancamentoAtual.Contabilizado)
+                {
+                    lancamentoAtual.Contabilizado = true;
+
+                    if (lancamentoAtual.TipoDeMovimentacao == TipoDeMovimentacao.Compra)
+                    {
+                        var _quantidadeTotal = portifolio.Quantidade + lancamentoAtual.Quantidade;
+                        var _precoMedio = ( (portifolio.Quantidade * portifolio.PrecoMedio) + 
+                                            (lancamentoAtual.Quantidade * lancamentoAtual.ValorDaOperacao)) / 
+                                            _quantidadeTotal;
+                        
+                        portifolio.Quantidade = _quantidadeTotal;
+                        portifolio.PrecoMedio = _precoMedio;
+
+                    } else {
+                        if (portifolio.Quantidade >= lancamentoAtual.Quantidade){
+                            var _quantidadeTotal = portifolio.Quantidade - lancamentoAtual.Quantidade;
+                            
+                            if (_quantidadeTotal == 0)
+                                portifolio.PrecoMedio = 0;
+                            portifolio.Quantidade = _quantidadeTotal;
+                        } else {
+                            throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
+                        }
+                    }
+                }
+
+                if (_lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra)
+                {
+                    var _quantidadeTotal = portifolio.Quantidade + _lancamento.Quantidade;
+                    var _precoMedio = ( (portifolio.Quantidade * portifolio.PrecoMedio) + 
+                                        (_lancamento.Quantidade * _lancamento.ValorDaOperacao)) / 
+                                        _quantidadeTotal;
+                    
+                    portifolio.Quantidade = _quantidadeTotal;
+                    portifolio.PrecoMedio = _precoMedio;
+
+                } else if (_lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Venda) {
+                    if (portifolio.Quantidade >= _lancamento.Quantidade){
+                        var _quantidadeTotal = portifolio.Quantidade - _lancamento.Quantidade;
+                        
+                        if (_quantidadeTotal == 0)
+                                portifolio.PrecoMedio = 0;
+                        portifolio.Quantidade = _quantidadeTotal;
+                    } else {
+                        throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
+                    }
+                } 
             }
         }
     }

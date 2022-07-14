@@ -15,6 +15,7 @@ namespace InvestQ.Domain.Entities.Clientes
         public Lancamento(Decimal valorDaOperacao, 
                        DateTime dataDaOperacao, 
                        int quantidade, 
+                       bool contabilizado,
                        TipoDeMovimentacao tipoDeMovimentacao,
                        TipoDeOperacao tipoDeOperacao,
                        Guid ativoId,
@@ -23,6 +24,7 @@ namespace InvestQ.Domain.Entities.Clientes
             ValorDaOperacao = valorDaOperacao;
             DataDaOperacao = dataDaOperacao;
             Quantidade = quantidade;
+            Contabilizado = contabilizado;
             TipoDeMovimentacao = tipoDeMovimentacao;
             TipoDeOperacao = tipoDeOperacao;
             AtivoId = ativoId;
@@ -31,6 +33,7 @@ namespace InvestQ.Domain.Entities.Clientes
         public decimal ValorDaOperacao { get; set; }
         public DateTime DataDaOperacao { get; set; }
         public int Quantidade { get; set; }
+        public bool Contabilizado { get; set; }
         public TipoDeMovimentacao TipoDeMovimentacao { get; set; }
         public TipoDeOperacao TipoDeOperacao { get; set; }
         public Guid AtivoId { get; set; }
