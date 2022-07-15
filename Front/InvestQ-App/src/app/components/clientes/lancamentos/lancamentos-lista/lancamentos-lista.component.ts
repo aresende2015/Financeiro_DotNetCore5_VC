@@ -23,6 +23,8 @@ export class LancamentosListaComponent implements OnInit {
 
   public pagination = {} as Pagination;
 
+  public _filtro: string = '';
+
   termoBuscaChanged: Subject<string> = new Subject<string>();
 
   public lancamentos: Lancamento[] = [];
@@ -46,6 +48,7 @@ export class LancamentosListaComponent implements OnInit {
   // }
 
   public onFiltroAcionado(evento: any) {
+    this._filtro = evento.filtro;
     this.filtrarLancamentos(evento.filtro) ;
   }
 
@@ -59,7 +62,7 @@ export class LancamentosListaComponent implements OnInit {
 
   filtrarLancamentos(evt: any): void {
     if (this.termoBuscaChanged.observers.length === 0) {
-      this.termoBuscaChanged.pipe(debounceTime(1000)).subscribe(
+      this.termoBuscaChanged.pipe(debounceTime(500)).subscribe(
         filtrarPor => {
           this.spinner.show();
           this.lancamentoService.getAllLancamentosByCarteiraId(
@@ -184,9 +187,10 @@ export class LancamentosListaComponent implements OnInit {
     this.router.navigate([`lancamentos/detalhe/${this.carteiraId}/${id}`])  ;
   }
 
-  public pageChanged(event): void {
+  public pageChanged(event: any): void {
     this.pagination.currentPage = event.page;
     this.carregarLancamentos();
+    this.filtrarLancamentos(this._filtro) ;
   }
 
 }
