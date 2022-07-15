@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Application.Dtos.Clientes;
+using InvestQ.Data.Paginacao;
 
 namespace InvestQ.Application.Interfaces.Clientes
 {
@@ -12,8 +13,8 @@ namespace InvestQ.Application.Interfaces.Clientes
         Task<LancamentoDto> AtualizarLancamento(LancamentoDto model);
         Task<bool> DeletarLancamento(Guid lancamentoId);
         
-        Task<LancamentoDto[]> GetAllLancamentosByCarteiraIdAsync(Guid carteiraId);
-        Task<LancamentoDto[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId, bool includeCarteira, bool includeAtivo);
+        Task<PageList<LancamentoDto>> GetAllLancamentosByCarteiraIdAsync(Guid carteiraId, PageParams pageParams);
+        Task<LancamentoDto[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId, PageParams pageParams, bool includeCarteira, bool includeAtivo);
         Task<LancamentoDto> GetLancamentoByIdAsync(Guid id);
         bool GetPossuiLancamentosByCarteiraId(Guid carteiraId);
         

@@ -9,6 +9,8 @@ import { ToastrService } from 'ngx-toastr';
 import { CarteiraService } from '@app/services/carteira.service';
 import { Carteira } from '@app/models/Carteira';
 import { TipoDeMovimentacao } from '@app/models/Enum/TipoDeMovimentacao.enum';
+import { PaginatedResult, Pagination } from '@app/models/pagination/Pagination';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-lancamentos-lista',
@@ -19,36 +21,66 @@ export class LancamentosListaComponent implements OnInit {
 
   modalRef?: BsModalRef;
 
+  public pagination = {} as Pagination;
+
+  termoBuscaChanged: Subject<string> = new Subject<string>();
+
   public lancamentos: Lancamento[] = [];
-  public lancamentosFiltrados: Lancamento[] = [];
+  //public lancamentosFiltrados: Lancamento[] = [];
   public lancamentoId = Guid.createEmpty();
   public carteiraId =  Guid.createEmpty();
   public carteiraDescricao: string = '';
   public tipoDeMovimentacao: TipoDeMovimentacao = TipoDeMovimentacao.NaoInformada;
 
-  private _filtroLista: string = '';
+  //private _filtroLista: string = '';
 
-  public get filtroLista(): string {
-    return this._filtroLista;
-  }
+  // public get filtroLista(): string {
+  //   return this._filtroLista;
+  // }
 
-  public set filtroLista(value: string) {
-    this._filtroLista = value;
-    this.lancamentosFiltrados = this.filtroLista
-                                    ? this.filtrarLancamentos(this.filtroLista)
-                                    : this.lancamentos;
-  }
+  // public set filtroLista(value: string) {
+  //   this._filtroLista = value;
+  //   this.lancamentosFiltrados = this.filtroLista
+  //                                   ? this.filtrarLancamentos(this.filtroLista)
+  //                                   : this.lancamentos;
+  // }
 
   public onFiltroAcionado(evento: any) {
     this.filtrarLancamentos(evento.filtro) ;
   }
 
-  filtrarLancamentos(filtrarPor: string): Lancamento[] {
-    filtrarPor = filtrarPor.toLocaleLowerCase();
-    return this.lancamentos.filter(
-      (lancamento: {dataDaOperacao: Date}) =>
-      lancamento.dataDaOperacao.toString().indexOf(filtrarPor) !== -1
-    )
+  // filtrarLancamentos(filtrarPor: string): Lancamento[] {
+  //   filtrarPor = filtrarPor.toLocaleLowerCase();
+  //   return this.lancamentos.filter(
+  //     (lancamento: {quantidade: number}) =>
+  //     lancamento.quantidade.toString().indexOf(filtrarPor) !== -1
+  //   )
+  // }
+
+  filtrarLancamentos(evt: any): void {
+    if (this.termoBuscaChanged.observers.length === 0) {
+      this.termoBuscaChanged.pipe(debounceTime(1000)).subscribe(
+        filtrarPor => {
+          this.spinner.show();
+          this.lancamentoService.getAllLancamentosByCarteiraId(
+            this.carteiraId,
+            this.pagination.currentPage,
+            this.pagination.itemsPerPage,
+            filtrarPor
+        ).subscribe(
+          (paginatedResult: PaginatedResult<Lancamento[]>) => {
+            this.lancamentos = paginatedResult.result;
+            this.pagination = paginatedResult.pagination;
+          },
+          (error: any) => {
+            console.log(error.error)
+            this.toastr.error('Erro ao carregar a tela...', 'Error!');
+          }
+        ).add(() => this.spinner.hide());
+        }
+      )
+    }
+    this.termoBuscaChanged.next(evt);
   }
 
   constructor(
@@ -62,6 +94,7 @@ export class LancamentosListaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.pagination = {currentPage: 1, itemsPerPage: 5, totalItems: 1} as Pagination;
     this.carregarLancamentos();
 
     setTimeout(() => {
@@ -96,9 +129,10 @@ export class LancamentosListaComponent implements OnInit {
     this.bucarNomeDaCarteira(this.carteiraId);
 
     const observer = {
-      next: (_lancamentos: Lancamento[]) => {
-        this.lancamentos = _lancamentos;
-        this.lancamentosFiltrados = this.lancamentos;
+      next: (paginatedResult: PaginatedResult<Lancamento[]>) => {
+        this.lancamentos = paginatedResult.result;
+        this.pagination = paginatedResult.pagination;
+        //this.lancamentosFiltrados = this.lancamentos;
       },
       error: (error: any) => {
         this.spinner.hide();
@@ -107,7 +141,12 @@ export class LancamentosListaComponent implements OnInit {
       complete: () => {this.spinner.hide()}
     }
 
-    this.lancamentoService.getAllLancamentosByCarteiraId(this.carteiraId).subscribe(observer);
+    this.lancamentoService
+        .getAllLancamentosByCarteiraId(this.carteiraId,
+                                       this.pagination.currentPage,
+                                       this.pagination.itemsPerPage,
+                                       null)
+        .subscribe(observer);
   }
 
   public openModal(event: any, template: TemplateRef<any>, lancamentosId: Guid): void {
@@ -143,6 +182,11 @@ export class LancamentosListaComponent implements OnInit {
 
   public editarLancamento(id: Guid): void {
     this.router.navigate([`lancamentos/detalhe/${this.carteiraId}/${id}`])  ;
+  }
+
+  public pageChanged(event): void {
+    this.pagination.currentPage = event.page;
+    this.carregarLancamentos();
   }
 
 }

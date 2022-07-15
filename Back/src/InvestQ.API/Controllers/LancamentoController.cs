@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InvestQ.API.Extensions;
 using InvestQ.Application.Dtos.Clientes;
 using InvestQ.Application.Interfaces.Clientes;
+using InvestQ.Data.Paginacao;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,15 +29,17 @@ namespace InvestQ.API.Controllers
         }
         
         [HttpGet("carteiraid/{carteiraId}")]
-        public async Task<IActionResult> Get(Guid carteiraId) 
+        public async Task<IActionResult> Get(Guid carteiraId, [FromQuery]PageParams pageParams) 
         {
             try
             {
-                 var lancamento = await _lacamentoService.GetAllLancamentosByCarteiraIdAsync(carteiraId);
+                 var lancamentos = await _lacamentoService.GetAllLancamentosByCarteiraIdAsync(carteiraId, pageParams);
 
-                 if (lancamento == null) return NoContent();
+                 if (lancamentos == null) return NoContent();
 
-                 return Ok(lancamento);
+                 Response.AddPagination(lancamentos.CurrentPage, lancamentos.PageSize, lancamentos.TotalCount, lancamentos.TotalPages);
+
+                 return Ok(lancamentos);
             }
             catch (Exception ex)
             {
@@ -71,11 +75,11 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpGet("{carteiraId}/{ativoId}")]
-        public async Task<IActionResult> Get(Guid carteiraId, Guid ativoId)
+        public async Task<IActionResult> Get(Guid carteiraId, Guid ativoId, [FromQuery]PageParams pageParams)
         {
             try
             {
-                var lancamento = await _lacamentoService.GetAllLancamentosByCarteiraIdAtivoIdAsync(carteiraId, ativoId, true, true);
+                var lancamento = await _lacamentoService.GetAllLancamentosByCarteiraIdAtivoIdAsync(carteiraId, ativoId, pageParams, true, true);
 
                 if (lancamento == null) return NoContent();
 

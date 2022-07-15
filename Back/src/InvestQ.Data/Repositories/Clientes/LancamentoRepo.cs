@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Data.Context;
 using InvestQ.Data.Interfaces.Clientes;
+using InvestQ.Data.Paginacao;
 using InvestQ.Domain.Entities.Clientes;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +18,7 @@ namespace InvestQ.Data.Repositories.Clientes
         {
             _context = context;
         }
-        public async Task<Lancamento[]> GetAllLancamentosByCarteiraIdAsync(Guid carteiraId)
+        public async Task<PageList<Lancamento>> GetAllLancamentosByCarteiraIdAsync(Guid carteiraId, PageParams pageParams)
         {
             IQueryable<Lancamento> query = _context.Lancamentos;
 
@@ -27,12 +28,12 @@ namespace InvestQ.Data.Repositories.Clientes
 
             query = query.AsNoTracking()
                          .OrderByDescending(l => l.DataDaOperacao)
-                         .Where(l => l.CarteiraId == carteiraId);
+                         .Where(l => l.CarteiraId == carteiraId && l.Ativo.CodigoDoAtivo.Contains(pageParams.Term));
 
-            return await query.ToArrayAsync();
+            return await PageList<Lancamento>.CreateAsync(query, pageParams.PageNumber, pageParams.pageSize);
         }
 
-        public async Task<Lancamento[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId, bool includeCarteira, bool includeAtivo)
+        public async Task<Lancamento[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId, PageParams pageParams, bool includeCarteira, bool includeAtivo)
         {
             IQueryable<Lancamento> query = _context.Lancamentos;
             if (includeCarteira)
@@ -41,10 +42,34 @@ namespace InvestQ.Data.Repositories.Clientes
             if (includeAtivo)
                 query = query.Include(l => l.Ativo);
             
-            query = query.AsNoTracking()
+            if (includeAtivo) {
+                query = query.AsNoTracking()
+                            .OrderBy(l => l.DataDaOperacao).ThenBy(l => l.TipoDeMovimentacao)
+                            .Where(l => (l.CarteiraId == carteiraId && l.AtivoId == ativoId) &&
+                                         l.Ativo.CodigoDoAtivo.Contains(pageParams.Term));
+            } else {
+                query = query.AsNoTracking()
                         .OrderBy(l => l.DataDaOperacao).ThenBy(l => l.TipoDeMovimentacao)
                         .Where(l => l.CarteiraId == carteiraId
-                                && l.AtivoId == ativoId);
+                                && l.AtivoId == ativoId);                
+            }
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<Lancamento[]> GetAllLancamentosByCarteiraIdAtivoIdSemPaginacaoAsync(Guid carteiraId, Guid ativoId, bool includeCarteira, bool includeAtivo)
+        {
+            IQueryable<Lancamento> query = _context.Lancamentos;
+            if (includeCarteira)
+                query = query.Include(l => l.Carteira);
+
+            if (includeAtivo)
+                query = query.Include(l => l.Ativo);
+
+            query = query.AsNoTracking()
+                    .OrderBy(l => l.DataDaOperacao).ThenBy(l => l.TipoDeMovimentacao)
+                    .Where(l => l.CarteiraId == carteiraId
+                            && l.AtivoId == ativoId);                
 
             return await query.ToArrayAsync();
         }

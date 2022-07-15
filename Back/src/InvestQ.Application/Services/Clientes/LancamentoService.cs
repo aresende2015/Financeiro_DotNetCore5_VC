@@ -6,6 +6,7 @@ using AutoMapper;
 using InvestQ.Application.Dtos.Clientes;
 using InvestQ.Application.Interfaces.Clientes;
 using InvestQ.Data.Interfaces.Clientes;
+using InvestQ.Data.Paginacao;
 using InvestQ.Domain.Entities.Clientes;
 using InvestQ.Domain.Enum;
 
@@ -94,15 +95,22 @@ namespace InvestQ.Application.Services.Clientes
             return await _lancamentoRepo.SalvarMudancasAsync();
         }
 
-        public async Task<LancamentoDto[]> GetAllLancamentosByCarteiraIdAsync(Guid carteiraId)
+        public async Task<PageList<LancamentoDto>> GetAllLancamentosByCarteiraIdAsync(Guid carteiraId, PageParams pageParams)
         {
             try
             {
-                var lancamentos = await _lancamentoRepo.GetAllLancamentosByCarteiraIdAsync(carteiraId);
+                var lancamentos = await _lancamentoRepo.GetAllLancamentosByCarteiraIdAsync(carteiraId, pageParams);
 
                 if (lancamentos == null) return null;
 
-                return _mapper.Map<LancamentoDto[]>(lancamentos);
+                var RetornoDto = _mapper.Map<PageList<LancamentoDto>>(lancamentos);
+
+                RetornoDto.CurrentPage = lancamentos.CurrentPage;
+                RetornoDto.TotalPages = lancamentos.TotalPages;
+                RetornoDto.PageSize = lancamentos.PageSize;
+                RetornoDto.TotalCount = lancamentos.TotalCount;
+
+                return RetornoDto;
             }
             catch (Exception ex)
             {
@@ -110,11 +118,11 @@ namespace InvestQ.Application.Services.Clientes
             }
         }
 
-        public async Task<LancamentoDto[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId, bool includeCarteira, bool includeAtivo)
+        public async Task<LancamentoDto[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId, PageParams pageParams, bool includeCarteira, bool includeAtivo)
         {
             try
             {
-                var lancamentos = await _lancamentoRepo.GetAllLancamentosByCarteiraIdAtivoIdAsync(carteiraId, ativoId, includeCarteira, includeAtivo);
+                var lancamentos = await _lancamentoRepo.GetAllLancamentosByCarteiraIdAtivoIdAsync(carteiraId, ativoId, pageParams, includeCarteira, includeAtivo);
 
                 if (lancamentos == null) return null;
 
@@ -203,7 +211,7 @@ namespace InvestQ.Application.Services.Clientes
         }
 
         private async Task RecalcularPortifolioAcao(Portifolio portifolio, Lancamento lancamentoAtual) {
-            var lancamentos = await _lancamentoRepo.GetAllLancamentosByCarteiraIdAtivoIdAsync(portifolio.CarteiraId, portifolio.AtivoId, false, false);
+            var lancamentos = await _lancamentoRepo.GetAllLancamentosByCarteiraIdAtivoIdSemPaginacaoAsync(portifolio.CarteiraId, portifolio.AtivoId, false, false);
 
             portifolio.PrecoMedio = 0;
             portifolio.Quantidade = 0;

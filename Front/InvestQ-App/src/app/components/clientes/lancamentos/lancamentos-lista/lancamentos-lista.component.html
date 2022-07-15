@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody *ngIf="lancamentos && lancamentos.length">
-      <tr *ngFor="let lancamento of lancamentosFiltrados" >
+      <tr *ngFor="let lancamento of lancamentos" >
         <td>{{ lancamento.ativo.codigoDoAtivo }}</td>
         <td>{{ getTipoDeMovimentacao(lancamento.tipoDeMovimentacao) }}</td>
         <td>{{ lancamento.quantidade }}</td>
@@ -42,6 +42,22 @@
       </tr>
     </tfoot>
   </table>
+  <div class="d-flex justify-content-center">
+    <pagination
+      [boundaryLinks]="true"
+
+      [totalItems]="pagination.totalItems"
+      [itemsPerPage]="pagination.itemsPerPage"
+      [(ngModel)]="pagination.currentPage"
+      (pageChanged)="pageChanged($event)"
+      pageBtnClass="btn"
+
+      previousText="&lsaquo;"
+      nextText="&rsaquo;"
+      firstText="&laquo;"
+      lastText="&raquo;">
+    </pagination>
+  </div>
 </div>
 <ng-template #template>
   <div class="modal-body text-center">

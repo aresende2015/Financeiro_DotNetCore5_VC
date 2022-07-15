@@ -1,11 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TipoDeAtivo } from '@app/models/Enum/TipoDeAtivo.enum';
 import { TipoDeMovimentacao } from '@app/models/Enum/TipoDeMovimentacao.enum';
 import { Lancamento } from '@app/models/Lancamento';
+import { PaginatedResult } from '@app/models/pagination/Pagination';
 import { environment } from '@environments/environment';
 import { Guid } from 'guid-typescript';
-import { Observable, take } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 
 @Injectable()
 export class LancamentoService {
@@ -13,11 +14,33 @@ export class LancamentoService {
 
   constructor(private http: HttpClient) { }
 
-  public getAllLancamentosByCarteiraId(carteiraId: Guid): Observable<Lancamento[]> {
+  public getAllLancamentosByCarteiraId(carteiraId: Guid, page?: number, itemsPerPage?: number, term?: string): Observable<PaginatedResult<Lancamento[]>> {
+
+    const paginatedResult: PaginatedResult<Lancamento[]> = new PaginatedResult<Lancamento[]>();
+
+    let params = new HttpParams;
+
+    if (page !== null && itemsPerPage !== null) {
+      params = params.append('pageNumber', page.toString());
+      params = params.append('pageSize', itemsPerPage.toString());
+    }
+
+    if (term !== null && term !== '')
+      params = params.append('term', term);
+
     return this
               .http
-              .get<Lancamento[]>(`${this.baseURL}/${'carteiraid'}/${carteiraId}`)
-              .pipe(take(1));
+              .get<Lancamento[]>(`${this.baseURL}/${'carteiraid'}/${carteiraId}`, {observe: 'response', params})
+              .pipe(
+                take(1),
+                map((response) => {
+                  paginatedResult.result = response.body;
+                  if(response.headers.has('Pagination')) {
+                    paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+                  }
+                  return paginatedResult;
+                })
+              );
   }
 
   public getLancamentoById(id: Guid): Observable<Lancamento> {
@@ -27,10 +50,32 @@ export class LancamentoService {
               .pipe(take(1));
   }
 
-  public getLancamentoByCarteiraIdAtivoId(carteiraId: Guid, ativoId: Guid): Observable<any> {
+  public getLancamentoByCarteiraIdAtivoId(carteiraId: Guid, ativoId: Guid, page?: number, itemsPerPage?: number, term?: string): Observable<PaginatedResult<Lancamento[]>> {
+
+    const paginatedResult: PaginatedResult<Lancamento[]> = new PaginatedResult<Lancamento[]>();
+
+    let params = new HttpParams;
+
+    if (page !== null && itemsPerPage !== null) {
+      params = params.append('pageNumber', page.toString());
+      params = params.append('pageSize', itemsPerPage.toString());
+    }
+
+    if (term !== null && term !== '')
+      params = params.append('term', term);
+
     return this.http
-        .get(`${this.baseURL}/${carteiraId}/${ativoId}`)
-        .pipe(take(1));
+        .get<Lancamento[]>(`${this.baseURL}/${carteiraId}/${ativoId}`, {observe: 'response', params})
+        .pipe(
+          take(1),
+          map((response) => {
+            paginatedResult.result = response.body;
+            if(response.headers.has('Pagination')) {
+              paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+            }
+            return paginatedResult;
+          })
+        );
   }
 
   public getPossuiLancamentoByCarteiraId(carteiraId: Guid, possuiLancamento: boolean): Observable<any> {
