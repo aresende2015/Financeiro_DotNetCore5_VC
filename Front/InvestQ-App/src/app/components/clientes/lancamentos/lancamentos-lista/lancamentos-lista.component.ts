@@ -28,37 +28,15 @@ export class LancamentosListaComponent implements OnInit {
   termoBuscaChanged: Subject<string> = new Subject<string>();
 
   public lancamentos: Lancamento[] = [];
-  //public lancamentosFiltrados: Lancamento[] = [];
   public lancamentoId = Guid.createEmpty();
   public carteiraId =  Guid.createEmpty();
   public carteiraDescricao: string = '';
   public tipoDeMovimentacao: TipoDeMovimentacao = TipoDeMovimentacao.NaoInformada;
 
-  //private _filtroLista: string = '';
-
-  // public get filtroLista(): string {
-  //   return this._filtroLista;
-  // }
-
-  // public set filtroLista(value: string) {
-  //   this._filtroLista = value;
-  //   this.lancamentosFiltrados = this.filtroLista
-  //                                   ? this.filtrarLancamentos(this.filtroLista)
-  //                                   : this.lancamentos;
-  // }
-
   public onFiltroAcionado(evento: any) {
     this._filtro = evento.filtro;
     this.filtrarLancamentos(evento.filtro) ;
   }
-
-  // filtrarLancamentos(filtrarPor: string): Lancamento[] {
-  //   filtrarPor = filtrarPor.toLocaleLowerCase();
-  //   return this.lancamentos.filter(
-  //     (lancamento: {quantidade: number}) =>
-  //     lancamento.quantidade.toString().indexOf(filtrarPor) !== -1
-  //   )
-  // }
 
   filtrarLancamentos(evt: any): void {
     if (this.termoBuscaChanged.observers.length === 0) {
@@ -135,7 +113,6 @@ export class LancamentosListaComponent implements OnInit {
       next: (paginatedResult: PaginatedResult<Lancamento[]>) => {
         this.lancamentos = paginatedResult.result;
         this.pagination = paginatedResult.pagination;
-        //this.lancamentosFiltrados = this.lancamentos;
       },
       error: (error: any) => {
         this.spinner.hide();

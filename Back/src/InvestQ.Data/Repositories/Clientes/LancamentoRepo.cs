@@ -6,6 +6,7 @@ using InvestQ.Data.Context;
 using InvestQ.Data.Interfaces.Clientes;
 using InvestQ.Data.Paginacao;
 using InvestQ.Domain.Entities.Clientes;
+using InvestQ.Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 
 namespace InvestQ.Data.Repositories.Clientes
@@ -57,6 +58,19 @@ namespace InvestQ.Data.Repositories.Clientes
             return await query.ToArrayAsync();
         }
 
+        public async Task<Lancamento[]> GetAllLancamentosByCarteiraIdAtivoIdDataOperacaoAsync(Guid carteiraId, Guid ativoId, DateTime dataDeOperacao)
+        {
+            IQueryable<Lancamento> query = _context.Lancamentos;
+            
+                query = query.AsNoTracking()
+                        .Where(l => l.CarteiraId == carteiraId
+                                 && l.AtivoId == ativoId
+                                 && l.DataDaOperacao.Date == dataDeOperacao.Date
+                                 && (l.TipoDeMovimentacao == TipoDeMovimentacao.Compra || l.TipoDeMovimentacao == TipoDeMovimentacao.Venda));
+
+            return await query.ToArrayAsync();
+        }
+
         public async Task<Lancamento[]> GetAllLancamentosByCarteiraIdAtivoIdSemPaginacaoAsync(Guid carteiraId, Guid ativoId, bool includeCarteira, bool includeAtivo)
         {
             IQueryable<Lancamento> query = _context.Lancamentos;
@@ -85,13 +99,15 @@ namespace InvestQ.Data.Repositories.Clientes
             return maiorDataDeOperacao;
         }
 
-        public async Task<Lancamento> GetLancamentoByIdAsync(Guid id)
+        public async Task<Lancamento> GetLancamentoByIdAsync(Guid id, bool includeCarteira, bool includeAtivo)
         {
             IQueryable<Lancamento> query = _context.Lancamentos;
 
-            query = query.Include(l => l.Ativo);
-            
-            query = query.Include(l => l.Carteira);
+            if (includeCarteira)
+                query = query.Include(l => l.Carteira);
+
+            if (includeAtivo)
+                query = query.Include(l => l.Ativo);
 
             query = query.AsNoTracking()
                          .OrderBy(l => l.DataDaOperacao)

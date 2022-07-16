@@ -61,7 +61,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                 var lancamento = await _lacamentoService.GetLancamentoByIdAsync(id);
+                 var lancamento = await _lacamentoService.GetLancamentoByIdAsync(id, true, true);
 
                  if (lancamento == null) return NoContent();
 
@@ -135,7 +135,7 @@ namespace InvestQ.API.Controllers
         {
             try
             {
-                var lancamento = await _lacamentoService.GetLancamentoByIdAsync(id);
+                var lancamento = await _lacamentoService.GetLancamentoByIdAsync(id, false, false);
                 if (lancamento == null)
                     StatusCode(StatusCodes.Status409Conflict,
                         "Você está tetando deletar um Lançamento que não existe.");

@@ -15,7 +15,7 @@ namespace InvestQ.Application.Interfaces.Clientes
         
         Task<PageList<LancamentoDto>> GetAllLancamentosByCarteiraIdAsync(Guid carteiraId, PageParams pageParams);
         Task<LancamentoDto[]> GetAllLancamentosByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId, PageParams pageParams, bool includeCarteira, bool includeAtivo);
-        Task<LancamentoDto> GetLancamentoByIdAsync(Guid id);
+        Task<LancamentoDto> GetLancamentoByIdAsync(Guid id, bool includeCarteira, bool includeAtivo);
         bool GetPossuiLancamentosByCarteiraId(Guid carteiraId);
         
     }
