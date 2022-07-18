@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InvestQ.Data.Context;
 using InvestQ.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace InvestQ.Data.Repositories
 {
@@ -23,6 +24,11 @@ namespace InvestQ.Data.Repositories
         public void Atualizar<T>(T entity) where T : class
         {
             _context.Update(entity);
+        }
+
+        public void AtualizarVarias<T>(T[] entityarray) where T : class
+        {
+            _context.UpdateRange(entityarray);
         }
 
         public void Deletar<T>(T entity) where T : class

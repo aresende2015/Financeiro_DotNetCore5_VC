@@ -34,59 +34,30 @@ namespace InvestQ.Application.Services.Clientes
 
             if( await _lancamentoRepo.GetLancamentoByIdAsync(lancamento.Id, false, false) == null)
             {
-                
-
                 if (_tipoDeAtivo == TipoDeAtivo.Acao)
                 {
                     if ( lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra || 
                          lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Venda)
                     {
-                        var lancamentosDoDiaDaOperacao = 
-                            await _lancamentoRepo
-                                .GetAllLancamentosByCarteiraIdAtivoIdDataOperacaoAsync(lancamento.CarteiraId
-                                                                                     , lancamento.AtivoId
-                                                                                     , lancamento.DataDaOperacao);
+                        var lancamentosDaCarteiraDoAtivoCompraVenda =  
+                                await _lancamentoRepo
+                                        .GetAllLancamentosByCarteiraIdAtivoIdCompraVendaAsync(lancamento.CarteiraId
+                                                                                            , lancamento.AtivoId
+                                                                                            , lancamento.Id);
+
+                        ContabilizarOperacaoDaytrade(lancamento
+                                                   , lancamentosDaCarteiraDoAtivoCompraVenda
+                                                   , TipoDeAcaoDoUsuario.Insert);
+
+                        await AtualizarPortifolioDaCarteiraDoAtivo(lancamento
+                                                                 , lancamentosDaCarteiraDoAtivoCompraVenda
+                                                                 , TipoDeAcaoDoUsuario.Insert);
                         
-                        var _quantidadeDaOperacao = lancamento.Quantidade;
-
-                        foreach (Lancamento _lancamento in lancamentosDoDiaDaOperacao)
-                        {
-                            if (_lancamento.TipoDeMovimentacao != lancamento.TipoDeMovimentacao)
-                            {
-                                var _quantidadeDayTrade = _lancamento.Quantidade - _lancamento.QuantidadeDayTrade;
-
-                                if (_quantidadeDayTrade > 0)
-                                {
-                                    if (_quantidadeDaOperacao >= _quantidadeDayTrade)
-                                    {
-                                        _quantidadeDaOperacao = _quantidadeDaOperacao - _quantidadeDayTrade;
-                                        _lancamento.QuantidadeDayTrade = _lancamento.QuantidadeDayTrade + _quantidadeDayTrade;
-                                        _lancamentoRepo.Atualizar(_lancamento);
-                                    } else 
-                                    {
-                                        _lancamento.QuantidadeDayTrade = _lancamento.QuantidadeDayTrade + _quantidadeDaOperacao;
-                                        _quantidadeDaOperacao = 0;
-                                        _lancamentoRepo.Atualizar(_lancamento);
-
-                                    }
-                                }
-                            }
-
-                        }
-                        if (_quantidadeDaOperacao != lancamento.Quantidade)
-                            lancamento.QuantidadeDayTrade = lancamento.Quantidade - _quantidadeDaOperacao;
-                        
-                        //lancamento.Contabilizado = true;
-
-                         _lancamentoRepo.Adicionar(lancamento);
-
-                        await _lancamentoRepo.SalvarMudancasAsync();                       
-
-                        //var retornoLancamento = _lancamentoRepo.GetLancamentoByIdAsync(lancamento.Id, false, false);
-
-                        await AdicionarPortifolioAcao(lancamento);
+                        _lancamentoRepo.AtualizarVarias(lancamentosDaCarteiraDoAtivoCompraVenda);                        
                     }
                 }
+
+                _lancamentoRepo.Adicionar(lancamento);
 
                 if (await _lancamentoRepo.SalvarMudancasAsync())
                 {
@@ -94,6 +65,7 @@ namespace InvestQ.Application.Services.Clientes
 
                     return _mapper.Map<LancamentoDto>(retorno);
                 }
+
             }
 
             return null;
@@ -111,6 +83,21 @@ namespace InvestQ.Application.Services.Clientes
                         throw new Exception("Não se pode alterar um Lançamento inativo.");
 
                     _mapper.Map(model, lancamento);
+
+                    var lancamentosDaCarteiraDoAtivoCompraVenda = await _lancamentoRepo
+                                                            .GetAllLancamentosByCarteiraIdAtivoIdCompraVendaAsync(lancamento.CarteiraId
+                                                                                                                , lancamento.AtivoId
+                                                                                                                , lancamento.Id);
+
+                    ContabilizarOperacaoDaytrade(lancamento
+                                                , lancamentosDaCarteiraDoAtivoCompraVenda
+                                                , TipoDeAcaoDoUsuario.Update);
+
+                    await AtualizarPortifolioDaCarteiraDoAtivo(lancamento
+                                                             , lancamentosDaCarteiraDoAtivoCompraVenda
+                                                             , TipoDeAcaoDoUsuario.Update);
+
+                    _lancamentoRepo.AtualizarVarias(lancamentosDaCarteiraDoAtivoCompraVenda); 
 
                     _lancamentoRepo.Atualizar(lancamento);
 
@@ -133,9 +120,26 @@ namespace InvestQ.Application.Services.Clientes
             if (lancamento == null)
                 throw new Exception("A Lancamento que tentou deletar não existe.");
 
-            _lancamentoRepo.Deletar(lancamento);
+            var lancamentosDaCarteiraDoAtivoCompraVenda =  
+                                await _lancamentoRepo
+                                        .GetAllLancamentosByCarteiraIdAtivoIdCompraVendaAsync(lancamento.CarteiraId
+                                                                                            , lancamento.AtivoId
+                                                                                            , lancamento.Id);
+            
+            if (lancamento.QuantidadeDayTrade > 0)
+            {
+                ContabilizarOperacaoDaytrade(lancamento
+                                            , lancamentosDaCarteiraDoAtivoCompraVenda
+                                            , TipoDeAcaoDoUsuario.Delete);
+            }
 
-            await RecalcularPortifolioDeleteAcao(lancamento);
+            await AtualizarPortifolioDaCarteiraDoAtivo(lancamento
+                                                     , lancamentosDaCarteiraDoAtivoCompraVenda
+                                                     , TipoDeAcaoDoUsuario.Delete);
+
+            _lancamentoRepo.AtualizarVarias(lancamentosDaCarteiraDoAtivoCompraVenda);
+
+            _lancamentoRepo.Deletar(lancamento);
 
             return await _lancamentoRepo.SalvarMudancasAsync();
         }
@@ -200,8 +204,87 @@ namespace InvestQ.Application.Services.Clientes
             return _lancamentoRepo.GetPossuiLancamentoByCarteiraId(carteiraId);
         }
 
-        private async Task AdicionarPortifolioAcao(Lancamento lancamento)
-        {   
+        private void ContabilizarOperacaoDaytrade(Lancamento lancamentoAtual
+                                                , Lancamento[] lancamentosDaCarteiraDoAtivoCompraVenda
+                                                , TipoDeAcaoDoUsuario tipoDeAcaoDoUsuario)
+        {
+            if (tipoDeAcaoDoUsuario == TipoDeAcaoDoUsuario.Delete || tipoDeAcaoDoUsuario == TipoDeAcaoDoUsuario.Update) 
+            {
+                ExcluirDayTradeDaCarteiraDoAtivo(lancamentoAtual, lancamentosDaCarteiraDoAtivoCompraVenda);
+            }
+
+            if (tipoDeAcaoDoUsuario == TipoDeAcaoDoUsuario.Insert  || tipoDeAcaoDoUsuario == TipoDeAcaoDoUsuario.Update)
+            {
+                IncluirDayTradeDaCarteiraDoAtivo(lancamentoAtual, lancamentosDaCarteiraDoAtivoCompraVenda);
+            }            
+        }
+
+        private void ExcluirDayTradeDaCarteiraDoAtivo(Lancamento excluirLancamento
+                                                    , Lancamento[] lancamentosDaCarteiraDoAtivoCompraVenda)
+        {
+            var _quatidadeDayTrade = excluirLancamento.QuantidadeDayTrade;
+
+            foreach (Lancamento _lancamentoDodia in lancamentosDaCarteiraDoAtivoCompraVenda)
+            {                            
+                if (_lancamentoDodia.TipoDeMovimentacao != excluirLancamento.TipoDeMovimentacao &&
+                    _lancamentoDodia.DataDaOperacao.Date == excluirLancamento.DataDaOperacao.Date &&
+                    _lancamentoDodia.QuantidadeDayTrade > 0 &&
+                    _quatidadeDayTrade > 0)
+                {
+                    if (_lancamentoDodia.QuantidadeDayTrade >= _quatidadeDayTrade)
+                    {
+                        _lancamentoDodia.QuantidadeDayTrade = excluirLancamento.QuantidadeDayTrade - _quatidadeDayTrade;
+                        _quatidadeDayTrade = 0;
+                    } else {
+                        _quatidadeDayTrade = _quatidadeDayTrade - _lancamentoDodia.QuantidadeDayTrade;
+                        _lancamentoDodia.QuantidadeDayTrade = 0;
+                    }
+                    excluirLancamento.Contabilizado = false;
+                }
+            }
+        }
+
+        private void IncluirDayTradeDaCarteiraDoAtivo(Lancamento incluirLancamento
+                                                    , Lancamento[] lancamentosDaCarteiraDoAtivoCompraVenda)
+        {
+            var _quantidadeDaOperacao = incluirLancamento.Quantidade;
+
+            foreach (Lancamento _lancamentoDodia in lancamentosDaCarteiraDoAtivoCompraVenda)
+            {                            
+                if (_lancamentoDodia.TipoDeMovimentacao != incluirLancamento.TipoDeMovimentacao &&
+                    _lancamentoDodia.DataDaOperacao.Date == incluirLancamento.DataDaOperacao.Date)
+                {
+                    var _quantidadeDayTrade = _lancamentoDodia.Quantidade - _lancamentoDodia.QuantidadeDayTrade;
+
+                    if (_quantidadeDayTrade > 0)
+                    {
+                        if (_quantidadeDaOperacao >= _quantidadeDayTrade)
+                        {
+                            _quantidadeDaOperacao = _quantidadeDaOperacao - _quantidadeDayTrade;
+                            _lancamentoDodia.QuantidadeDayTrade = _lancamentoDodia.QuantidadeDayTrade + _quantidadeDayTrade;
+                        } else 
+                        {
+                            _lancamentoDodia.QuantidadeDayTrade = _lancamentoDodia.QuantidadeDayTrade + _quantidadeDaOperacao;
+                            _quantidadeDaOperacao = 0;
+
+                        }
+                        _lancamentoDodia.Contabilizado = false;
+                    }
+                }
+            }
+
+            incluirLancamento.Contabilizado = false;
+
+            if (_quantidadeDaOperacao != incluirLancamento.Quantidade)
+            {                
+                incluirLancamento.QuantidadeDayTrade = incluirLancamento.Quantidade - _quantidadeDaOperacao;
+            }
+        }
+
+        private async Task AtualizarPortifolioDaCarteiraDoAtivo(Lancamento lancamento
+                                                              , Lancamento[] lancamentosDaCarteiraDoAtivo
+                                                              , TipoDeAcaoDoUsuario tipoDeAcaoDoUsuario)
+        {
             var portifolio = await _portifolioRepo.GetPortifolioByCarteiraIdAtivoIdAsync(lancamento.CarteiraId, lancamento.AtivoId);
 
             if (portifolio == null) {
@@ -213,158 +296,111 @@ namespace InvestQ.Application.Services.Clientes
                     portifolio.PrecoMedio = lancamento.ValorDaOperacao;
 
                     _portifolioRepo.Adicionar(portifolio);
-                    lancamento.Contabilizado = true;
+                    lancamento.Contabilizado = true; 
                 } else {
                     throw new Exception("Não pode ocorrer uma venda sem ter o ativo.");
                 }
-            }
-            else {
-                DateTime _maiorDataDeOperacao = _lancamentoRepo.GetDataLancamentoByCarteiraIdAtivoIdAsync
-                                                    (lancamento.CarteiraId, lancamento.AtivoId);
-                
-                
-                if (lancamento.DataDaOperacao.Date > _maiorDataDeOperacao.Date)
+            } else {
+                DateTime _maiorDataDeOperacao = _lancamentoRepo
+                                                    .GetDataLancamentoByCarteiraIdAtivoIdAsync(lancamento.CarteiraId, lancamento.AtivoId);
+
+                if (tipoDeAcaoDoUsuario == TipoDeAcaoDoUsuario.Insert && lancamento.DataDaOperacao.Date > _maiorDataDeOperacao.Date)
                 {
                     if (lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra)
                     {
-                        var _quantidadeTotal = portifolio.Quantidade + (lancamento.Quantidade - lancamento.QuantidadeDayTrade);
-                        var _precoMedio = ( (portifolio.Quantidade * portifolio.PrecoMedio) + 
-                                            ((lancamento.Quantidade - lancamento.QuantidadeDayTrade) * lancamento.ValorDaOperacao)) / 
-                                            _quantidadeTotal;
-                        
-                        portifolio.Quantidade = _quantidadeTotal;
-                        portifolio.PrecoMedio = _precoMedio;
-
+                        IncluirLancamentoDeCompraNoPortifolio(portifolio, lancamento);
                     } else {
                         if (portifolio.Quantidade >= lancamento.Quantidade){
-                            var _quantidadeTotal = portifolio.Quantidade - lancamento.Quantidade;
-                            
-                            if (_quantidadeTotal == 0)
-                                portifolio.PrecoMedio = 0;
-                            portifolio.Quantidade = _quantidadeTotal;
+                            IncluirLancamentoDeVendaNoPortifolio(portifolio, lancamento);
                         } else {
                             throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
                         }
-                    }                    
-                    _portifolioRepo.Atualizar(portifolio);
-                    lancamento.Contabilizado = true;
+                    }
+                    lancamento.Contabilizado = true; 
                 } else {
-                    await RecalcularPortifolioAcao(portifolio, lancamento);
-                    _portifolioRepo.Atualizar(portifolio);
+                    RecalcularPortifolioDaCarteiraDoAtivo(portifolio
+                                                        , lancamento
+                                                        , lancamentosDaCarteiraDoAtivo
+                                                        , tipoDeAcaoDoUsuario);
                 }
+                _portifolioRepo.Atualizar(portifolio);
             }
-            
         }
 
-        private async Task RecalcularPortifolioAcao(Portifolio portifolio, Lancamento lancamentoAtual) {
-
-            var lancamentos = await _lancamentoRepo
-                                .GetAllLancamentosByCarteiraIdAtivoIdSemPaginacaoAsync(portifolio.CarteiraId
-                                                                                     , portifolio.AtivoId
-                                                                                     , false
-                                                                                     , false);
+        private void RecalcularPortifolioDaCarteiraDoAtivo(Portifolio portifolio
+                                                         , Lancamento lancamentoAtual
+                                                         , Lancamento[] lancamentosDaCarteiraDoAtivo
+                                                         , TipoDeAcaoDoUsuario tipoDeAcaoDoUsuario) {
 
             portifolio.PrecoMedio = 0;
             portifolio.Quantidade = 0;
 
-            foreach (Lancamento _lancamento in lancamentos)
+            foreach (Lancamento _lancamento in lancamentosDaCarteiraDoAtivo)
             {
-                // if ((lancamentoAtual.DataDaOperacao.Date < _lancamento.DataDaOperacao.Date) && 
-                //      !lancamentoAtual.Contabilizado)
-                // {
-                //     lancamentoAtual.Contabilizado = true;
+                if (tipoDeAcaoDoUsuario == TipoDeAcaoDoUsuario.Insert || tipoDeAcaoDoUsuario == TipoDeAcaoDoUsuario.Update)
+                {
+                    if ((lancamentoAtual.DataDaOperacao.Date < _lancamento.DataDaOperacao.Date) && 
+                     !lancamentoAtual.Contabilizado)
+                    {
+                        lancamentoAtual.Contabilizado = true;
 
-                //     if (lancamentoAtual.TipoDeMovimentacao == TipoDeMovimentacao.Compra)
-                //     {
-                //         var _quantidadeTotal = portifolio.Quantidade + lancamentoAtual.Quantidade;
-                //         var _precoMedio = ( (portifolio.Quantidade * portifolio.PrecoMedio) + 
-                //                             (lancamentoAtual.Quantidade * lancamentoAtual.ValorDaOperacao)) / 
-                //                             _quantidadeTotal;
-                        
-                //         portifolio.Quantidade = _quantidadeTotal;
-                //         portifolio.PrecoMedio = _precoMedio;
-
-                //     } else {
-                //         if (portifolio.Quantidade >= lancamentoAtual.Quantidade){
-                //             var _quantidadeTotal = portifolio.Quantidade - lancamentoAtual.Quantidade;
-                            
-                //             if (_quantidadeTotal == 0)
-                //                 portifolio.PrecoMedio = 0;
-                //             portifolio.Quantidade = _quantidadeTotal;
-                //         } else {
-                //             throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
-                //         }
-                //     }
-                // }
+                        if (lancamentoAtual.TipoDeMovimentacao == TipoDeMovimentacao.Compra)
+                        {
+                            IncluirLancamentoDeCompraNoPortifolio(portifolio, lancamentoAtual);
+                        } else {
+                            if (portifolio.Quantidade >= (lancamentoAtual.Quantidade - lancamentoAtual.QuantidadeDayTrade)){
+                                IncluirLancamentoDeVendaNoPortifolio(portifolio, lancamentoAtual);
+                            } else {
+                                throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
+                            }
+                        }
+                    }
+                }
 
                 if (_lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra)
                 {
-                    var _quantidadeTotal = portifolio.Quantidade + (_lancamento.Quantidade - _lancamento.QuantidadeDayTrade);
-                    var _precoMedio = ( (portifolio.Quantidade * portifolio.PrecoMedio) + 
-                                        ((_lancamento.Quantidade - _lancamento.QuantidadeDayTrade) * _lancamento.ValorDaOperacao)) / 
-                                        _quantidadeTotal;
-                    
-                    portifolio.Quantidade = _quantidadeTotal;
-                    portifolio.PrecoMedio = _precoMedio;
-
+                    IncluirLancamentoDeCompraNoPortifolio(portifolio, _lancamento);
+                    _lancamento.Contabilizado = true;
                 } else if (_lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Venda) {
                     if (portifolio.Quantidade >= (_lancamento.Quantidade - _lancamento.QuantidadeDayTrade)){
-                        var _quantidadeTotal = portifolio.Quantidade - (_lancamento.Quantidade - _lancamento.QuantidadeDayTrade);
-                        
-                        if (_quantidadeTotal == 0)
-                                portifolio.PrecoMedio = 0;
-                        portifolio.Quantidade = _quantidadeTotal;
+                        IncluirLancamentoDeVendaNoPortifolio(portifolio, _lancamento);
+                        _lancamento.Contabilizado = true;
                     } else {
                         throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
                     }
                 } 
-                _lancamento.Contabilizado = true;
 
-                if (lancamentoAtual.Id != _lancamento.Id)
-                    _lancamentoRepo.Atualizar(_lancamento);
+                if (portifolio.Quantidade < 0)
+                    throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
+            
             }
         }
+    
+        private void IncluirLancamentoDeCompraNoPortifolio(Portifolio portifolio
+                                                       , Lancamento lancamento)
+        {
+            var _quantidadeTotal = portifolio.Quantidade + (lancamento.Quantidade - lancamento.QuantidadeDayTrade);
+                    
+            decimal _precoMedio = 0;
 
-        private async Task RecalcularPortifolioDeleteAcao(Lancamento lancamento) {
+            if (_quantidadeTotal > 0)
+                _precoMedio = ( (portifolio.Quantidade * portifolio.PrecoMedio) + 
+                                    ((lancamento.Quantidade - lancamento.QuantidadeDayTrade) * lancamento.ValorDaOperacao)) / 
+                                    _quantidadeTotal;
+            
+            portifolio.Quantidade = _quantidadeTotal;
+            portifolio.PrecoMedio = _precoMedio;
+        }
 
-            var portifolio = await _portifolioRepo.GetPortifolioByCarteiraIdAtivoIdAsync(lancamento.CarteiraId, lancamento.AtivoId);
-
-            var lancamentos = await _lancamentoRepo.GetAllLancamentosByCarteiraIdAtivoIdSemPaginacaoAsync(portifolio.CarteiraId, portifolio.AtivoId, false, false);
-
-            portifolio.PrecoMedio = 0;
-            portifolio.Quantidade = 0;
-
-            foreach (Lancamento _lancamento in lancamentos)
-            {
-                if (lancamento.Id != _lancamento.Id) {
-                    if (_lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra)
-                    {
-                        var _quantidadeTotal = portifolio.Quantidade + _lancamento.Quantidade;
-                        var _precoMedio = ( (portifolio.Quantidade * portifolio.PrecoMedio) + 
-                                            (_lancamento.Quantidade * _lancamento.ValorDaOperacao)) / 
-                                            _quantidadeTotal;
+        private void IncluirLancamentoDeVendaNoPortifolio(Portifolio portifolio
+                                                        , Lancamento lancamento) 
+        {
+            var _quantidadeTotal = portifolio.Quantidade - (lancamento.Quantidade - lancamento.QuantidadeDayTrade);
                         
-                        portifolio.Quantidade = _quantidadeTotal;
-                        portifolio.PrecoMedio = _precoMedio;
+            if (_quantidadeTotal == 0)
+                    portifolio.PrecoMedio = 0;
 
-                    } else if (_lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Venda) {
-                        var _quantidadeTotal = portifolio.Quantidade - _lancamento.Quantidade;
-                        
-                        if (_quantidadeTotal == 0)
-                                portifolio.PrecoMedio = 0;
-                        portifolio.Quantidade = _quantidadeTotal;
-                    }
-                    _lancamento.Contabilizado = true;
-                    _lancamentoRepo.Atualizar(_lancamento); 
-                }
-
-                
-            }
-
-            if (portifolio.Quantidade < 0)
-                    throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
-
-            _portifolioRepo.Atualizar(portifolio);
+            portifolio.Quantidade = _quantidadeTotal;
         }
     }
 }

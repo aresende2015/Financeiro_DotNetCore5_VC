@@ -58,6 +58,35 @@ namespace InvestQ.Data.Repositories.Clientes
             return await query.ToArrayAsync();
         }
 
+        public async Task<Lancamento[]> GetAllLancamentosByCarteiraIdAtivoIdCompraVendaAsync(Guid carteiraId, Guid ativoId)
+        {
+            IQueryable<Lancamento> query = _context.Lancamentos;
+
+            query = query.AsNoTracking()
+                    .OrderBy(l => l.DataDaOperacao).ThenBy(l => l.TipoDeMovimentacao)
+                    .Where(l => l.CarteiraId == carteiraId 
+                             && l.AtivoId == ativoId 
+                             && (l.TipoDeMovimentacao == TipoDeMovimentacao.Compra 
+                                    || l.TipoDeMovimentacao == TipoDeMovimentacao.Venda));                        
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<Lancamento[]> GetAllLancamentosByCarteiraIdAtivoIdCompraVendaAsync(Guid carteiraId, Guid ativoId, Guid excluirId)
+        {
+            IQueryable<Lancamento> query = _context.Lancamentos;
+
+            query = query.AsNoTracking()
+                    .OrderBy(l => l.DataDaOperacao).ThenBy(l => l.TipoDeMovimentacao)
+                    .Where(l => l.CarteiraId == carteiraId 
+                             && l.AtivoId == ativoId 
+                             && l.Id != excluirId
+                             && (l.TipoDeMovimentacao == TipoDeMovimentacao.Compra 
+                                    || l.TipoDeMovimentacao == TipoDeMovimentacao.Venda));                        
+
+            return await query.ToArrayAsync();
+        }
+
         public async Task<Lancamento[]> GetAllLancamentosByCarteiraIdAtivoIdDataOperacaoAsync(Guid carteiraId, Guid ativoId, DateTime dataDeOperacao)
         {
             IQueryable<Lancamento> query = _context.Lancamentos;
@@ -109,9 +138,7 @@ namespace InvestQ.Data.Repositories.Clientes
             if (includeAtivo)
                 query = query.Include(l => l.Ativo);
 
-            query = query.AsNoTracking()
-                         .OrderBy(l => l.DataDaOperacao)
-                         .Where(l => l.Id == id);
+            query = query.AsNoTracking().Where(l => l.Id == id);
 
             return await query.FirstOrDefaultAsync();
         }
