@@ -28,6 +28,8 @@ export class ClienteCarteiraDetalheComponent implements OnInit {
   clienteId: Guid;
   clienteNome: string;
 
+  carteiraPossuiLancamentos: boolean = false;
+
   form!: FormGroup;
 
   estadoSalvar = 'post';
@@ -180,6 +182,7 @@ export class ClienteCarteiraDetalheComponent implements OnInit {
   public carteiraPossuiLancamento(): void {
     this.lancamentoService.getPossuiLancamentoByCarteiraId(this.carteiraId, true).subscribe({
       next: (possuiLancamento: boolean) => {
+        this.carteiraPossuiLancamentos = possuiLancamento;
         if (possuiLancamento) {
           this.form.controls['clienteId'].disable();
           this.form.controls['corretoraId'].disable();
@@ -205,10 +208,18 @@ export class ClienteCarteiraDetalheComponent implements OnInit {
     this.spinner.show();
 
     if (this.form.valid) {
-
-      this.carteira = (this.estadoSalvar === 'post')
-                      ? {...this.form.value}
-                      : {id: this.carteira.id, ...this.form.value};
+      if (this.estadoSalvar === "post")
+      {
+        this.carteira = {...this.form.value};
+      } else {
+        if (this.carteiraPossuiLancamento) {
+          this.carteira.descricao = this.form.controls['descricao'].value;
+          this.carteira.cliente = null;
+          this.carteira.corretora = null;
+        } else {
+          this.carteira = {id: this.carteira.id, ...this.form.value};
+        }
+      }
 
       this.carteiraService[this.estadoSalvar](this.carteira).subscribe(
         (_carteira: Carteira) => {

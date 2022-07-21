@@ -130,6 +130,11 @@ export class LancamentoDetalheComponent implements OnInit {
             this.lancamento.tipoDeAtivo = this.lancamento.ativo.tipoDeAtivo;
             this.carregarAtivos(this.lancamento.tipoDeAtivo);
             this.form.patchValue(this.lancamento);
+            this.form.controls['ativoId'].disable();
+            this.form.controls['dataDaOperacao'].disable();
+            this.form.controls['tipoDeMovimentacao'].disable();
+            this.form.controls['tipoDeOperacao'].disable();
+            this.form.controls['tipoDeAtivo'].disable();
           },
           error: (error: any) => {
             this.spinner.hide();
@@ -176,9 +181,15 @@ export class LancamentoDetalheComponent implements OnInit {
 
     if (this.form.valid) {
 
-      this.lancamento = (this.estadoSalvar === 'post')
-                      ? {...this.form.value}
-                      : {id: this.lancamento.id, ...this.form.value};
+      if (this.estadoSalvar === "post")
+      {
+        this.lancamento = {...this.form.value};
+      } else {
+          this.lancamento.valorDaOperacao = this.form.controls['valorDaOperacao'].value;
+          this.lancamento.quantidade = this.form.controls['quantidade'].value;
+          this.lancamento.ativo = null;
+          this.lancamento.carteira = null;
+      }
 
       this.lancamentoService[this.estadoSalvar](this.lancamento).subscribe(
         (_lancamento: Lancamento) => {

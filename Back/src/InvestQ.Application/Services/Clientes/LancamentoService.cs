@@ -374,6 +374,23 @@ namespace InvestQ.Application.Services.Clientes
                     throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
             
             }
+
+            if (!lancamentoAtual.Contabilizado && tipoDeAcaoDoUsuario == TipoDeAcaoDoUsuario.Update)
+            {
+                if (lancamentoAtual.TipoDeMovimentacao == TipoDeMovimentacao.Compra)
+                {
+                    IncluirLancamentoDeCompraNoPortifolio(portifolio, lancamentoAtual);
+                } else {
+                    if (portifolio.Quantidade >= (lancamentoAtual.Quantidade - lancamentoAtual.QuantidadeDayTrade)){
+                        IncluirLancamentoDeVendaNoPortifolio(portifolio, lancamentoAtual);
+                    } else {
+                        throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
+                    }
+                }
+
+                if (portifolio.Quantidade < 0)
+                    throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
+            }
         }
     
         private void IncluirLancamentoDeCompraNoPortifolio(Portifolio portifolio

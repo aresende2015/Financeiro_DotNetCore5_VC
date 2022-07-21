@@ -21,6 +21,14 @@
         <td>{{ portifolio.quantidade }}</td>
         <td>{{ portifolio.precoMedio | currency:'BRL':'symbol':'1.2-2'}}</td>
         <td>
+          <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="openModal($event, template, portifolio.carteiraId, portifolio.ativoId)">
+            <i class="fa fa-edit"></i>
+            Comprar
+          </button>
+          <button class="btn btn-outline-primary btn-sm" tooltip="Carteira" (click)="openModal($event, template, portifolio.carteiraId, portifolio.ativoId)">
+            <i class="fa fa-id-badge"></i>
+            Vender
+          </button>
         </td>
       </tr>
     </tbody>
@@ -33,3 +41,76 @@
     </tfoot>
   </table>
 </div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="p-3">
+        <div class="row">
+          <div class="form-group col-md-4" [ngClass]="cssValidator(f.tipoDeMovimentacao)">
+            <label class="control-label">Tipo de Movimentacao</label>
+            xxxx
+          </div>
+          <div class="form-group col-md-4" [ngClass]="cssValidator(f.ativoId)">
+            <label class="control-label">Ativo</label>
+            xxxx
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Data da operação {{lancamento.dataDaOperacao | DateFormatPipe }}</label>
+            <input
+              type="datetime" class="form-control"
+              [ngClass]="cssValidator(f.dataDaOperacao)"
+              value="{{lancamento.dataDaOperacao | DateFormatPipe }}"
+              bsDatepicker
+              [bsConfig]="bsConfig"
+              formControlName="dataDaOperacao"
+              placeholder=""
+            >
+            <div *ngIf="f.dataDaOperacao.errors?.required" class="invalid-feedback">
+              Data da operação é obrigatória.
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Quantidade</label>
+            <input
+              type="text"
+              currencyMask
+              [options]="{ prefix: '', thousands: '.', decimal: ',', align: 'left', precision: 0 }"
+              [ngClass]="cssValidator(f.quantidade)"
+              class="form-control"
+              formControlName="quantidade"
+              placeholder=""
+            >
+            <div *ngIf="f.quantidade.errors?.required" class="invalid-feedback">
+              Quantidade é obrigatório.
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Valor</label>
+            <input
+              type="text"
+              currencyMask
+              [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left', precision: 2 }"
+              [ngClass]="cssValidator(f.valorDaOperacao)"
+              class="form-control"
+              formControlName="valorDaOperacao"
+              placeholder=""
+            >
+            <div *ngIf="f.valorDaOperacao.errors?.required" class="invalid-feedback">
+              Valor da operação é obrigatório.
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="confirm()" >Confirmar</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Cancelar</button>
+  </div>
+</ng-template>
