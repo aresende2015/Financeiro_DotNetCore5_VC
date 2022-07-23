@@ -10,7 +10,7 @@ import { Observable, take } from 'rxjs';
 
 export class AtivoService {
 
-  baseURL = environment.apiURL + 'api/Ativo';
+  baseURL = environment.apiURL + 'api/ativo';
 
   constructor(private http: HttpClient) { }
 
@@ -20,6 +20,12 @@ export class AtivoService {
             .http
             .get<Ativo[]>(`${this.baseURL}/${tipoDeAtivo}`)
             .pipe(take(1));
+  }
+
+  public getAtivoById(id: Guid): Observable<Ativo> {
+    return this.http
+              .get<Ativo>(`${this.baseURL}/${id}/id`)
+              .pipe(take(1));
   }
 
   public getAtivoByTipoDeAtivoDescricao(tipoDeAtivo: TipoDeAtivo, descricao: string): Observable<Ativo> {

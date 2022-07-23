@@ -12,6 +12,9 @@ import { ToastrService } from 'ngx-toastr';
 import { LancamentoService } from '@app/services/lancamento.service';
 import { Lancamento } from '@app/models/Lancamento';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AtivoService } from '@app/services/ativo.service';
+import { Ativo } from '@app/models/Ativo';
+import { TipoDeAtivo } from '@app/models/Enum/TipoDeAtivo.enum';
 
 @Component({
   selector: 'app-portifolios-lista',
@@ -25,14 +28,27 @@ export class PortifoliosListaComponent implements OnInit {
   public portifolioId = Guid.createEmpty();
   public carteiraId =  Guid.createEmpty();
   public carteiraDescricao: string = '';
+  public ativo = {} as Ativo;
+  private _filtroLista: string = '';
 
   public lancamento = {} as Lancamento;
+  public tipoDeMovimentacaoOp: any[];
+  public tipoDeMovimentacaoCompra = TipoDeMovimentacao.Compra;
+  public tipoDeMovimentacaoVenda = TipoDeMovimentacao.Venda;
 
   modalRef?: BsModalRef;
   form!: FormGroup;
 
   get f(): any {
     return this.form.controls;
+  }
+
+  public getTipoDeMovimentacao() {
+    return [
+      {valor: TipoDeMovimentacao.NaoInformada, desc: 'NaoInformada' },
+      {valor: TipoDeMovimentacao.Compra, desc: 'Compra' },
+      {valor: TipoDeMovimentacao.Venda, desc: 'Venda' },
+    ];
   }
 
   get bsConfig(): any {
@@ -44,8 +60,6 @@ export class PortifoliosListaComponent implements OnInit {
       showWeekNumbers: false
     }
   }
-
-  private _filtroLista: string = '';
 
   public get filtroLista(): string {
     return this._filtroLista;
@@ -76,6 +90,7 @@ export class PortifoliosListaComponent implements OnInit {
     private portifolioService: PortifolioService,
     private carteiraService: CarteiraService,
     private lancamentoService: LancamentoService,
+    private ativoService: AtivoService,
     private activatedRouter: ActivatedRoute,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
@@ -83,7 +98,7 @@ export class PortifoliosListaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.carregarPortifolios();
+    this.carregarPortifolios(null);
 
     setTimeout(() => {
       /** spinner ends after 5 seconds */
@@ -105,10 +120,14 @@ export class PortifoliosListaComponent implements OnInit {
     });
   }
 
-  public carregarPortifolios(): void {
+  public carregarPortifolios(_carteiraId: Guid): void {
     this.spinner.show();
 
-    this.carteiraId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
+    if (_carteiraId === null) {
+      this.carteiraId = Guid.parse(this.activatedRouter.snapshot.paramMap.get('id').toString());
+    } else {
+      this.carteiraId = _carteiraId;
+    }
 
     this.bucarNomeDaCarteira(this.carteiraId);
 
@@ -127,13 +146,22 @@ export class PortifoliosListaComponent implements OnInit {
     this.portifolioService.getAllPortifoliosByCarteiraId(this.carteiraId).subscribe(observer);
   }
 
-  // public comprarAtivo(carteiraId: Guid, ativoId: Guid): void {
-  //   //this.router.navigate([`clientes/listarcarteiras/${id}`])
-  // }
+  public carregarAtivo(ativo: Guid): void {
 
-  // public venderAtivo(id: Guid, ativoId: Guid): void {
-  //   //this.router.navigate([`clientes/listarcarteiras/${id}`])
-  // }
+    const observer = {
+      next: (_ativo: Ativo) => {
+        this.ativo = _ativo;
+      },
+      error: (error: any) => {
+        this.spinner.hide();
+        console.error(error);
+        this.toastr.error('Erro ao carregar a tela...', 'Error"');
+      },
+      complete: () => {this.spinner.hide()}
+    }
+
+    this.ativoService.getAtivoById(ativo).subscribe(observer);
+  }
 
   public validation(): void {
     this.form = this.fb.group({
@@ -142,8 +170,7 @@ export class PortifoliosListaComponent implements OnInit {
       quantidade: ['', [Validators.required]],
       tipoDeMovimentacao: [0, [Validators.required]],
       tipoDeOperacao: [0, [Validators.required]],
-      ativoId: [null, [Validators.required]],
-      tipoDeAtivo: [null, [Validators.required]],
+      codigoDoAtivo: [''],
       carteiraId: [null, [Validators.required]]
     });
   }
@@ -156,9 +183,25 @@ export class PortifoliosListaComponent implements OnInit {
     this.form.reset();
   }
 
-  public openModal(event: any, template: TemplateRef<any>, carteiraId: Guid, ativoId: Guid): void {
+  public openModal(event: any,
+                   template: TemplateRef<any>,
+                   carteiraId: Guid,
+                   ativoId: Guid,
+                   tipoDeMovimentacao: TipoDeMovimentacao): void {
+
     event.stopPropagation();
-    //this.lancamentoId = lancamentosId;
+
+    this.validation();
+
+    this.tipoDeMovimentacaoOp = this.lancamentoService.getTipoDeMovimentacao();
+    this.form.controls['tipoDeMovimentacao'].setValue(tipoDeMovimentacao);
+    this.carregarAtivo(ativoId);
+    this.form.controls['codigoDoAtivo'].setValue(this.ativo.codigoDoAtivo);
+    this.form.controls['carteiraId'].setValue(carteiraId);
+
+    this.form.controls['tipoDeMovimentacao'].disable();
+    this.form.controls['codigoDoAtivo'].disable();
+
     this.modalRef = this.modalService.show(template);
   }
 
@@ -167,24 +210,30 @@ export class PortifoliosListaComponent implements OnInit {
   }
 
   public confirm(): void {
+    this.spinner.show();
+
+    this.lancamento.carteiraId = this.form.controls['carteiraId'].value;
+    this.lancamento.valorDaOperacao = this.form.controls['valorDaOperacao'].value;
+    this.lancamento.quantidade = this.form.controls['quantidade'].value;
+    this.lancamento.dataDaOperacao = this.form.controls['dataDaOperacao'].value;
+    this.lancamento.tipoDeMovimentacao = this.form.controls['tipoDeMovimentacao'].value;
+    this.lancamento.ativoId = this.ativo.id;
+    this.lancamento.tipoDeOperacao = 0;
+    this.lancamento.tipoDeAtivo = this.ativo.tipoDeAtivo;
+
     this.modalRef?.hide();
+
     this.spinner.show();
 
     this.lancamentoService.post(this.lancamento).subscribe(
-      (result: any) => {
-        if (result.message === 'Deletado') {
-          this.toastr.success('O registro foi excluído com sucesso!', 'Excluído!');
-          //this.spinner.hide();
-          //this.carregarLancamentos();
-        }
+      (_lancamento: Lancamento) => {
+          this.toastr.success('Lançamento salvo com sucesso!', 'Sucesso');
+          this.carregarPortifolios(_lancamento.carteiraId);
       },
       (error: any) => {
         console.error(error);
-        //this.toastr.error(`Erro ao tentar deletar o lancamento ${this.lancamentoId}. ${error.error}`, 'Erro');
-        //this.spinner.hide();
+        this.toastr.error('Erro ao incluir o lançamento', 'Erro');
       },
-      //() => {this.spinner.hide();}
     ).add(() => {this.spinner.hide();});
   }
-
 }

@@ -13,6 +13,11 @@
         <th>Qtd</th>
         <th>Preço Médio</th>
         <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody *ngIf="portifolios && portifolios.length">
@@ -20,12 +25,25 @@
         <td>{{ portifolio.ativo.codigoDoAtivo }}</td>
         <td>{{ portifolio.quantidade }}</td>
         <td>{{ portifolio.precoMedio | currency:'BRL':'symbol':'1.2-2'}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>
-          <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="openModal($event, template, portifolio.carteiraId, portifolio.ativoId)">
+          <button
+            class="btn btn-primary btn-sm me-md-2"
+            tooltip="Comprar"
+            (click)="openModal($event, template, portifolio.carteiraId, portifolio.ativoId, this.tipoDeMovimentacaoCompra)"
+          >
             <i class="fa fa-edit"></i>
             Comprar
           </button>
-          <button class="btn btn-outline-primary btn-sm" tooltip="Carteira" (click)="openModal($event, template, portifolio.carteiraId, portifolio.ativoId)">
+          <button
+            class="btn btn-success btn-sm"
+            tooltip="Vender"
+            (click)="openModal($event, template, portifolio.carteiraId, portifolio.ativoId, this.tipoDeMovimentacaoVenda)"
+          >
             <i class="fa fa-id-badge"></i>
             Vender
           </button>
@@ -44,24 +62,32 @@
 
 <ng-template #template>
   <div class="modal-header">
-    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+    <h5 class="modal-title" id="staticBackdropLabel">Compra ou Venda</h5>
   </div>
   <div class="modal-body">
     <form [formGroup]="form">
-      <div class="p-3">
+      <div class="p-2">
         <div class="row">
-          <div class="form-group col-md-4" [ngClass]="cssValidator(f.tipoDeMovimentacao)">
+          <div class="form-group col-md-6" [ngClass]="cssValidator(f.tipoDeMovimentacao)">
             <label class="control-label">Tipo de Movimentacao</label>
-            xxxx
+            <select class="form-control" id="tipoDeMovimentacao" formControlName="tipoDeMovimentacao">
+              <option *ngFor="let item of tipoDeMovimentacaoOp" [value]="item.valor">{{ item.desc }}</option>
+            </select>
           </div>
-          <div class="form-group col-md-4" [ngClass]="cssValidator(f.ativoId)">
+          <div class="form-group col-md-6" [ngClass]="cssValidator(f.codigoDoAtivo)">
             <label class="control-label">Ativo</label>
-            xxxx
+            <input
+              type="text" class="form-control"
+              value="{{ this.ativo.codigoDoAtivo }}"
+              [ngClass]="cssValidator(f.codigoDoAtivo)"
+              formControlName="codigoDoAtivo"
+              placeholder=""
+            >
           </div>
         </div>
         <div class="row">
           <div class="form-group col-md-4">
-            <label>Data da operação {{lancamento.dataDaOperacao | DateFormatPipe }}</label>
+            <label>Data da operação</label>
             <input
               type="datetime" class="form-control"
               [ngClass]="cssValidator(f.dataDaOperacao)"
@@ -110,7 +136,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="confirm()" >Confirmar</button>
-    <button type="button" class="btn btn-primary" (click)="decline()" >Cancelar</button>
+    <button class="btn btn-warning" (click)="decline()" >Cancelar</button>
+    <button class="btn btn-success" (click)="confirm()" >Confirmar</button>
   </div>
 </ng-template>

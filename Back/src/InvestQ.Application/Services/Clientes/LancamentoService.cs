@@ -45,15 +45,17 @@ namespace InvestQ.Application.Services.Clientes
                                                                                             , lancamento.AtivoId
                                                                                             , lancamento.Id);
 
-                        ContabilizarOperacaoDaytrade(lancamento
-                                                   , lancamentosDaCarteiraDoAtivoCompraVenda
-                                                   , TipoDeAcaoDoUsuario.Insert);
+                        if (lancamentosDaCarteiraDoAtivoCompraVenda.Count() > 0) {
+                            ContabilizarOperacaoDaytrade(lancamento
+                                                    , lancamentosDaCarteiraDoAtivoCompraVenda
+                                                    , TipoDeAcaoDoUsuario.Insert);
+                        }
 
                         await AtualizarPortifolioDaCarteiraDoAtivo(lancamento
-                                                                 , lancamentosDaCarteiraDoAtivoCompraVenda
-                                                                 , TipoDeAcaoDoUsuario.Insert);
+                                                                , lancamentosDaCarteiraDoAtivoCompraVenda
+                                                                , TipoDeAcaoDoUsuario.Insert);
                         
-                        _lancamentoRepo.AtualizarVarias(lancamentosDaCarteiraDoAtivoCompraVenda);                        
+                        _lancamentoRepo.AtualizarVarias(lancamentosDaCarteiraDoAtivoCompraVenda);
                     }
                 }
 
@@ -301,11 +303,30 @@ namespace InvestQ.Application.Services.Clientes
                     throw new Exception("Não pode ocorrer uma venda sem ter o ativo.");
                 }
             } else {
-                DateTime _maiorDataDeOperacao = _lancamentoRepo
-                                                    .GetDataLancamentoByCarteiraIdAtivoIdAsync(lancamento.CarteiraId, lancamento.AtivoId);
+                if (lancamentosDaCarteiraDoAtivo.Count() > 0) {
+                    DateTime _maiorDataDeOperacao = _lancamentoRepo
+                                                        .GetDataLancamentoByCarteiraIdAtivoIdAsync(lancamento.CarteiraId, lancamento.AtivoId);
 
-                if (tipoDeAcaoDoUsuario == TipoDeAcaoDoUsuario.Insert && lancamento.DataDaOperacao.Date > _maiorDataDeOperacao.Date)
-                {
+                    if (tipoDeAcaoDoUsuario == TipoDeAcaoDoUsuario.Insert && lancamento.DataDaOperacao.Date > _maiorDataDeOperacao.Date)
+                    {
+                        if (lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra)
+                        {
+                            IncluirLancamentoDeCompraNoPortifolio(portifolio, lancamento);
+                        } else {
+                            if (portifolio.Quantidade >= lancamento.Quantidade){
+                                IncluirLancamentoDeVendaNoPortifolio(portifolio, lancamento);
+                            } else {
+                                throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
+                            }
+                        }
+                        lancamento.Contabilizado = true; 
+                    } else {
+                        RecalcularPortifolioDaCarteiraDoAtivo(portifolio
+                                                            , lancamento
+                                                            , lancamentosDaCarteiraDoAtivo
+                                                            , tipoDeAcaoDoUsuario);
+                    }                    
+                } else {
                     if (lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra)
                     {
                         IncluirLancamentoDeCompraNoPortifolio(portifolio, lancamento);
@@ -316,13 +337,9 @@ namespace InvestQ.Application.Services.Clientes
                             throw new Exception("Não pode ocorrer uma venda sem ter a quantidade do ativo.");
                         }
                     }
-                    lancamento.Contabilizado = true; 
-                } else {
-                    RecalcularPortifolioDaCarteiraDoAtivo(portifolio
-                                                        , lancamento
-                                                        , lancamentosDaCarteiraDoAtivo
-                                                        , tipoDeAcaoDoUsuario);
+                    lancamento.Contabilizado = true;
                 }
+
                 _portifolioRepo.Atualizar(portifolio);
             }
         }

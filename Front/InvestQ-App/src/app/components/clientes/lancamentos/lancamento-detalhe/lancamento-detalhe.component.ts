@@ -184,6 +184,7 @@ export class LancamentoDetalheComponent implements OnInit {
       if (this.estadoSalvar === "post")
       {
         this.lancamento = {...this.form.value};
+        console.log(this.lancamento)
       } else {
           this.lancamento.valorDaOperacao = this.form.controls['valorDaOperacao'].value;
           this.lancamento.quantidade = this.form.controls['quantidade'].value;
