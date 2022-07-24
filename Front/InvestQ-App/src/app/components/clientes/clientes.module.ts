@@ -25,6 +25,7 @@ import { LancamentoFiltroListaComponent } from './lancamentos/lancamento-filtro-
 import { PortifoliosComponent } from './portifolios/portifolios.component';
 import { PortifolioFiltroListaComponent } from './portifolios/portifolio-filtro-lista/portifolio-filtro-lista.component';
 import { PortifoliosListaComponent } from './portifolios/portifolios-lista/portifolios-lista.component';
+import { PortifoliosListaAcoesComponent } from './portifolios/portifolios-lista/portifolios-lista-acoes/portifolios-lista-acoes.component';
 
 @NgModule({
   imports: [
@@ -61,7 +62,8 @@ import { PortifoliosListaComponent } from './portifolios/portifolios-lista/porti
     LancamentoFiltroListaComponent,
     PortifoliosComponent,
     PortifolioFiltroListaComponent,
-    PortifoliosListaComponent
+    PortifoliosListaComponent,
+    PortifoliosListaAcoesComponent
   ]
 })
 export class ClientesModule { }
