@@ -2,62 +2,71 @@
   <legend class="d-flex justify-content-between capitalize">
     <p><b>Carteira:</b> {{ this.carteiraDescricao }}</p>
   </legend>
-  <app-filtrar
-    [botaoNovo]="false"
-    (filtroAcionado)="onFiltroAcionado($event)">
-  </app-filtrar>
-  <table class="table table-striped">
-    <thead class="table-dark">
-      <tr>
-        <th>Código</th>
-        <th>Qtd</th>
-        <th>Preço Médio</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody *ngIf="portifolios && portifolios.length">
-      <tr *ngFor="let portifolio of portifoliosFiltrados" >
-        <td>{{ portifolio.ativo.codigoDoAtivo }}</td>
-        <td>{{ portifolio.quantidade }}</td>
-        <td>{{ portifolio.precoMedio | currency:'BRL':'symbol':'1.2-2'}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-          <button
-            class="btn btn-primary btn-sm me-md-2"
-            tooltip="Comprar"
-            (click)="openModal($event, template, portifolio.carteiraId, portifolio.ativoId, this.tipoDeMovimentacaoCompra)"
-          >
-            <i class="fa fa-edit"></i>
-            Comprar
-          </button>
-          <button
-            class="btn btn-success btn-sm"
-            tooltip="Vender"
-            (click)="openModal($event, template, portifolio.carteiraId, portifolio.ativoId, this.tipoDeMovimentacaoVenda)"
-          >
-            <i class="fa fa-id-badge"></i>
-            Vender
-          </button>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot *ngIf="!portifolios.length">
-      <tr>
-        <td colspan="8" class="text-center">
-          <h4>Nenhum Ativo encontrado!</h4>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+  <tabset>
+    <tab heading="Ações" id="tab1">
+      <br>
+      <app-filtrar
+        [botaoNovo]="false"
+        (filtroAcionado)="onFiltroAcionado($event)">
+      </app-filtrar>
+      <table class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>Código</th>
+            <th>Qtd</th>
+            <th>Preço Médio</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="portifolios && portifolios.length">
+          <tr *ngFor="let portifolio of portifoliosFiltrados" >
+            <td>{{ portifolio.ativo.codigoDoAtivo }}</td>
+            <td>{{ portifolio.quantidade }}</td>
+            <td>{{ portifolio.precoMedio | currency:'BRL':'symbol':'1.2-2'}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <button
+                class="btn btn-primary btn-sm me-md-2"
+                tooltip="Comprar"
+                (click)="openModal($event, template, portifolio.carteiraId, portifolio.ativoId, this.tipoDeMovimentacaoCompra)"
+              >
+                <i class="fa fa-edit"></i>
+                Comprar
+              </button>
+              <button
+                class="btn btn-success btn-sm"
+                tooltip="Vender"
+                (click)="openModal($event, template, portifolio.carteiraId, portifolio.ativoId, this.tipoDeMovimentacaoVenda)"
+              >
+                <i class="fa fa-id-badge"></i>
+                Vender
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot *ngIf="!portifolios.length">
+          <tr>
+            <td colspan="8" class="text-center">
+              <h4>Nenhum Ativo encontrado!</h4>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </tab>
+    <tab heading="Basic Title 1">Basic content 1</tab>
+    <tab heading="Basic Title 2">Basic content 2</tab>
+  </tabset>
+
+
 </div>
 
 <ng-template #template>
