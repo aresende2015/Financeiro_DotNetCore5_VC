@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using InvestQ.Application.Dtos.Clientes;
 using InvestQ.Application.Interfaces.Clientes;
+using InvestQ.Data.Interfaces.Ativos;
 using InvestQ.Data.Interfaces.Clientes;
 using InvestQ.Data.Paginacao;
 using InvestQ.Domain.Entities.Clientes;
@@ -16,14 +17,17 @@ namespace InvestQ.Application.Services.Clientes
     {
         private readonly ILancamentoRepo _lancamentoRepo;
         private readonly IPortifolioRepo _portifolioRepo;
+        private readonly IAtivoRepo _ativoRepo;
         private readonly IMapper _mapper;
 
         public LancamentoService(ILancamentoRepo lancamentoRepo,
                                  IPortifolioRepo portifolioRepo,
+                                 IAtivoRepo ativoRepo,
                                  IMapper mapper)
         {
             _lancamentoRepo = lancamentoRepo;
             _portifolioRepo = portifolioRepo;
+            _ativoRepo = ativoRepo;
             _mapper = mapper;
         }
         public async Task<LancamentoDto> AdicionarLancamento(LancamentoDto model)
@@ -34,7 +38,7 @@ namespace InvestQ.Application.Services.Clientes
 
             if( await _lancamentoRepo.GetLancamentoByIdAsync(lancamento.Id, false, false) == null)
             {
-                if (_tipoDeAtivo == TipoDeAtivo.Acao)
+                if (_tipoDeAtivo == TipoDeAtivo.Acao || _tipoDeAtivo == TipoDeAtivo.FundoImobiliario)
                 {
                     if ( lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra || 
                          lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Venda)
@@ -47,13 +51,13 @@ namespace InvestQ.Application.Services.Clientes
 
                         if (lancamentosDaCarteiraDoAtivoCompraVenda.Count() > 0) {
                             ContabilizarOperacaoDaytrade(lancamento
-                                                    , lancamentosDaCarteiraDoAtivoCompraVenda
-                                                    , TipoDeAcaoDoUsuario.Insert);
+                                                       , lancamentosDaCarteiraDoAtivoCompraVenda
+                                                       , TipoDeAcaoDoUsuario.Insert);
                         }
 
                         await AtualizarPortifolioDaCarteiraDoAtivo(lancamento
-                                                                , lancamentosDaCarteiraDoAtivoCompraVenda
-                                                                , TipoDeAcaoDoUsuario.Insert);
+                                                                 , lancamentosDaCarteiraDoAtivoCompraVenda
+                                                                 , TipoDeAcaoDoUsuario.Insert);
                         
                         _lancamentoRepo.AtualizarVarias(lancamentosDaCarteiraDoAtivoCompraVenda);
                     }
@@ -83,23 +87,36 @@ namespace InvestQ.Application.Services.Clientes
                 {
                     if (lancamento.Inativo)
                         throw new Exception("Não se pode alterar um Lançamento inativo.");
+                    
+                    var _tipoDeAtivo = model.TipoDeAtivo;
 
-                    _mapper.Map(model, lancamento);
+                    _mapper.Map(model, lancamento);                    
 
-                    var lancamentosDaCarteiraDoAtivoCompraVenda = await _lancamentoRepo
-                                                            .GetAllLancamentosByCarteiraIdAtivoIdCompraVendaAsync(lancamento.CarteiraId
-                                                                                                                , lancamento.AtivoId
-                                                                                                                , lancamento.Id);
+                    if (_tipoDeAtivo == TipoDeAtivo.Acao || _tipoDeAtivo == TipoDeAtivo.FundoImobiliario)
+                    {
+                        if ( lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra || 
+                             lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Venda) 
+                        {
+                            var lancamentosDaCarteiraDoAtivoCompraVenda = await _lancamentoRepo
+                                                                    .GetAllLancamentosByCarteiraIdAtivoIdCompraVendaAsync(lancamento.CarteiraId
+                                                                                                                        , lancamento.AtivoId
+                                                                                                                        , lancamento.Id);
 
-                    ContabilizarOperacaoDaytrade(lancamento
-                                                , lancamentosDaCarteiraDoAtivoCompraVenda
-                                                , TipoDeAcaoDoUsuario.Update);
+                            if (lancamentosDaCarteiraDoAtivoCompraVenda.Count() > 0) 
+                            {
+                                ContabilizarOperacaoDaytrade(lancamento
+                                                           , lancamentosDaCarteiraDoAtivoCompraVenda
+                                                           , TipoDeAcaoDoUsuario.Update);
+                            }
 
-                    await AtualizarPortifolioDaCarteiraDoAtivo(lancamento
-                                                             , lancamentosDaCarteiraDoAtivoCompraVenda
-                                                             , TipoDeAcaoDoUsuario.Update);
+                            await AtualizarPortifolioDaCarteiraDoAtivo(lancamento
+                                                                     , lancamentosDaCarteiraDoAtivoCompraVenda
+                                                                     , TipoDeAcaoDoUsuario.Update);
 
-                    _lancamentoRepo.AtualizarVarias(lancamentosDaCarteiraDoAtivoCompraVenda); 
+                            _lancamentoRepo.AtualizarVarias(lancamentosDaCarteiraDoAtivoCompraVenda); 
+                        }
+
+                    }
 
                     _lancamentoRepo.Atualizar(lancamento);
 
@@ -122,24 +139,34 @@ namespace InvestQ.Application.Services.Clientes
             if (lancamento == null)
                 throw new Exception("A Lancamento que tentou deletar não existe.");
 
-            var lancamentosDaCarteiraDoAtivoCompraVenda =  
-                                await _lancamentoRepo
-                                        .GetAllLancamentosByCarteiraIdAtivoIdCompraVendaAsync(lancamento.CarteiraId
-                                                                                            , lancamento.AtivoId
-                                                                                            , lancamento.Id);
-            
-            if (lancamento.QuantidadeDayTrade > 0)
+            var _ativo = await _ativoRepo.GetAtivoByIdAsync(lancamento.AtivoId);
+
+            if (_ativo.TipoDeAtivo == TipoDeAtivo.Acao || _ativo.TipoDeAtivo == TipoDeAtivo.FundoImobiliario)
             {
-                ContabilizarOperacaoDaytrade(lancamento
-                                            , lancamentosDaCarteiraDoAtivoCompraVenda
-                                            , TipoDeAcaoDoUsuario.Delete);
+                if ( lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Compra || 
+                     lancamento.TipoDeMovimentacao == TipoDeMovimentacao.Venda) 
+                {
+                    var lancamentosDaCarteiraDoAtivoCompraVenda =  
+                                        await _lancamentoRepo
+                                                .GetAllLancamentosByCarteiraIdAtivoIdCompraVendaAsync(lancamento.CarteiraId
+                                                                                                    , lancamento.AtivoId
+                                                                                                    , lancamento.Id);
+                    
+                    if (lancamento.QuantidadeDayTrade > 0)
+                    {
+                        ContabilizarOperacaoDaytrade(lancamento
+                                                   , lancamentosDaCarteiraDoAtivoCompraVenda
+                                                   , TipoDeAcaoDoUsuario.Delete);
+                    }
+
+                    await AtualizarPortifolioDaCarteiraDoAtivo(lancamento
+                                                             , lancamentosDaCarteiraDoAtivoCompraVenda
+                                                             , TipoDeAcaoDoUsuario.Delete);
+
+                    _lancamentoRepo.AtualizarVarias(lancamentosDaCarteiraDoAtivoCompraVenda);
+
+                }
             }
-
-            await AtualizarPortifolioDaCarteiraDoAtivo(lancamento
-                                                     , lancamentosDaCarteiraDoAtivoCompraVenda
-                                                     , TipoDeAcaoDoUsuario.Delete);
-
-            _lancamentoRepo.AtualizarVarias(lancamentosDaCarteiraDoAtivoCompraVenda);
 
             _lancamentoRepo.Deletar(lancamento);
 
