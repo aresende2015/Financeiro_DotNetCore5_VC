@@ -3,8 +3,8 @@ namespace InvestQ.Application.Dtos.Enum
     public enum TipoDeAtivoDto
     {
         NaoInformada,
-        Acao,
         Caixa,
+        Acao,
         FundoImobiliario,
         TesouroDireto
     }

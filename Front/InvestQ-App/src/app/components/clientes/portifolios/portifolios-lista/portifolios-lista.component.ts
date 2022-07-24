@@ -5,6 +5,7 @@ import { CarteiraService } from '@app/services/carteira.service';
 import { Guid } from 'guid-typescript';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { TipoDeAtivo } from '@app/models/Enum/TipoDeAtivo.enum';
 
 @Component({
   selector: 'app-portifolios-lista',
@@ -15,6 +16,10 @@ export class PortifoliosListaComponent implements OnInit {
 
   public carteiraId =  Guid.createEmpty();
   public carteiraDescricao: string = '';
+
+  public tipoDeAtivoAcao = TipoDeAtivo.Acao;
+  public tipoDeAtivoFII = TipoDeAtivo.FundoImobiliario;
+  public tipoDeAtivoTD = TipoDeAtivo.TesouroDireto;
 
   constructor(
     private carteiraService: CarteiraService,

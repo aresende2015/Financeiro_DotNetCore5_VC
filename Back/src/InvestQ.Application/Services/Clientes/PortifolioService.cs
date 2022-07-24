@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using InvestQ.Application.Dtos.Clientes;
+using InvestQ.Application.Dtos.Enum;
 using InvestQ.Application.Interfaces.Clientes;
 using InvestQ.Data.Interfaces.Clientes;
 using InvestQ.Domain.Entities.Clientes;
+using InvestQ.Domain.Enum;
 
 namespace InvestQ.Application.Services.Clientes
 {
@@ -85,6 +87,24 @@ namespace InvestQ.Application.Services.Clientes
             try
             {
                 var portifolios = await _portifolioRepo.GetAllPortifoliosByCarteiraIdAsync(carteiraId);
+
+                if (portifolios == null) return null;
+
+                return _mapper.Map<PortifolioDto[]>(portifolios);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<PortifolioDto[]> GetAllPortifoliosByCarteiraIdTipoDeAtivoAsync(Guid carteiraId, TipoDeAtivoDto tipoDeAtivo)
+        {
+            try
+            {
+                var _tipoDeAtivo = _mapper.Map<TipoDeAtivo>(tipoDeAtivo);
+
+                var portifolios = await _portifolioRepo.GetAllPortifoliosByCarteiraIdTipoDeAtivoAsync(carteiraId, _tipoDeAtivo);
 
                 if (portifolios == null) return null;
 

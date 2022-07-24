@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Ativo } from '@app/models/Ativo';
@@ -12,6 +12,7 @@ import { Guid } from 'guid-typescript';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { TipoDeAtivo } from '@app/models/Enum/TipoDeAtivo.enum';
 
 @Component({
   selector: 'app-portifolios-lista-acoes',
@@ -19,6 +20,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./portifolios-lista-acoes.component.scss']
 })
 export class PortifoliosListaAcoesComponent implements OnInit {
+
+  @Input() _tipoDeAtivo = TipoDeAtivo.NaoInformada;
 
   public portifolios: Portifolio[] = [];
   public portifoliosFiltrados: Portifolio[] = [];
@@ -122,7 +125,7 @@ export class PortifoliosListaAcoesComponent implements OnInit {
       complete: () => {this.spinner.hide()}
     }
 
-    this.portifolioService.getAllPortifoliosByCarteiraId(this.carteiraId).subscribe(observer);
+    this.portifolioService.getAllPortifoliosByCarteiraIdTipoDeAtivo(this.carteiraId, this._tipoDeAtivo).subscribe(observer);
   }
 
   public carregarAtivo(ativo: Guid): void {

@@ -8,21 +8,27 @@
         <i class="fa fa-chart-line m-2"></i>
         <span>Ações</span>
       </ng-template>
-      <app-portifolios-lista-acoes></app-portifolios-lista-acoes>
+      <app-portifolios-lista-acoes
+        [_tipoDeAtivo]= this.tipoDeAtivoAcao>
+      </app-portifolios-lista-acoes>
     </tab>
     <tab class="border border-top-0 p-3">
       <ng-template tabHeading>
         <i class="fa fa-industry m-2"></i>
         <span>FIIs</span>
       </ng-template>
-      <!-- <app-portifolios-lista-acoes></app-portifolios-lista-acoes> -->
+      <app-portifolios-lista-acoes
+        [_tipoDeAtivo]= this.tipoDeAtivoFII>
+      </app-portifolios-lista-acoes>
     </tab>
     <tab class="border border-top-0 p-3">
       <ng-template tabHeading>
         <i class="fa fa-landmark m-2"></i>
         <span>Tesouro Direto</span>
       </ng-template>
-      <!-- <app-portifolios-lista-acoes></app-portifolios-lista-acoes> -->
+      <app-portifolios-lista-acoes
+        [_tipoDeAtivo]= this.tipoDeAtivoTD>
+      </app-portifolios-lista-acoes>
     </tab>
   </tabset>
 </div>

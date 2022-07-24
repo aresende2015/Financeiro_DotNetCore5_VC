@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using InvestQ.Data.Context;
 using InvestQ.Data.Interfaces.Clientes;
 using InvestQ.Domain.Entities.Clientes;
+using InvestQ.Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 
 namespace InvestQ.Data.Repositories.Clientes
@@ -29,6 +30,21 @@ namespace InvestQ.Data.Repositories.Clientes
             query = query.AsNoTracking()
                          .OrderBy(p => p.Ativo.CodigoDoAtivo)
                          .Where(p => p.CarteiraId == carteiraId);
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<Portifolio[]> GetAllPortifoliosByCarteiraIdTipoDeAtivoAsync(Guid carteiraId, TipoDeAtivo tipoDeAtivo)
+        {
+            IQueryable<Portifolio> query = _context.Portifolios;
+
+            query = query.Include(p => p.Ativo);
+            
+            query = query.Include(p => p.Carteira);
+
+            query = query.AsNoTracking()
+                         .OrderBy(p => p.Ativo.CodigoDoAtivo)
+                         .Where(p => p.CarteiraId == carteiraId && p.Ativo.TipoDeAtivo == tipoDeAtivo);
 
             return await query.ToArrayAsync();
         }
