@@ -15,11 +15,11 @@ import { ToastrService } from 'ngx-toastr';
 import { TipoDeAtivo } from '@app/models/Enum/TipoDeAtivo.enum';
 
 @Component({
-  selector: 'app-portifolios-lista-acoes',
-  templateUrl: './portifolios-lista-acoes.component.html',
-  styleUrls: ['./portifolios-lista-acoes.component.scss']
+  selector: 'app-portifolios-lista-ativos',
+  templateUrl: './portifolios-lista-ativos.component.html',
+  styleUrls: ['./portifolios-lista-ativos.component.scss']
 })
-export class PortifoliosListaAcoesComponent implements OnInit {
+export class PortifoliosListaAtivosComponent implements OnInit {
 
   @Input() _tipoDeAtivo = TipoDeAtivo.NaoInformada;
 
