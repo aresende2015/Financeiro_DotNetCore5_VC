@@ -4,6 +4,7 @@
   </legend>
   <app-filtrar
     [rotaLink]="'/lancamentos/detalhe/' + [this.carteiraId]"
+    [placerHolder]="'Filtrar por código do ativo'"
     (filtroAcionado)="onFiltroAcionado($event)">
   </app-filtrar>
   <table class="table table-striped">

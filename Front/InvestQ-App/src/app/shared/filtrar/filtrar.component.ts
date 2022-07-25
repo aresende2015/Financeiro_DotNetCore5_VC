@@ -13,6 +13,7 @@ export class FiltrarComponent implements OnInit {
 
   @Input() rotaLink: string = '';
   @Input() botaoNovo = true;
+  @Input() placerHolder: string = '';
 
   @Output() filtroAcionado = new EventEmitter();
 
